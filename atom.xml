@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
-  <link href="http://liaobz.github.io/blog/atom.xml" rel="self"/>
-  <link href="http://liaobz.github.io/blog/"/>
-  <updated>2014-12-12T15:49:53+08:00</updated>
-  <id>http://liaobz.github.io/blog/</id>
+  <title><![CDATA[liao.bz]]></title>
+  <link href="http://blog.liao.bz//atom.xml" rel="self"/>
+  <link href="http://blog.liao.bz//"/>
+  <updated>2014-12-12T16:09:21+08:00</updated>
+  <id>http://blog.liao.bz//</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[liaobz]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Title]]></title>
-    <link href="http://liaobz.github.io/blog/blog/2014/12/12/title/"/>
+    <link href="http://blog.liao.bz//blog/2014/12/12/title/"/>
     <updated>2014-12-12T15:20:07+08:00</updated>
-    <id>http://liaobz.github.io/blog/blog/2014/12/12/title</id>
+    <id>http://blog.liao.bz//blog/2014/12/12/title</id>
     <content type="html"><![CDATA[<p>test</p>
 ]]></content>
   </entry>
