@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[liao.bz]]></title>
-  <link href="http://blog.liao.bz//atom.xml" rel="self"/>
-  <link href="http://blog.liao.bz//"/>
-  <updated>2014-12-12T16:19:18+08:00</updated>
-  <id>http://blog.liao.bz//</id>
+  <link href="http://blog.liao.bz/atom.xml" rel="self"/>
+  <link href="http://blog.liao.bz/"/>
+  <updated>2014-12-12T16:26:38+08:00</updated>
+  <id>http://blog.liao.bz/</id>
   <author>
     <name><![CDATA[liaobz]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Title]]></title>
-    <link href="http://blog.liao.bz//blog/2014/12/12/title/"/>
+    <link href="http://blog.liao.bz/blog/2014/12/12/title/"/>
     <updated>2014-12-12T15:20:07+08:00</updated>
-    <id>http://blog.liao.bz//blog/2014/12/12/title</id>
+    <id>http://blog.liao.bz/blog/2014/12/12/title</id>
     <content type="html"><![CDATA[<p>test</p>
 ]]></content>
   </entry>
