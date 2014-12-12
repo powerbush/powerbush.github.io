@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[liao.bz]]></title>
-  <link href="http://blog.liao.bz/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Repo | liao.bz]]></title>
+  <link href="http://blog.liao.bz/blog/categories/repo/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz/"/>
   <updated>2014-12-12T16:33:04+08:00</updated>
   <id>http://blog.liao.bz/</id>
@@ -12,308 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[MR82_JB5_1.19_20140125版代码编译脚本讲解]]></title>
-    <link href="http://blog.liao.bz/blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie/"/>
-    <updated>2014-02-07T11:24:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie</id>
-    <content type="html"><![CDATA[<p>在8312/8382平台上，因为软件上无法做到对不同版本及容量RAM的兼容，例如DDR2与DDR3，512MB与1024MB。之前的做法都是根据客户的需求，从而手动修改custom_MemoryDevice.h文件来编译相应的固件。<br/>
-为了减少无谓的重复累赘的工作，新版代码再次对编译脚本进行更新，具体更新代码可自行查阅mediatek/config/common目录下的编译脚本。下面是对更新点的讲解。<br/>
-本次更新的核心是对RAM版本和容量各种组合的重命名。理解了命名方式，便可以熟练的掌握和使用新的编译脚本。<br/>
-如下图，新的命名可分为三部分：第一部分是RAM版本，第二部分是片选数量，第三部分是RAM容量。目前5种版本RAM具体含义可参照下图。</p>
-
-<!-- more -->
-
-
-<p><img class="center" src="http://192.168.2.96/blogimgs/2014-02-07-1-1.png" width="644" height="421" title="5种版本的RAM" >
-而新的编译脚本则须加上RAM代号：如想编译DDR3.1024MB的MR6012H1C1W1软件，编译脚本为
-    ./pack_user_image.sh R321 mr601 MR6012H1C1W1 new
-同时为了方便编译中性软件，在编译的时候也可以用R代替RAM型号，编译脚本则会自动编译多个preloader并打包(仅pack脚本，make脚本不支持)。如：
-    ./pack_user_image.sh R mr601 MR6012H1C1W1 new</p>
-
-<p>PS：<br/>
-1.DDR2频率默认为533MHz，DDR3频率默认为916MHz。<br/>
-2.目前R212的仅有spetex的PL017。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Camera插值]]></title>
-    <link href="http://blog.liao.bz/blog/2014/01/03/cameracha-zhi/"/>
-    <updated>2014-01-03T09:55:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2014/01/03/cameracha-zhi</id>
-    <content type="html"><![CDATA[<h4>Camera插值在底层已经做好，我们只需要在中间层和app层添加一个对应的picture size即可。但是有一些限制条件需要注意：</h4>
-
-<h5>1．插值的倍数只能小于等于16倍，也就是说假如是1M的sensor，那最多只能插值到16M；</h5>
-
-<h5>2．插值后的width和height都不能超过8192，也就是picture size设置的width和height的大小都不能超过8192；</h5>
-
-<h5>3．若插值的大小超过12M：则需要打补丁</h5>
-
-<h5>4．由于hardware jpeg encoder的限制，插值时设置的width和height请您分别都设为16的整数倍，若设置非16整数倍的width或height，则可能导致拍出来的图片会有异常(如图片扭曲、花屏、连拍的图片绿屏)。</h5>
-
-<!-- more -->
-
-
-<h2>下面是关于插值的方法：</h2>
-
-<h3>（一）中间层修改</h3>
-
-<h4>1.mediatek/custom/common/hal/imgsensor/\<sensor name\>/config.ftbl.\<sensor name\>.h</h4>
-
-<p>（若没有该文件，则修改mediatek/custom/common/hal/imgsensor/src/config.ftbl.common_raw.h或者config.ftbl.common_yuv.h）<br/>
-在如下定义picture size的地方增加您想要的size (宽和高必须是16的整数倍)，如果已经包含您要加的size，就不需要再增加。
-    #if 1
-        //  Picture Size
-        FTABLE_CONFIG_AS_TYPE_OF_DEFAULT_VALUES(
-            KEY_AS<em>(MtkCameraParameters::KEY_PICTURE_SIZE),
-            SCENE_AS_DEFAULT_SCENE(
-                ITEM_AS_DEFAULT</em>(&ldquo;2560x1920&rdquo;),
-                ITEM_AS_VALUES_(
-                    &ldquo;320x240&rdquo;,  &ldquo;640x480&rdquo;,  &ldquo;1024x768&rdquo;,  &ldquo;1280x720&rdquo;,  &ldquo;1280x768&rdquo;,  &ldquo;1280x960&rdquo;
-                )
-            ),
-        )
-    #endif</p>
-
-<p>例如：
-    //  Picture Size
-    FTABLE_CONFIG_AS_TYPE_OF_DEFAULT_VALUES(
-        KEY_AS<em>(MtkCameraParameters::KEY_PICTURE_SIZE),
-        SCENE_AS_DEFAULT_SCENE(
-            ITEM_AS_DEFAULT</em>(&ldquo;2560x1920&rdquo;),
-            ITEM_AS_VALUES_(
-                &ldquo;320x240&rdquo;,  &ldquo;640x480&rdquo;,  &ldquo;1024x768&rdquo;,  &ldquo;1280x720&rdquo;,  &ldquo;1280x768&rdquo;,  &ldquo;1280x960&rdquo;,  &ldquo;1920x1088&rdquo;,  &ldquo;1920x1152&rdquo;,
-            )
-        ),
-    )</p>
-
-<p>1920:1088 ≈ 16:9<br/>
-1920:1152 ≈ 5:3</p>
-
-<p>如果是16:9的屏幕,则得确保2个分辨率都添加<br/>
-width：height ≈ 16:9<br/>
-width：height ≈ 5:3</p>
-
-<h3>（二）app层的修改可以按照如下来修改：</h3>
-
-<h4>1．packages/apps/Camera/res/values/strings.xml</h4>
-
-<p>增加您想要的size，如果已经包含您要加的size，就不需要再增加</p>
-
-<pre><code>&lt;string name="pref_camera_picturesize_entry_3264x2448"&gt;8M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_2592x1936"&gt;5M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_2048x1536"&gt;3M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1600x1200"&gt;2M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1280x960"&gt;1.3M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1024x768"&gt;1M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_640x480"&gt;VGA&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_320x240"&gt;QVGA&lt;/string&gt;
-</code></pre>
-
-<p>例如：</p>
-
-<pre><code>&lt;string name="pref_camera_picturesize_entry_3264x2448"&gt;8M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_2592x1936"&gt;5M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_2048x1536"&gt;3M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1920x1088"&gt;2M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1920x1152"&gt;2M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1600x1200"&gt;2M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1280x960"&gt;1.3M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1024x768"&gt;1M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_640x480"&gt;VGA&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_320x240"&gt;QVGA&lt;/string&gt;
-</code></pre>
-
-<h4>2．packages/apps/Camera/res/values/arrays.xml</h4>
-
-<pre><code>&lt;string-array name="pref_camera_picturesize_entries" translatable="false"&gt;
-    &lt;!-- TODO: Change to a better name of the preference.
-            The first element of the array should be
-            "pref_camera_picturesize_entry_2592x1944". However, we are too
-            late for the translation. Since we show the same label as the
-            second item, we just use the second one instead.
-    --&gt;
-    &lt;!-- 4:3 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_320x240&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1024x768&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_4096x3072&lt;/item&gt;
-    &lt;!-- 16:9 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x720&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1152&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2560x1440&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2992x1680&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_3328x1872&lt;/item&gt;
-    &lt;!-- 5:3 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x768&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
-    &lt;!-- 3:2 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
-&lt;/string-array&gt;
-</code></pre>
-
-<p>增加您想要的size，如果已经包含您要加的size，就不需要再增加
-例如：</p>
-
-<pre><code>&lt;string-array name="pref_camera_picturesize_entries" translatable="false"&gt;
-    &lt;!-- TODO: Change to a better name of the preference.
-            The first element of the array should be
-            "pref_camera_picturesize_entry_2592x1944". However, we are too
-            late for the translation. Since we show the same label as the
-            second item, we just use the second one instead.
-    --&gt;
-    &lt;!-- 4:3 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_320x240&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1024x768&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_4096x3072&lt;/item&gt;
-    &lt;!-- 16:9 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x720&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1920x1088&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1152&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2560x1440&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2992x1680&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_3328x1872&lt;/item&gt;
-    &lt;!-- 5:3 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x768&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1920x1152&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
-    &lt;!-- 3:2 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
-&lt;/string-array&gt;
-</code></pre>
-
-<h4>3．packages/apps/Camera/res/values/arrays.xml</h4>
-
-<pre><code>&lt;string-array name="pref_camera_picturesize_entryvalues" translatable="false"&gt;
-    &lt;!-- 4:3 --&gt;
-    &lt;item&gt;320x240&lt;/item&gt;
-    &lt;item&gt;640x480&lt;/item&gt;
-    &lt;item&gt;1024x768&lt;/item&gt;
-    &lt;item&gt;1280x960&lt;/item&gt;
-    &lt;item&gt;1600x1200&lt;/item&gt;
-    &lt;item&gt;2048x1536&lt;/item&gt;
-    &lt;item&gt;2560x1920&lt;/item&gt;
-    &lt;item&gt;3264x2448&lt;/item&gt;
-    &lt;item&gt;4096x3072&lt;/item&gt;
-    &lt;!-- 16:9 --&gt;
-    &lt;item&gt;640x352&lt;/item&gt;
-    &lt;item&gt;1280x720&lt;/item&gt;
-    &lt;item&gt;2048x1152&lt;/item&gt;
-    &lt;item&gt;2560x1440&lt;/item&gt;
-    &lt;item&gt;2992x1680&lt;/item&gt;
-    &lt;item&gt;3328x1872&lt;/item&gt;
-    &lt;!-- 5:3 --&gt;
-    &lt;item&gt;1280x768&lt;/item&gt;
-    &lt;item&gt;1600x960&lt;/item&gt;
-    &lt;item&gt;2880x1728&lt;/item&gt;
-    &lt;item&gt;3600x2160&lt;/item&gt;
-    &lt;!-- 3:2 --&gt;
-    &lt;item&gt;1440x960&lt;/item&gt;
-    &lt;item&gt;2048x1360&lt;/item&gt;
-    &lt;item&gt;2560x1712&lt;/item&gt;
-&lt;/string-array&gt;
-</code></pre>
-
-<p>增加您想要的size，如果已经包含你要加的size，就不需要再增加<br/>
-例如：</p>
-
-<pre><code>&lt;string-array name="pref_camera_picturesize_entryvalues" translatable="false"&gt;
-    &lt;!-- 4:3 --&gt;
-    &lt;item&gt;320x240&lt;/item&gt;
-    &lt;item&gt;640x480&lt;/item&gt;
-    &lt;item&gt;1024x768&lt;/item&gt;
-    &lt;item&gt;1280x960&lt;/item&gt;
-    &lt;item&gt;1600x1200&lt;/item&gt;
-    &lt;item&gt;2048x1536&lt;/item&gt;
-    &lt;item&gt;2560x1920&lt;/item&gt;
-    &lt;item&gt;3264x2448&lt;/item&gt;
-    &lt;item&gt;4096x3072&lt;/item&gt;
-    &lt;!-- 16:9 --&gt;
-    &lt;item&gt;640x352&lt;/item&gt;
-    &lt;item&gt;1280x720&lt;/item&gt;
-    &lt;item&gt;1920x1088&lt;/item&gt;
-    &lt;item&gt;2048x1152&lt;/item&gt;
-    &lt;item&gt;2560x1440&lt;/item&gt;
-    &lt;item&gt;2992x1680&lt;/item&gt;
-    &lt;item&gt;3328x1872&lt;/item&gt;
-    &lt;!-- 5:3 --&gt;
-    &lt;item&gt;1280x768&lt;/item&gt;
-    &lt;item&gt;1600x960&lt;/item&gt;
-    &lt;item&gt;1920x1152&lt;/item&gt;
-    &lt;item&gt;2880x1728&lt;/item&gt;
-    &lt;item&gt;3600x2160&lt;/item&gt;
-    &lt;!-- 3:2 --&gt;
-    &lt;item&gt;1440x960&lt;/item&gt;
-    &lt;item&gt;2048x1360&lt;/item&gt;
-    &lt;item&gt;2560x1712&lt;/item&gt;
-&lt;/string-array&gt;
-</code></pre>
-
-<h4>4．packages/apps/Camera/src/com/Android/Camera/CameraSettings.java</h4>
-
-<pre><code>public static final String[] PICTURE_SIZE_16_9 = new String[] {
-    "640x352",
-    "1280x720",
-    "2048x1152",
-    "2560x1440",
-    "2992x1680",
-    "3328x1872",
-};
-
-public static final String[] PICTURE_SIZE_5_3 = new String[] {
-    "1280x768",
-    "1600x960",
-    "2880x1728",
-    "3600x2160",
-};
-</code></pre>
-
-<p>增加您想要的size，如果已经包含你要加的size，就不需要再增加<br/>
-例如：
-s
-    public static final String[] PICTURE_SIZE_16_9 = new String[] {
-        &ldquo;640x352&rdquo;,
-        &ldquo;1280x720&rdquo;,
-        &ldquo;1920x1088&rdquo;,
-        &ldquo;2048x1152&rdquo;,
-        &ldquo;2560x1440&rdquo;,
-        &ldquo;2992x1680&rdquo;,
-        &ldquo;3328x1872&rdquo;,
-    };</p>
-
-<pre><code>public static final String[] PICTURE_SIZE_5_3 = new String[] {
-    "1280x768",
-    "1600x960",
-    "1920x1152",
-    "2880x1728",
-    "3600x2160",
-};
-</code></pre>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[常用命令2]]></title>
@@ -618,8 +316,7 @@ repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分
 <h3>3.1 新建default.xml文件</h3>
 
 <p>在manifest目录下新建default.xml文件，此文件是repo管理的所有git仓库(project)<br/>
-内容如下:</p>
-
+内容如下:
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -629,7 +326,7 @@ repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=<span class="ni">&amp;ldquo;</span>1.0<span class="ni">&amp;rdquo;</span> encoding=<span class="ni">&amp;ldquo;</span>UTF-8<span class="ni">&amp;rdquo;</span>?&gt;
 </span><span class='line'><span class="nt">&lt;manifest&gt;</span>
 </span><span class='line'>    <span class="nt">&lt;remote</span>  <span class="na">name=</span><span class="s">&quot;alps&quot;</span>
 </span><span class='line'>           <span class="na">fetch=</span><span class="s">&quot;DIR&quot;</span> <span class="nt">/&gt;</span>
@@ -638,8 +335,7 @@ repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分
 </span><span class='line'>           <span class="na">sync-j=</span><span class="s">&quot;4&quot;</span> <span class="nt">/&gt;</span>
 </span><span class='line'>    <span class="nt">&lt;project</span> <span class="na">path=</span><span class="s">&quot;alps/ndk&quot;</span> <span class="na">name=</span><span class="s">&quot;alps/ndk&quot;</span> <span class="nt">/&gt;</span>
 </span><span class='line'><span class="nt">&lt;/manifest&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
+</span></code></pre></td></tr></table></div></figure></p>
 
 <h4>注：</h4>
 
@@ -668,8 +364,7 @@ git push master --all
 
 <h2>5. 关于copyfile的使用</h2>
 
-<p>前面有提到过git仓库创建的原则，比如alps/mediatek/platform目录下，需要对common和mt6589，2个目录各创建一个git仓库，但是在alps/mediatek/platform下存在Android.mk和rules.mk 文件，如果只在common和mt6589这2个目录中建立仓库则会导致无法下载这2个mk文件，所以推荐的方法是在alps/mediatek/platform下面创建目录mtk，并将Android.mk和rules.mk这2个文件复制过去，下载的时候就可以通过copyfile去实现了</p>
-
+<p>前面有提到过git仓库创建的原则，比如alps/mediatek/platform目录下，需要对common和mt6589，2个目录各创建一个git仓库，但是在alps/mediatek/platform下存在Android.mk和rules.mk 文件，如果只在common和mt6589这2个目录中建立仓库则会导致无法下载这2个mk文件，所以推荐的方法是在alps/mediatek/platform下面创建目录mtk，并将Android.mk和rules.mk这2个文件复制过去，下载的时候就可以通过copyfile去实现了
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -679,10 +374,7 @@ git push master --all
 </span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;rules.mk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mediatek/platform/rules.mk&quot;</span> <span class="nt">/&gt;</span>
 </span><span class='line'><span class="nt">&lt;/project&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
-
-
-<p>同理alps下面的几个文件也是一样的情况，可以在build中穿件mtk文件夹</p>
-
+同理alps下面的几个文件也是一样的情况，可以在build中穿件mtk文件夹
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -695,8 +387,7 @@ git push master --all
 </span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/mbldenv.sh&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mbldenv.sh&quot;</span> <span class="nt">/&gt;</span>
 </span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/mk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mk&quot;</span> <span class="nt">/&gt;</span>
 </span><span class='line'><span class="nt">&lt;/project&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
+</span></code></pre></td></tr></table></div></figure></p>
 ]]></content>
   </entry>
   
@@ -878,175 +569,6 @@ lbz@elink:~/work/project/md77$ repo forall -c git pull md77 elink_sw
 
 <pre><code>git push md77 patch:elink_preview
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Elink 代码规范]]></title>
-    <link href="http://blog.liao.bz/blog/2013/09/03/elink-code-server-guide2/"/>
-    <updated>2013-09-03T18:05:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/09/03/elink-code-server-guide2</id>
-    <content type="html"><![CDATA[<h2>1：机型命名：</h2>
-
-<p>Elink 软件机型由内部自己定义，不和外部的外壳等等有关联。遵循简单、规律、好记的原则。<br/>
-具体命名规则，请参考《Elink 机型命名规则》，项目前立项时，由项目经理提供配置单给蔡锦涛负责命名。<br/>
-在代码里面，请给与变量PRODUCT_MODEL赋值，例如<br/>
-    PRODUCT_MODEL=MD7065HC
-那么系统标准的属性,ro.product.model会变赋值为<br/>
-    ro.product.model=MD7065HC</p>
-
-<h2>2：软件版本号命名：</h2>
-
-<p>软件版本号分为两个版本，一个是中性版本号，一个是生成版本号。</p>
-
-<!--more-->
-
-
-<ul>
-<li><p>中性版本号：
-为了标示当前中性代码的版本情况，不随编译日期而改变，一般不随版型机型而变化，影响整份代码，一般不包含客户需求，乃Elink标准软件。<br/>
-给属性ro.custom.build.version赋值即可，例如：<br/>
-  ro.custom.build.version=1.22_20130903
-这个版本号还和Readme对应起来，还和代码的TAG对应起来，便于管理。</p></li>
-<li><p>生成版本号
-表示软件工程师制作出来的软件版本号命名，和具体的版型机型有关，还和编译日期有关。<br/>
-例如：<br/>
-规则为：芯片<em>版型</em>机型_(客户单号).YYYYMMDD<br/>
-例如标准软件：MT77_MD7062HC1.20130903<br/>
-例如客制软件：MT77_MD7062HC1_123456.20130903<br/>
-它影响的属性为：
-  ro.build.display.id</p></li>
-</ul>
-
-
-<h2>3：代码分支管理：</h2>
-
-<p>一般代码，我们有以下几种情况：</p>
-
-<ol>
-<li>我们自己拿到的代码创建的仓库，我们简称为mtk分支，对应远程分支master。</li>
-<li>Elink标准代码分支， 我们简称为elink_sw分支，一般对应远程分支为elink_sw分支。
-
-<h2>4：目前代码管理存在的问题点：</h2>
-
-<p>问题1：不同中性版本号之前的差异，无法快速切换？
-解决方案：使用git tag.<br/>
-每个repo 中的每个git使用一个tag，这个tag,使用中性版本号来表示，例如<br/>
-当MT6577的代码，使用了1.22_20130903这个版本号，还需要在push上之前，打上这个tag信息。</p></li>
-</ol>
-
-
-<p>使用方法：
-    git tag 1.22_20130903
-简单操作如下：
-    repo checkout elink_sw
-    repo forall -c git tag 1.22_20130903
-    repo forall -c git push remotegitname elink_sw：elink_sw   //推代码到指定分支上去。
-    repo forall -c git push remotegitname 1.22_20130903
-具体请参考：<br/>
-git的tag，跟分支一样简单。<br/>
-每次上线养成打tag好习惯 :)<br/>
-    $: git tag 1.22_20130903_publish<br/>
-加上-f覆盖原有的tag
-    $: git tag -f 1.22_20130903_publish
-显示所有的tag
-    $: git tag
-    1.22_20130903_publish
-    1.22_20130903_publish
-    1.22_20130903_publish
-删除tag
-    $: git tag -d 1.22_20130903_publish
-tag要push上服务器，操作跟分支操作没有任何区别</p>
-
-<ul>
-<li>push 到服务器<br/>
-  $: git push origin 1.22_20130903_publish</li>
-<li>从服务器上删除<br/>
-  $: git push origin :1.22_20130903_publish
-具体详细，可以参考git tag的帮助，或者参考其他资料获取。</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Elink-code-server-guide]]></title>
-    <link href="http://blog.liao.bz/blog/2013/09/03/elink-code-server-guide1/"/>
-    <updated>2013-09-03T18:04:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/09/03/elink-code-server-guide1</id>
-    <content type="html"><![CDATA[<p>目前已经搭建好代码服务器，后续的项目中使用git作为代码管理。请大家了解。<br/>
-使用说明：<br/>
-我们使用ssh来作为git通讯的协议。所以也使用ssh key 来授权和管理。<br/>
-静态IP地址为192.168.2.96</p>
-
-<h2>1：建立ssh key</h2>
-
-<p>首先检查 ls -l ~/.ssh,看有无id_rsa 和id_rsa.pub文件。<br/>
-如果没有，请键入ssh-keygen，然后一直回车，保持默认值。<br/>
-如下所示：</p>
-
-<p>然后请把id_rsa.pub文件更名为id_rsa.pub_yourname通过Email发送给LBZ。</p>
-
-<!--more-->
-
-
-<p>注：在git服务器端使用<br/>
-    cat id_rsa.pub_paul >> .ssh/authorized_keys<br/>
-把用户的公钥放在服务器上，这样你就可以用自己的私钥id_rsa来访问了。这个就是原理。</p>
-
-<h2>2：配置git</h2>
-
-<p>git不欢迎没有name &amp; email的陌生人。<br/>
-请使用<br/>
-    git config &ndash;global user.name
-    git config &ndash;global user.email
-来简单配置下git.<br/>
-另外最重要的是学习git的使用。</p>
-
-<h2>3. 下载代码：</h2>
-
-<p>1> MT6577
-    repo init -u elink-code-server@192.168.2.96:/elink_code/sda/md77/manifest.git
-    repo sync
-2> MT6589
-    repo init -u elink-code-server@192.168.2.96:/elink_code/sda/mq89/manifest.git
-    repo sync</p>
-
-<h2>4：管理代码：</h2>
-
-<p>我们会建立三个分支，<br/>
-分支mtk，为mtk原始的source.<br/>
-分支elink_sw ，为我们公版的稳定版本的source.<br/>
-分支yourbranchname ,为个人开发使用的版本,请更改名字，例如paul。</p>
-
-<p>拿到代码后，请执行以下操作
-    repo start mtk &ndash;all                                          //建立mtk分支
-    repo forall -c &ldquo;git checkout -b elink_sw md77/elink_sw&rdquo;       //获取elink_sw分支
-    repo forall -c &ldquo;git checkout -b yourbranchname elink_sw&rdquo;
-!ok，你现在可以在你自己的yourbranchname上开发了。<br/>
-<strong>注意一下操作：</strong><br/>
-1. 你如果要开发新客户，请基于elink_sw分支做新的分支，例如分支newbranchname。命令 repo forall -c &ldquo;git checkout -b newbranchname elink_sw&rdquo;<br/>
-2. 如果elink_sw有更新，请先切换到elink_sw分支，然后执行repo forall -c &ldquo;git pull remoteG remotebranchname&rdquo;<br/>
-其中 remoteG表示的是远程仓库名，remotebranchname代表的是远程分支名。<br/>
-3. 如果有你补丁确认后，需要上传到服务器，请再自己的分支确认后，然后更新到elink_sw分支。<br/>
-然后在inet_team分支上，操作 repo forall -c &ldquo;git push remote_res_name elink_sw:elink_preview&rdquo;<br/>
-即：<br/>
-    repo forall -c &ldquo;git push md77 elink_sw:elink_preview&rdquo;</p>
-
-<p>上传代码，会影响到所有的同事，所以请确认后再上传,谁上传谁负责。</p>
-
-<h2>5：编译代码：</h2>
-
-<pre><code>make_user_project.sh
-make_project.sh
-</code></pre>
-
-<p>这样实现代码和配置的分开选择，但是一个命令搞定。<br/>
-请大家使用新的脚本。<br/>
-实现软件基础部分不动，用户的配置共用。<br/>
-即可编译。<br/>
-后续，我们陆续减少客户的代码公共部分的修改，减少打包时版型配置部分的影响，请各位浏览下目前的代码结构。<br/>
-如果客户有比较多的源码修改，建议使用新的branch.基于elink_sw版本。后续elink_sw有更新，只需要merge elink_sw就可以。</p>
 ]]></content>
   </entry>
   
