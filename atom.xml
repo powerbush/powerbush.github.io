@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[My Octopress Blog]]></title>
+  <link href="http://liaobz.github.io/blog/atom.xml" rel="self"/>
+  <link href="http://liaobz.github.io/blog/"/>
+  <updated>2014-12-12T15:32:19+08:00</updated>
+  <id>http://liaobz.github.io/blog/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Title]]></title>
+    <link href="http://liaobz.github.io/blog/blog/2014/12/12/title/"/>
+    <updated>2014-12-12T15:20:07+08:00</updated>
+    <id>http://liaobz.github.io/blog/blog/2014/12/12/title</id>
+    <content type="html"><![CDATA[<p>test</p>
+]]></content>
+  </entry>
+  
+</feed>
