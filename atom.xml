@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[liao.bz]]></title>
-  <link href="http://blog.liao.bz/atom.xml" rel="self"/>
-  <link href="http://blog.liao.bz/"/>
-  <updated>2014-12-16T14:32:32+08:00</updated>
-  <id>http://blog.liao.bz/</id>
+  <link href="http://blog.liao.bz//atom.xml" rel="self"/>
+  <link href="http://blog.liao.bz//"/>
+  <updated>2014-12-16T15:10:20+08:00</updated>
+  <id>http://blog.liao.bz//</id>
   <author>
     <name><![CDATA[liaobz]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[MR82_JB5_1.19_20140125版代码编译脚本讲解]]></title>
-    <link href="http://blog.liao.bz/blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie/"/>
+    <link href="http://blog.liao.bz//blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie/"/>
     <updated>2014-02-07T11:24:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie</id>
+    <id>http://blog.liao.bz//blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie</id>
     <content type="html"><![CDATA[<p>在8312/8382平台上，因为软件上无法做到对不同版本及容量RAM的兼容，例如DDR2与DDR3，512MB与1024MB。之前的做法都是根据客户的需求，从而手动修改custom_MemoryDevice.h文件来编译相应的固件。<br/>
 为了减少无谓的重复累赘的工作，新版代码再次对编译脚本进行更新，具体更新代码可自行查阅mediatek/config/common目录下的编译脚本。下面是对更新点的讲解。<br/>
 本次更新的核心是对RAM版本和容量各种组合的重命名。理解了命名方式，便可以熟练的掌握和使用新的编译脚本。<br/>
@@ -40,9 +40,9 @@
   
   <entry>
     <title type="html"><![CDATA[Camera插值]]></title>
-    <link href="http://blog.liao.bz/blog/2014/01/03/cameracha-zhi/"/>
+    <link href="http://blog.liao.bz//blog/2014/01/03/cameracha-zhi/"/>
     <updated>2014-01-03T09:55:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2014/01/03/cameracha-zhi</id>
+    <id>http://blog.liao.bz//blog/2014/01/03/cameracha-zhi</id>
     <content type="html"><![CDATA[<h4>Camera插值在底层已经做好，我们只需要在中间层和app层添加一个对应的picture size即可。但是有一些限制条件需要注意：</h4>
 
 <h5>1．插值的倍数只能小于等于16倍，也就是说假如是1M的sensor，那最多只能插值到16M；</h5>
@@ -317,9 +317,9 @@ s
   
   <entry>
     <title type="html"><![CDATA[常用命令2]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/19/git-common-commands/"/>
+    <link href="http://blog.liao.bz//blog/2013/10/19/git-common-commands/"/>
     <updated>2013-10-19T17:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/19/git-common-commands</id>
+    <id>http://blog.liao.bz//blog/2013/10/19/git-common-commands</id>
     <content type="html"><![CDATA[<h2>1、查看分支</h2>
 
 <pre><code>repo branch 分支名前有个星号且显示为绿色 表示现在所在分支
@@ -414,9 +414,9 @@ git clean -fd  删除上一步命令显示的文件
   
   <entry>
     <title type="html"><![CDATA[常用命令1]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/19/common-commands/"/>
+    <link href="http://blog.liao.bz//blog/2013/10/19/common-commands/"/>
     <updated>2013-10-19T16:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/19/common-commands</id>
+    <id>http://blog.liao.bz//blog/2013/10/19/common-commands</id>
     <content type="html"><![CDATA[<h2>1、同步代码</h2>
 
 <pre><code>repo start mtk --all                                          // 建立mtk分支
@@ -515,9 +515,9 @@ project alps/vendor/mediatek/md706/             branch huama
   
   <entry>
     <title type="html"><![CDATA[Git仓库的建立以及repo的管理]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/19/build-repo-server/"/>
+    <link href="http://blog.liao.bz//blog/2013/10/19/build-repo-server/"/>
     <updated>2013-10-19T15:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/19/build-repo-server</id>
+    <id>http://blog.liao.bz//blog/2013/10/19/build-repo-server</id>
     <content type="html"><![CDATA[<h2>1. repo 的安装</h2>
 
 <p>一般服务器上都安装了git，所以只需安装repo即可<br/>
@@ -715,9 +715,9 @@ git push master --all
   
   <entry>
     <title type="html"><![CDATA[Repo添加project后补全本地分支]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/18/repo-project-add-local-branch-doc/"/>
+    <link href="http://blog.liao.bz//blog/2013/10/18/repo-project-add-local-branch-doc/"/>
     <updated>2013-10-18T15:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/18/repo-project-add-local-branch-doc</id>
+    <id>http://blog.liao.bz//blog/2013/10/18/repo-project-add-local-branch-doc</id>
     <content type="html"><![CDATA[<h2>概述</h2>
 
 <p>在repo的服务器端添加新project时(例如添加了MD900项目),本地完成同步后执行repo branch会碰到下面的情况:
@@ -798,9 +798,9 @@ git push master --all
   
   <entry>
     <title type="html"><![CDATA[往服务器上push代码流程]]></title>
-    <link href="http://blog.liao.bz/blog/2013/09/28/push-doc/"/>
+    <link href="http://blog.liao.bz//blog/2013/09/28/push-doc/"/>
     <updated>2013-09-28T18:04:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/09/28/push-doc</id>
+    <id>http://blog.liao.bz//blog/2013/09/28/push-doc</id>
     <content type="html"><![CDATA[<h2>1.本地合成、测试及提交</h2>
 
 <h3>1).本地合成与测试</h3>
@@ -910,9 +910,9 @@ lbz@elink:~$ repo forall -c git merge elink_sw
   
   <entry>
     <title type="html"><![CDATA[Elink 代码规范]]></title>
-    <link href="http://blog.liao.bz/blog/2013/09/03/elink-code-server-guide2/"/>
+    <link href="http://blog.liao.bz//blog/2013/09/03/elink-code-server-guide2/"/>
     <updated>2013-09-03T18:05:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/09/03/elink-code-server-guide2</id>
+    <id>http://blog.liao.bz//blog/2013/09/03/elink-code-server-guide2</id>
     <content type="html"><![CDATA[<h2>1：机型命名：</h2>
 
 <p>Elink 软件机型由内部自己定义，不和外部的外壳等等有关联。遵循简单、规律、好记的原则。<br/>
@@ -1028,9 +1028,9 @@ git的tag，跟分支一样简单。<br/>
   
   <entry>
     <title type="html"><![CDATA[Elink-code-server-guide]]></title>
-    <link href="http://blog.liao.bz/blog/2013/09/03/elink-code-server-guide1/"/>
+    <link href="http://blog.liao.bz//blog/2013/09/03/elink-code-server-guide1/"/>
     <updated>2013-09-03T18:04:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/09/03/elink-code-server-guide1</id>
+    <id>http://blog.liao.bz//blog/2013/09/03/elink-code-server-guide1</id>
     <content type="html"><![CDATA[<p>目前已经搭建好代码服务器，后续的项目中使用git作为代码管理。请大家了解。<br/>
 使用说明：<br/>
 我们使用ssh来作为git通讯的协议。所以也使用ssh key 来授权和管理。<br/>
@@ -1120,6 +1120,462 @@ make_project.sh
 即可编译。<br/>
 后续，我们陆续减少客户的代码公共部分的修改，减少打包时版型配置部分的影响，请各位浏览下目前的代码结构。<br/>
 如果客户有比较多的源码修改，建议使用新的branch.基于elink_sw版本。后续elink_sw有更新，只需要merge elink_sw就可以。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[大硬盘容量安装ubuntu]]></title>
+    <link href="http://blog.liao.bz//blog/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu/"/>
+    <updated>2013-04-18T23:35:00+08:00</updated>
+    <id>http://blog.liao.bz//blog/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu</id>
+    <content type="html"><![CDATA[<p>前几天公司购置了新服务器，前一天是装好了ubuntu 11.10，其实我是很奇怪为什么不装10.04或者12.04的，但这不是重点，开始叫我给服务器配置环境，作为用来编译android的服务器，结果第二天过去，说不能编译就把系统给重装了，改用10.04，但是装完进不去系统。停在一个</p>
+
+<pre><code>grub rescue&gt;
+</code></pre>
+
+<p>的界面。当然还有其他信息，不过记得不是很清楚了。</p>
+
+<!--more-->
+
+
+<p>当然只能求助<a href="http://wwww.google.com/ncr">股勾</a>大神了，大部分结果都引向这样一个答案：</p>
+
+<pre><code>1.先使用ls命令，找到Ubuntu的安装在哪个分区：
+    grub rescue&gt;ls
+会罗列所有的磁盘分区信息，比方说：
+    (hd0,1),(hd0,5),(hd0,3),(hd0,2)
+2.然后依次调用如下命令： X表示各个分区号码
+    grub rescue&gt;ls (hd0,X)/boot/grub
+如果都找不到的话，需要查一下是否因为Linux版本差异，造成grub的路径不对，例如直接ls(hd0,X)/grub等等。
+3.假设找到（hd0,5）时，显示了文件夹中的文件，则表示Linux安装在这个分区。
+4.调用如下命令：
+    grub rescue&gt;set root=(hd0,5)
+    grub rescue&gt;set prefix=(hd0,5)/boot/grub
+    grub rescue&gt;insmod /boot/grub/normal.mod
+5.然后调用如下命令，就可以显示出丢失的grub菜单了。
+    grub rescue&gt;normal
+6.不过不要高兴，如果这时重启，问题依旧存在，我们需要进入Linux中，对grub进行修复。
+进入Linux之后，在命令行执行：
+    sudo update-grub
+    sudo grub-install /dev/sda
+（sda是你的硬盘号码，千万不要指定分区号码，例如sda1，sda5等都不对）
+7.重启测试是否已经恢复了grub的启动菜单
+</code></pre>
+
+<p>但是在步骤2我一直没遇到我所期待的结果，到达不了步骤3，得到结果要么是unknown filesystem,就是什么out of disk，疑惑了许久，换了好几个版本都是类似的错误。</p>
+
+<p>就这样整整大半天，后面我想，要不分下区吧，之前都是把整个硬盘扔给linux，让他自己去分。分区的时候又去找股勾大神，3T硬盘太大不知道怎么下手啊，然后猛然想到MBR和GPT，会不会装不上系统就是硬盘太大的原因，MBR最大只支持2T，就给/home分区留了2000000M，给/boot留了100M，给swap留了10000M，剩下近1000000M扔给了/，然后重装，问题消失。</p>
+
+<h2>事后诸葛</h2>
+
+<p>之前整个硬盘直接扔给ubuntu，他会分三个区：启动分区、/、swap，有两个盘在我操作第二步的时候是unknown filesystem，但总有一个是out of disk，现在来看就是因为硬盘太大的缘故，目前网上流行的文章大多数重复而陈旧，老是把人往歧途上带。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[再搭Octpress]]></title>
+    <link href="http://blog.liao.bz//blog/2013/04/17/zai-da-octpress/"/>
+    <updated>2013-04-17T22:25:00+08:00</updated>
+    <id>http://blog.liao.bz//blog/2013/04/17/zai-da-octpress</id>
+    <content type="html"><![CDATA[<p>本文主要参照<a href="http://octopress.org/docs/setup/">Octopress Setup</a>来搭建博客，数月前我曾写了<a href="http://blog.liao.bz/blog/2013/01/21/octopressde-luo-cheng/">Octopress的落成</a>，当时刚上手，迷迷糊糊就搭建好了博客，就两个时间点的比较而言，自认为对git以及ssh都相对熟练了许多，因此对搭建博客的整个流程都不再是迷迷糊糊过来的，所以最好你是熟悉ssh和git的，git的教程可以访问<a href="http://git-scm.com/book/zh">git-scm.com/book/zh</a>，需要梯子。</p>
+
+<p>下面开始搭建了……</p>
+
+<!--more-->
+
+
+<h1>git</h1>
+
+<p>首先安装git</p>
+
+<pre><code>sudo apt-get install git
+</code></pre>
+
+<h1>Ruby 1.9.3 by RVM</h1>
+
+<p>然后安装Ruby1.9.3，教程说有两种方法——<a href="http://octopress.org/docs/setup/rbenv">rbenv</a> or <a href="http://octopress.org/docs/setup/rvm">RVM</a>，我选择了后者。</p>
+
+<h2>RVM</h2>
+
+<p>先装RVM，参考<a href="http://octopress.org/docs/setup/rvm/?1366114402">Installing Ruby With RVM</a></p>
+
+<pre><code>sudo apt-get install curl
+</code></pre>
+
+<h4>下面的命令不要执行了…翻到下面<a href="##RVM%20again">RVM again</a></h4>
+
+<pre><code>curl -L https://get.rvm.io | bash -s stable --ruby
+</code></pre>
+
+<p>执行完毕后输出的信息包含一下内容：<br>
+ # [username],<br>
+ #<br>
+ #   Thank you for using RVM!<br>
+ #   I sincerely hope that RVM helps to make your life easier and<br>
+ #   more enjoyable!!!<br>
+ #<br>
+ # ~Wayne</p>
+
+<h2>try Ruby 1.9.3</h2>
+
+<pre><code>sudo apt-get install ruby-rvm
+rvm install 1.9.3
+</code></pre>
+
+<p>在执行完上个命令的时候我没看仔细就开始了这个步骤，然后就有了如下的错误信息，其实上个步骤也有错误信息，选择性忽视掉了红字。</p>
+
+<pre><code>ERROR: The requested url does not exist: 'ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-.tar.bz2'
+ERROR: Error running 'bunzip2 &lt; '/usr/share/ruby-rvm/archives/ruby-1.9.3-.tar.bz2' | tar xf - -C /usr/share/ruby-rvm/tmp/rvm_src_8445', please read /usr/share/ruby-rvm/log/ruby-1.9.3/extract.log
+ERROR: There has been an error while trying to extract the source.  
+Halting the installation.
+ERROR: There has been an error fetching the ruby interpreter. Halting the installation.
+</code></pre>
+
+<p>回去看才发现有两段错误信息</p>
+
+<p>part 1:</p>
+
+<pre><code>* WARNING: You're using ~/.profile, make sure you load it,
+add the following line to ~/.bash_profile if it exists
+otherwise add it to ~/.bash_login:
+
+  source ~/.profile
+</code></pre>
+
+<p>part 2:</p>
+
+<pre><code>Missing required packages: git-core.
+RVM autolibs is now configured with mode '2' =&gt; 'check and stop if missing',
+please run `rvm autolibs enable` to let RVM do its job or run and read `rvm autolibs [help]`
+or visit https://rvm.io/rvm/autolibs for more information.
+</code></pre>
+
+<h2>back to RVM</h2>
+
+<p>回去重装RVM，执行</p>
+
+<pre><code>curl -L https://get.rvm.io | bash -s stable --ruby
+</code></pre>
+
+<p>这次提示有些不同，他检测到RVM有错误：</p>
+
+<pre><code>It looks you are one of the happy Ubuntu users,
+RVM packaged by Ubuntu is old and broken,
+follow this link for details how to fix:
+  http://stackoverflow.com/a/9056395/497756
+</code></pre>
+
+<p>不过他提供了一个网址，来自著名的<a href="http://stackoverflow.com/a/9056395/497756">stackoverflow</a>，以下内容选自<a href="http://stackoverflow.com/a/9056395/497756">stackoverflow</a>：</p>
+
+<p>You have broken version of RVM. Ubuntu does something to RVM that produces lots of errors, the only safe way of fixing for now is to:</p>
+
+<pre><code>sudo apt-get --purge remove ruby-rvm
+sudo rm -rf /usr/share/ruby-rvm /etc/rvmrc /etc/profile.d/rvm.sh
+</code></pre>
+
+<p>open new terminal and validate environment is clean from old RVM settings (should be no output):
+(这里说要启动新的终端，应该不会输出什么)</p>
+
+<pre><code>env | grep rvm
+</code></pre>
+
+<p>if there was output, try to open new terminal, if it does not help then restart your computer.(如果有输出要尝试启动新终端，不然就重启电脑。PS：我没启动新终端没输出，一开理解错误，我启动新终端，有输出，然后我以为正常了，然后开始了下面的操作。。。晕)</p>
+
+<h2>RVM again</h2>
+
+<p>install RVM：//期间输入三次左右的密码，下面的命令斜杠不是我加进去的，最好不要漏了</p>
+
+<pre><code>\curl -L https://get.rvm.io | bash -s stable --ruby --autolibs=enable --auto-dotfiles
+</code></pre>
+
+<p>好像下面是输出：</p>
+
+<pre><code>  If you find you need some hand-holding, take a look at [Installing Ruby on Ubuntu 12.04](http://blog.coolaj86.com/articles/installing-ruby-on-ubuntu-12-04.html), which gives a bit more explanation.
+ * To start using RVM you need to run `source /home/liaobz/.rvm/scripts/rvm`
+   in all your open shell windows, in rare cases you need to reopen all shell windows.
+</code></pre>
+
+<h2>Ruby 1.9.3</h2>
+
+<p>运行</p>
+
+<pre><code>rvm install 1.9.3
+</code></pre>
+
+<p>输一次密码之后再下载，我擦嘞，9789K的东西提示我要40多分钟，我想先去看一集《权利的游戏》了……操蛋的ubuntu12.04自带的电影播放机，ass和srt都加载不了，好在有深度影音……那可是人家葬礼啊，让个小子在那里卖萌(那小子是死者儿子…)……兰尼斯特家的侏儒也来卖萌……终于装完了……深度影音暂停后最小话会自动播放，播放放最小话才是暂停……</p>
+
+<p>言归正传，先改个东西，选择终端->菜单->编辑(Edit)->配置文件首选项(Profile Preferences)->标题和命令(Title and Command)->命令(Command)->勾上以登录Shell方式运行命令(Run command as a login shell)</p>
+
+<p>快捷一点就是先选中终端窗口，Alt+E,O,然后剩下的看上面</p>
+
+<p>接着执行(貌似还得重启终端)</p>
+
+<pre><code>rvm use 1.9.3
+</code></pre>
+
+<p>如果你偷懒没做上面的改动，会有下面的提示</p>
+
+<pre><code>RVM is not a function, selecting rubies with 'rvm use ...' will not work.
+
+You need to change your terminal emulator preferences to allow login shell.
+Sometimes it is required to use `/bin/bash --login` as the command.
+Please visit https://rvm.io/integration/gnome-terminal/ for a example.
+</code></pre>
+
+<p>意思就是你还是要改</p>
+
+<pre><code>rvm rubygems latest
+</code></pre>
+
+<p>然后</p>
+
+<pre><code>usrname@pcname:~$ ruby --version
+ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-linux]
+</code></pre>
+
+<p>Ruby就算好了，可以<a href="http://octopress.org/docs/setup">← Return to setup</a>了。</p>
+
+<h1>Setup Octopress</h1>
+
+<pre><code>git clone git://github.com/imathis/octopress.git octopress
+cd octopress    # If you use RVM, You'll be asked if you trust the .rvmrc file (say yes).
+</code></pre>
+
+<p>提示了一大段，选yes，接着下两个命令都不会出上面大问题</p>
+
+<pre><code>gem install bundler
+bundle install
+</code></pre>
+
+<p>如果你一边在看官网教程，你会发现上面有个rbenv rehash，那句不要执行，因为我用的RVM方式(# If you use rbenv, rehash to be able to run the bundle command)，我貌似断了下网，Ctrl+C了一下，重新执行，输出以下内容：</p>
+
+<pre><code>Your bundle is complete!
+Use `bundle show [gemname]` to see where a bundled gem is installed.
+
+rake install
+</code></pre>
+
+<h4>Octopress Setup Done!<br>Next Steps <a href="http://octopress.org/docs/deploying/">Set up deployment</a><br>这次我选择<a href="http://octopress.org/docs/deploying/github">Deploying to Github Pages »</a>，上次的Heroku太慢了</h4>
+
+<h1>Deploying to Github Pages</h1>
+
+<p>在登陆github前提下访问<a href="">new Github repository</a>，新建一个与用户名同名的repository，记住网页上提供的SSH地址，终端运行</p>
+
+<pre><code>rake setup_github_pages
+</code></pre>
+
+<p>输入刚才的SSH地址，输出提示若干，接着终端运行</p>
+
+<pre><code>rake generate
+rake deploy
+</code></pre>
+
+<h2></h2>
+
+<h2></h2>
+
+<p>此时应该是算完成了的，我自己倒是粗心做了比较多多余的事。官方说改动在十分钟左右生效，我的在提交过了十分钟还是不能访问，估计这个过程会稍微久一点。</p>
+
+<p>PS:昨天后面太晚没去管了，回来发现<a href="http://liaobz.github.io/">liaobz.github.io</a>还是上不去，反倒是<a href="http://liaobz.github.io/liaobz/">liaobz.github.io/liaobz</a>可以上去了。我发誓我是参照With Github User/Organization pages来的，而不是参照的With Github Project pages (gh-pages)，总之我不考究了。</p>
+
+<p>最终还是发现了我失误在什么地方，毕竟gh-pages不能独立域名不幸福啊……我新建的Repository Name是liaobz，这是错误的，正确的应该是liaobz.github.com，嗯 就这么多。</p>
+
+<p>本文特地尽可能多的将错误步骤贴上博客，希望被官方教程误导了的同学可以检索到，从而解决乃至避免错误，本文难免有疏漏/错误的地方，欢迎不吝指出。</p>
+
+<h2></h2>
+
+<h2></h2>
+
+<p>下面是一点点补充，如果你的执行步骤中出现了以下语句</p>
+
+<pre><code>Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+</code></pre>
+
+<p>你最好先按顺序执行这三条命令，设定用户名/密码，然后是修改提交信息吧好像</p>
+
+<pre><code>git config --global user.name "Your Name"
+git config --global user.email you@example.com
+git commit --amend --reset-author
+</code></pre>
+
+<p>执行rake deploy后输出的语句包含下面内容</p>
+
+<pre><code>## Pushing generated _deploy website
+Permission denied (publickey).
+fatal: The remote end hung up unexpectedly
+</code></pre>
+
+<p>应该是忘了配SSH Keys了，自行补上即可。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[关于电池寿命]]></title>
+    <link href="http://blog.liao.bz//blog/2013/01/29/guan-yu-dian-chi-shou-ming/"/>
+    <updated>2013-01-29T22:51:00+08:00</updated>
+    <id>http://blog.liao.bz//blog/2013/01/29/guan-yu-dian-chi-shou-ming</id>
+    <content type="html"><![CDATA[<p>经常发现身边很多人手机快没电了也不充电，当然能够理解他们这样做的目的是希望能够正确的使用电池，从而延长电池寿命，但是这一套其实只是在镉镍电池的时代才管用，现在的锂电池呢？</p>
+
+<p>锂电池其实更适合浅充浅放，没电了就充吧，别漏了电话，还对电池有利。</p>
+
+<!--more-->
+
+
+<h2><a href="http://baike.baidu.com/view/65936.htm">Part 1:电池记忆效应</a></h2>
+
+<h3>定义</h3>
+
+<p>如果电池属镍镉电池，长期不彻底充电、放电，易在电池内留下痕迹，降低电池容量，这种现象称为电池记忆效应。意思是说，电池好像记忆用户日常的充、放电幅度和模式，日久就很难改变这种模式，不能再做大幅度充电或放电。 锂离子电池不存在这种效应。</p>
+
+<h3>导致的原因</h3>
+
+<p>由于传统工艺中负极为烧结式，镉晶粒较粗，如果镍镉电池在它们被完全放电之前就重新充电，镉晶粒容易聚集成块而使电池放电时形成次级放电平台。</p>
+
+<p>电池会储存这一放电平台并在下次循环中将其作为放电的终点，尽管电池本身的容量可以使电池放电到更低的平台上。在以后的放电过程中电池将只记得这一低容量。同样在每一次使用中，任何一次不完全的放电都将加深这一效应，使电池的容量变得更低。</p>
+
+<h3>怎样消除效应</h3>
+
+<p>要消除这种效应，有两种方法，一是采用小电流深度放电（如用 0.1C 放至 0V ）一是采用大电流充放电（如 1C ）几次。</p>
+
+<p>在实际应用中,消除记忆效应的方法有严格的规范和一个操作流程.操作不当会适得其反.</p>
+
+<p>对于镍镉电池,正常的维护是定期深放电:平均每使用一个月(或30次循环)进行一次深放电(放电到1.0V/每节,老外称之为 exercise),平常使用是尽量用光电池或用到关机等手段可以缓解记忆效应的形成,但这个不是exercise,因为仪器(如手机)是不会用到 1.0V/每节才关机的,必须要专门的设备或线路来完成这项工作,幸好许多镍氢电池的充电器都带有这个功能.</p>
+
+<p>对于长期没有进行exercise的镍镉电池,会因为记忆效应的累计,无法用exercise进行容量回复,这时则需要更深的放电(老外称recondition),这是一种用很小的电流长时间对电池放电到0.4V每节的一个过程,需要专业的设备进行.</p>
+
+<p>对于镍氢电池,exercise进行的频率大概每三个月一次即可有效的缓解记忆效应.因为镍氢电池的循环寿命远远低于镍镉电池,几乎用不到recondition这个方法.</p>
+
+<p><strong>建议1:每次充电以前对电池放电是没有必要,而且是有害的,因为电池的使用寿命无谓的减短了.</strong><br/>
+<strong>建议2:用一个电阻接电池的正负极进行放电是不可取的,电流没法控制,容易过放到0V,甚至导致串联电池组的电池极性反转.</strong></p>
+
+<h2><a href="http://baike.baidu.com/view/17063.htm#19">Part 2:浅放浅充是王道</a></h2>
+
+<p>我知道百度知道能搜处很多与这个观点相悖的答案，可以看看<a href="http://baike.baidu.com/view/17063.htm#19">锂电池_百度百科</a>。</p>
+
+<p>虽然大家都知道锂电池几乎没有记忆效应，但是都知道它有一个使用寿命，而且一般把这个寿命认为是“充电次数”。所以，为了尽量延长锂电池的寿命，很多朋友便喜欢满充满放，甚至不惜手动把电量全部耗尽，其实这仍旧不太科学。因为严格来说，锂电池的寿命与“充电周期”的完成次数有关，锂电池的寿命一般为300～500个充电周期，而“充电周期”却并不完全等同于“充电次数”。</p>
+
+<p>什么是充电周期呢？就拿1块600毫安的锂电池来说，一个累计充电至600毫安的完整过程，才是一个充电周期。比如这块电池现在是600毫安的满电状态，在经过使用之后，电量完全耗尽，好，现在开始充电。第一次由0毫安充电到400毫安，然后用掉N毫安；第二次又充150毫安，再用掉N毫安；第三次再充100毫安，再用掉N毫安。虽然我们一共充了3次电，但只有第三次充电到一半，即再次充电至50毫安时，这三次充电的总量才达到了600毫安。也就是说，只要到这个时候，这块电池完成了一个充电周期。</p>
+
+<p>当然，每次充电量的大小并不能做到精确的统计，我们在此只是打个比方，来证明一次充满电和多次冲满电的效果是一样的，但是对电池寿命的影响却不一样。很明显，如果我们每次都满充满放的话，那么充电一次，确实就等于完成了一个充电周期。而浅放浅充的话，则要充电数次才能完成一个充电周期。另外，还有一点请大家注意，电池在满电状态下存放并不合理，一来会对电池造成很大伤害；二来会造成电量的无谓流失，也就是说，有一部分电量会被白白浪费掉，而且这还以损害电池的充电周期为代价，那又何必呢？</p>
+
+<p>根据大多数的使用经历来看，很少出现“一次完全充电，然后就一次性用尽电量”的情况。因此，还是建议大家浅放浅充，这样既方便使用，也能尽量延长锂电池的寿命。不过，对于第一次投入使用的锂电池来说，还请大家先满充满放3次，以求把电池的蓄电性能激发到最佳，然后再浅充浅放。<br/>
+<a href="http://dc.abang.com/od/basic/a/lidian_shiyong.htm">文章出处</a>，虽然原文讲的是相机的锂电池，但是只要是锂电池都是相通的。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[通过反射隐藏MX2的SmartBar]]></title>
+    <link href="http://blog.liao.bz//blog/2013/01/26/tong-guo-fan-she-yin-cang-mx2de-smartbar/"/>
+    <updated>2013-01-26T05:40:00+08:00</updated>
+    <id>http://blog.liao.bz//blog/2013/01/26/tong-guo-fan-she-yin-cang-mx2de-smartbar</id>
+    <content type="html"><![CDATA[<h2>由来</h2>
+
+<p>SmartBar自打出来便一直引来不少争议，与此同时貌似便是官方与开发者的关于显示与隐藏SmartBar的竞赛，开发者千方百计希望可以隐藏掉SmartBar，而官方则想方设法不让开发者隐藏。</p>
+
+<p>而网上流传的最广的setSystemUiVisibility貌似第一时间就被官方咔掉了，其他能找的资料少之又少，没办法，只能通过反编译学习别人怎么去掉。来个偷师学艺，希望程序员的偷也不算偷。</p>
+
+<!--more-->
+
+
+<h2>经过</h2>
+
+<p>首先从安装包里面提取出dex文件</p>
+
+<p><img src="http://blog.liao.bz//images/2013-01-26-1.png"></p>
+
+<p>使用反编译工具反编译</p>
+
+<p><img src="http://blog.liao.bz//images/2013-01-26-2.png"></p>
+
+<p>随后使用jar浏览器查看反编译出来的文件，再逐步查看代码，肯定是优先查看MainActivity的，既然程序的设置里面是有选择关闭SmartBar的，便优先搜索preference</p>
+
+<p><img src="http://blog.liao.bz//images/2013-01-26-3.png"></p>
+
+<p>再找到com.weibo.net.s这个类搜索 j(boolean)方法</p>
+
+<p><img src="http://blog.liao.bz//images/2013-01-26-4.png"></p>
+
+<p>这样看来便大致可以猜测com.weibo.net.s是个常量类之类的，j(boolean)和w()分别是get/set方法，这样的话，回到MainActivity找到使用了set()方法的地方</p>
+
+<p><img src="http://blog.liao.bz//images/2013-01-26-5.png"></p>
+
+<p>一开始我还傻傻的以为setNavigationMode是我要的Key，跑了一遍才发现break才是我要找的，在这里终于见到了long time no see的goto，我的意思是…相信你们懂的，再来一次，搜索label217</p>
+
+<p><img src="http://blog.liao.bz//images/2013-01-26-6.png"></p>
+
+<p>这便是我要的结果了……不过217是什么？宿舍号码吗…管他嘞</p>
+
+<h2>结果</h2>
+
+<p>将代码拿过来优化之后</p>
+
+<pre><code>    try {
+        Class ActionBarClass = getActionBar().getClass();
+        Class[] parameterTypes = new Class[1];
+        parameterTypes[0] = Boolean.TYPE;
+        Method setTabsShowAtBottom = ActionBarClass.getMethod(
+                "setTabsShowAtBottom", parameterTypes);
+        Object[] parameterValues = new Object[1];
+        parameterValues[0] = Boolean.valueOf(true);
+        setTabsShowAtBottom.invoke(getActionBar(), parameterValues);
+    } catch (NoSuchMethodException e) {
+        e.printStackTrace();
+    } catch (IllegalArgumentException e) {
+        e.printStackTrace();
+    } catch (IllegalAccessException e) {
+        e.printStackTrace();
+    } catch (InvocationTargetException e) {
+        e.printStackTrace();
+    }
+</code></pre>
+
+<p>不过呢，最后的结果还是需要继续调整的，因为右上角的两个ActionBar图标应该不是你想要的吧。</p>
+
+<p><img src="http://blog.liao.bz//images/2013-01-26-7.jpg" width="800" height="300" title="每日一文" ></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress的落成]]></title>
+    <link href="http://blog.liao.bz//blog/2013/01/21/octopressde-luo-cheng/"/>
+    <updated>2013-01-21T22:31:00+08:00</updated>
+    <id>http://blog.liao.bz//blog/2013/01/21/octopressde-luo-cheng</id>
+    <content type="html"><![CDATA[<p>最初看了<a href="http://ghosert.loadtrend.com/">ghosert</a>后开始用octpress搭建传说中的程序员博客，但是弄了四五次仍然失败了。
+一开始参考<a href="http://octopress.org/docs/setup/">octpress</a>，在Deploying的时候选的是Github Pages，终究没能deploy成功。然后今天<a href="https://github.com%E4%B9%9F%E8%B7%9F%E7%9D%80Github">https://github.com%E4%B9%9F%E8%B7%9F%E7%9D%80Github</a> Pages在抢票助手的帮助下被GFW带走了，忽然又兴起尝试搭建Octpress，不过今天尝试在终端下通过goagent想要连接github时始终连不上。命令见下：</p>
+
+<pre><code>git config --global http.proxy http://127.0.0.1:8087
+</code></pre>
+
+<!--more-->
+
+
+<p>在一气之下就选了第二个HeroKu，开始弄了半天还是弄不上去，不甘心的google了一下heroku，发现Fenng<a href="http://dbanotes.net/arch/heroku_architecture.html">对其的评价</a>还是蛮高的，在我编辑博客的时候网站已经进不去了。
+得益于前几次的折腾，什么git/ruby/ssh key/rbenv都弄好了，然后最后一次手动去zip了octpress解压，然后进octpress目录</p>
+
+<pre><code>git init
+gem install heroku
+heroku create
+git config branch.master.remote heroku
+</code></pre>
+
+<p>然后删去了.gitignore文件public那项，接着在终端</p>
+
+<pre><code>rake generate
+git add .
+git commit -m 'site updated'
+git push heroku master
+</code></pre>
+
+<p>然后，然后就可以了~</p>
 ]]></content>
   </entry>
   

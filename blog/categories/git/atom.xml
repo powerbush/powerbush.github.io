@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Git | liao.bz]]></title>
-  <link href="http://blog.liao.bz/blog/categories/git/atom.xml" rel="self"/>
-  <link href="http://blog.liao.bz/"/>
-  <updated>2014-12-16T14:32:32+08:00</updated>
-  <id>http://blog.liao.bz/</id>
+  <link href="http://blog.liao.bz//blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://blog.liao.bz//"/>
+  <updated>2014-12-16T15:22:14+08:00</updated>
+  <id>http://blog.liao.bz//</id>
   <author>
     <name><![CDATA[liaobz]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[常用命令2]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/19/git-common-commands/"/>
+    <link href="http://blog.liao.bz//blog/2013/10/19/git-common-commands/"/>
     <updated>2013-10-19T17:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/19/git-common-commands</id>
+    <id>http://blog.liao.bz//blog/2013/10/19/git-common-commands</id>
     <content type="html"><![CDATA[<h2>1、查看分支</h2>
 
 <pre><code>repo branch 分支名前有个星号且显示为绿色 表示现在所在分支
@@ -112,9 +112,9 @@ git clean -fd  删除上一步命令显示的文件
   
   <entry>
     <title type="html"><![CDATA[常用命令1]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/19/common-commands/"/>
+    <link href="http://blog.liao.bz//blog/2013/10/19/common-commands/"/>
     <updated>2013-10-19T16:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/19/common-commands</id>
+    <id>http://blog.liao.bz//blog/2013/10/19/common-commands</id>
     <content type="html"><![CDATA[<h2>1、同步代码</h2>
 
 <pre><code>repo start mtk --all                                          // 建立mtk分支
@@ -213,9 +213,9 @@ project alps/vendor/mediatek/md706/             branch huama
   
   <entry>
     <title type="html"><![CDATA[Git仓库的建立以及repo的管理]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/19/build-repo-server/"/>
+    <link href="http://blog.liao.bz//blog/2013/10/19/build-repo-server/"/>
     <updated>2013-10-19T15:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/19/build-repo-server</id>
+    <id>http://blog.liao.bz//blog/2013/10/19/build-repo-server</id>
     <content type="html"><![CDATA[<h2>1. repo 的安装</h2>
 
 <p>一般服务器上都安装了git，所以只需安装repo即可<br/>
@@ -330,25 +330,17 @@ project alps/vendor/mediatek/md706/             branch huama
 
 <p>在manifest目录下新建default.xml文件，此文件是repo管理的所有git仓库(project)<br/>
 内容如下:
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=<span class="ni">&amp;ldquo;</span>1.0<span class="ni">&amp;rdquo;</span> encoding=<span class="ni">&amp;ldquo;</span>UTF-8<span class="ni">&amp;rdquo;</span>?&gt;
-</span><span class='line'><span class="nt">&lt;manifest&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;remote</span>  <span class="na">name=</span><span class="s">&quot;alps&quot;</span>
-</span><span class='line'>           <span class="na">fetch=</span><span class="s">&quot;DIR&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;default</span> <span class="na">revision=</span><span class="s">&quot;master&quot;</span>
-</span><span class='line'>           <span class="na">remote=</span><span class="s">&quot;alps&quot;</span>
-</span><span class='line'>           <span class="na">sync-j=</span><span class="s">&quot;4&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;project</span> <span class="na">path=</span><span class="s">&quot;alps/ndk&quot;</span> <span class="na">name=</span><span class="s">&quot;alps/ndk&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'><span class="nt">&lt;/manifest&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+{% codeblock lang:xml %}
+&lt;?xml version=&ldquo;1.0&rdquo; encoding=&ldquo;UTF-8&rdquo;?>
+<manifest>
+    <remote  name="alps"
+           fetch="DIR" />
+    <default revision="master"
+           remote="alps"
+           sync-j="4" />
+    <project path="alps/ndk" name="alps/ndk" />
+</manifest>
+{% endcodeblock %}</p>
 
 <h4>注：</h4>
 
@@ -378,37 +370,29 @@ git push master --all
 <h2>5. 关于copyfile的使用</h2>
 
 <p>前面有提到过git仓库创建的原则，比如alps/mediatek/platform目录下，需要对common和mt6589，2个目录各创建一个git仓库，但是在alps/mediatek/platform下存在Android.mk和rules.mk 文件，如果只在common和mt6589这2个目录中建立仓库则会导致无法下载这2个mk文件，所以推荐的方法是在alps/mediatek/platform下面创建目录mtk，并将Android.mk和rules.mk这2个文件复制过去，下载的时候就可以通过copyfile去实现了
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;project</span> <span class="na">path=</span><span class="s">&quot;alps/mediatek/platform/mtk&quot;</span> <span class="na">name=</span><span class="s">&quot;alps/mediatek/platform/mtk/&quot;</span> <span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;Android.mk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mediatek/platform/Android.mk&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;rules.mk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mediatek/platform/rules.mk&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'><span class="nt">&lt;/project&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
+{% codeblock lang:xml %}
+<project path="alps/mediatek/platform/mtk" name="alps/mediatek/platform/mtk/" >
+    <copyfile src="Android.mk" dest="alps/mediatek/platform/Android.mk" />
+    <copyfile src="rules.mk" dest="alps/mediatek/platform/rules.mk" />
+</project>
+{% endcodeblock %}
 同理alps下面的几个文件也是一样的情况，可以在build中穿件mtk文件夹
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;project</span> <span class="na">path=</span><span class="s">&quot;alps/build&quot;</span> <span class="na">name=</span><span class="s">&quot;alps/build/&quot;</span> <span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/Makefile&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/Makefile&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/makeMtk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/makeMtk&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/mbldenv.sh&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mbldenv.sh&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/mk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mk&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'><span class="nt">&lt;/project&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+{% codeblock lang:xml %}
+<project path="alps/build" name="alps/build/" >
+    <copyfile src="mtk/Makefile" dest="alps/Makefile" />
+    <copyfile src="mtk/makeMtk" dest="alps/makeMtk" />
+    <copyfile src="mtk/mbldenv.sh" dest="alps/mbldenv.sh" />
+    <copyfile src="mtk/mk" dest="alps/mk" />
+</project>
+{% endcodeblock %}</p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Repo添加project后补全本地分支]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/18/repo-project-add-local-branch-doc/"/>
+    <link href="http://blog.liao.bz//blog/2013/10/18/repo-project-add-local-branch-doc/"/>
     <updated>2013-10-18T15:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/18/repo-project-add-local-branch-doc</id>
+    <id>http://blog.liao.bz//blog/2013/10/18/repo-project-add-local-branch-doc</id>
     <content type="html"><![CDATA[<h2>概述</h2>
 
 <p>在repo的服务器端添加新project时(例如添加了MD900项目),本地完成同步后执行repo branch会碰到下面的情况:
@@ -489,9 +473,9 @@ git push master --all
   
   <entry>
     <title type="html"><![CDATA[往服务器上push代码流程]]></title>
-    <link href="http://blog.liao.bz/blog/2013/09/28/push-doc/"/>
+    <link href="http://blog.liao.bz//blog/2013/09/28/push-doc/"/>
     <updated>2013-09-28T18:04:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/09/28/push-doc</id>
+    <id>http://blog.liao.bz//blog/2013/09/28/push-doc</id>
     <content type="html"><![CDATA[<h2>1.本地合成、测试及提交</h2>
 
 <h3>1).本地合成与测试</h3>

@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://blog.liao.bz/sitemap.xml 
+Sitemap: http://blog.liao.bz//sitemap.xml 

@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>MR82_JB5_1.19_20140125版代码编译脚本讲解 - liao.bz</title>
+  <title>通过反射隐藏MX2的SmartBar - liao.bz</title>
   <meta name="author" content="liaobz">
 
   
-  <meta name="description" content="在8312/8382平台上，因为软件上无法做到对不同版本及容量RAM的兼容，例如DDR2与DDR3，512MB与1024MB。之前的做法都是根据客户的需求，从而手动修改custom_MemoryDevice.h文件来编译相应的固件。
-为了减少无谓的重复累赘的工作，新版代码再次对编译脚本进行更新， &hellip;">
+  <meta name="description" content="由来 SmartBar自打出来便一直引来不少争议，与此同时貌似便是官方与开发者的关于显示与隐藏SmartBar的竞赛，开发者千方百计希望可以隐藏掉SmartBar，而官方则想方设法不让开发者隐藏。 而网上流传的最广的setSystemUiVisibility貌似第一时间就被官方咔掉了， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.liao.bz//blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie">
+  <link rel="canonical" href="http://blog.liao.bz//blog/2013/01/26/tong-guo-fan-she-yin-cang-mx2de-smartbar">
   <link href="/blog/favicon.png" rel="icon">
   <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/blog/atom.xml" rel="alternate" title="liao.bz" type="application/atom+xml">
@@ -69,7 +68,7 @@
   
   <header>
     
-      <h1 class="entry-title">MR82_JB5_1.19_20140125版代码编译脚本讲解</h1>
+      <h1 class="entry-title">通过反射隐藏MX2的SmartBar</h1>
     
     
       <p class="meta">
@@ -78,30 +77,77 @@
 
 
 
-<time class='entry-date' datetime='2014-02-07T11:24:00+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>11:24 am</span></time>
+<time class='entry-date' datetime='2013-01-26T05:40:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>5:40 am</span></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>在8312/8382平台上，因为软件上无法做到对不同版本及容量RAM的兼容，例如DDR2与DDR3，512MB与1024MB。之前的做法都是根据客户的需求，从而手动修改custom_MemoryDevice.h文件来编译相应的固件。<br/>
-为了减少无谓的重复累赘的工作，新版代码再次对编译脚本进行更新，具体更新代码可自行查阅mediatek/config/common目录下的编译脚本。下面是对更新点的讲解。<br/>
-本次更新的核心是对RAM版本和容量各种组合的重命名。理解了命名方式，便可以熟练的掌握和使用新的编译脚本。<br/>
-如下图，新的命名可分为三部分：第一部分是RAM版本，第二部分是片选数量，第三部分是RAM容量。目前5种版本RAM具体含义可参照下图。</p>
+<div class="entry-content"><h2>由来</h2>
 
-<!-- more -->
+<p>SmartBar自打出来便一直引来不少争议，与此同时貌似便是官方与开发者的关于显示与隐藏SmartBar的竞赛，开发者千方百计希望可以隐藏掉SmartBar，而官方则想方设法不让开发者隐藏。</p>
+
+<p>而网上流传的最广的setSystemUiVisibility貌似第一时间就被官方咔掉了，其他能找的资料少之又少，没办法，只能通过反编译学习别人怎么去掉。来个偷师学艺，希望程序员的偷也不算偷。</p>
+
+<!--more-->
 
 
-<p><img class="center" src="http://192.168.2.96/blogimgs/2014-02-07-1-1.png" width="644" height="421" title="5种版本的RAM" >
-而新的编译脚本则须加上RAM代号：如想编译DDR3.1024MB的MR6012H1C1W1软件，编译脚本为
-    ./pack_user_image.sh R321 mr601 MR6012H1C1W1 new
-同时为了方便编译中性软件，在编译的时候也可以用R代替RAM型号，编译脚本则会自动编译多个preloader并打包(仅pack脚本，make脚本不支持)。如：
-    ./pack_user_image.sh R mr601 MR6012H1C1W1 new</p>
+<h2>经过</h2>
 
-<p>PS：<br/>
-1.DDR2频率默认为533MHz，DDR3频率默认为916MHz。<br/>
-2.目前R212的仅有spetex的PL017。</p>
+<p>首先从安装包里面提取出dex文件</p>
+
+<p><img src="/blog/images/2013-01-26-1.png"></p>
+
+<p>使用反编译工具反编译</p>
+
+<p><img src="/blog/images/2013-01-26-2.png"></p>
+
+<p>随后使用jar浏览器查看反编译出来的文件，再逐步查看代码，肯定是优先查看MainActivity的，既然程序的设置里面是有选择关闭SmartBar的，便优先搜索preference</p>
+
+<p><img src="/blog/images/2013-01-26-3.png"></p>
+
+<p>再找到com.weibo.net.s这个类搜索 j(boolean)方法</p>
+
+<p><img src="/blog/images/2013-01-26-4.png"></p>
+
+<p>这样看来便大致可以猜测com.weibo.net.s是个常量类之类的，j(boolean)和w()分别是get/set方法，这样的话，回到MainActivity找到使用了set()方法的地方</p>
+
+<p><img src="/blog/images/2013-01-26-5.png"></p>
+
+<p>一开始我还傻傻的以为setNavigationMode是我要的Key，跑了一遍才发现break才是我要找的，在这里终于见到了long time no see的goto，我的意思是…相信你们懂的，再来一次，搜索label217</p>
+
+<p><img src="/blog/images/2013-01-26-6.png"></p>
+
+<p>这便是我要的结果了……不过217是什么？宿舍号码吗…管他嘞</p>
+
+<h2>结果</h2>
+
+<p>将代码拿过来优化之后</p>
+
+<pre><code>    try {
+        Class ActionBarClass = getActionBar().getClass();
+        Class[] parameterTypes = new Class[1];
+        parameterTypes[0] = Boolean.TYPE;
+        Method setTabsShowAtBottom = ActionBarClass.getMethod(
+                "setTabsShowAtBottom", parameterTypes);
+        Object[] parameterValues = new Object[1];
+        parameterValues[0] = Boolean.valueOf(true);
+        setTabsShowAtBottom.invoke(getActionBar(), parameterValues);
+    } catch (NoSuchMethodException e) {
+        e.printStackTrace();
+    } catch (IllegalArgumentException e) {
+        e.printStackTrace();
+    } catch (IllegalAccessException e) {
+        e.printStackTrace();
+    } catch (InvocationTargetException e) {
+        e.printStackTrace();
+    }
+</code></pre>
+
+<p>不过呢，最后的结果还是需要继续调整的，因为右上角的两个ActionBar图标应该不是你想要的吧。</p>
+
+<p><img src="/blog/images/2013-01-26-7.jpg" width="800" height="300" title="每日一文" ></p>
 </div>
 
 
@@ -117,15 +163,21 @@
 
 
 
-<time class='entry-date' datetime='2014-02-07T11:24:00+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>11:24 am</span></time>
+<time class='entry-date' datetime='2013-01-26T05:40:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>5:40 am</span></time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/blog/categories/android/'>android</a>, <a class='category' href='/blog/blog/categories/smartbar/'>smartbar</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.liao.bz//blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie/" data-via="" data-counturl="http://blog.liao.bz//blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.liao.bz//blog/2013/01/26/tong-guo-fan-she-yin-cang-mx2de-smartbar/" data-via="" data-counturl="http://blog.liao.bz//blog/2013/01/26/tong-guo-fan-she-yin-cang-mx2de-smartbar/" >Tweet</a>
   
   
   
@@ -134,8 +186,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/blog/2014/01/03/cameracha-zhi/" title="Previous Post: camera插值">&laquo; camera插值</a>
+        <a class="basic-alignment left" href="/blog/blog/2013/01/21/octopressde-luo-cheng/" title="Previous Post: Octopress的落成">&laquo; Octopress的落成</a>
       
+      
+        <a class="basic-alignment right" href="/blog/blog/2013/01/29/guan-yu-dian-chi-shou-ming/" title="Next Post: 关于电池寿命">关于电池寿命 &raquo;</a>
       
     </p>
   </footer>
