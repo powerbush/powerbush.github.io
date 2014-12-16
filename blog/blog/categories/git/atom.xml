@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | liao.bz]]></title>
   <link href="http://blog.liao.bz//blog/categories/git/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz//"/>
-  <updated>2014-12-16T16:48:00+08:00</updated>
+  <updated>2014-12-16T16:52:04+08:00</updated>
   <id>http://blog.liao.bz//</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -364,16 +364,18 @@ fetch后面的双引号填写代码存放的路径，remote name 和default remo
 远程的分支，这里填写的是默认分支master，sync-j表示的开启的线程数。  
 project内容的path变量表示本地存放的目录，name表示服务器相关git的存放路径，即DIR/alps/ndk/
 ###3.2 git add default.xml并提交
-</code></pre>
-
-<pre><code>cd mq89_std/manifest
-git add default.xml
-git commit -am "prompt"
-git remote add master elink@192.168.2.98:~/mq89/manifest.git
-git push master --all
-</code></pre>
-
-<pre><code>####注：每次的更改都需要提交default.xml文件
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>    <span class="nb">cd </span>mq89_std/manifest
+</span><span class='line'>    git add default.xml
+</span><span class='line'>    git commit -am <span class="s2">&quot;prompt&quot;</span>
+</span><span class='line'>    git remote add master elink@192.168.2.98:~/mq89/manifest.git
+</span><span class='line'>    git push master --all
+</span></code></pre></td></tr></table></div></figure>
+####注：每次的更改都需要提交default.xml文件
 ##4. 客户端的下载
 比如下载到repo-client文件夹中
 </code></pre>

@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://blog.liao.bz/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz/"/>
-  <updated>2014-12-16T16:48:01+08:00</updated>
+  <updated>2014-12-16T16:52:00+08:00</updated>
   <id>http://blog.liao.bz/</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -950,11 +950,12 @@ project内容的path变量表示本地存放的目录，name表示服务器相�
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd mq89_std/manifest
-</span><span class='line'>git add default.xml
-</span><span class='line'>git commit -am "prompt"
-</span><span class='line'>git remote add master elink@192.168.2.98:~/mq89/manifest.git
-</span><span class='line'>git push master --all</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>    <span class="nb">cd </span>mq89_std/manifest
+</span><span class='line'>    git add default.xml
+</span><span class='line'>    git commit -am <span class="s2">&quot;prompt&quot;</span>
+</span><span class='line'>    git remote add master elink@192.168.2.98:~/mq89/manifest.git
+</span><span class='line'>    git push master --all
+</span></code></pre></td></tr></table></div></figure>
 
 
 <h4>注：每次的更改都需要提交default.xml文件</h4>
