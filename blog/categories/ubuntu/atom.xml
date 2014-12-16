@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ubuntu | My Octopress Blog]]></title>
+  <link href="http://blog.liao.bz/blog/categories/ubuntu/atom.xml" rel="self"/>
+  <link href="http://blog.liao.bz/"/>
+  <updated>2014-12-16T16:06:13+08:00</updated>
+  <id>http://blog.liao.bz/</id>
+  <author>
+    <name><![CDATA[liaobz]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[大硬盘容量安装ubuntu]]></title>
+    <link href="http://blog.liao.bz/blog/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu/"/>
+    <updated>2013-04-18T23:35:00+08:00</updated>
+    <id>http://blog.liao.bz/blog/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu</id>
+    <content type="html"><![CDATA[<p>前几天公司购置了新服务器，前一天是装好了ubuntu 11.10，其实我是很奇怪为什么不装10.04或者12.04的，但这不是重点，开始叫我给服务器配置环境，作为用来编译android的服务器，结果第二天过去，说不能编译就把系统给重装了，改用10.04，但是装完进不去系统。停在一个</p>
+
+<pre><code>grub rescue&gt;
+</code></pre>
+
+<p>的界面。当然还有其他信息，不过记得不是很清楚了。</p>
+
+<!--more-->
+
+
+<p>当然只能求助<a href="http://wwww.google.com/ncr">股勾</a>大神了，大部分结果都引向这样一个答案：</p>
+
+<pre><code>1.先使用ls命令，找到Ubuntu的安装在哪个分区：
+    grub rescue&gt;ls
+会罗列所有的磁盘分区信息，比方说：
+    (hd0,1),(hd0,5),(hd0,3),(hd0,2)
+2.然后依次调用如下命令： X表示各个分区号码
+    grub rescue&gt;ls (hd0,X)/boot/grub
+如果都找不到的话，需要查一下是否因为Linux版本差异，造成grub的路径不对，例如直接ls(hd0,X)/grub等等。
+3.假设找到（hd0,5）时，显示了文件夹中的文件，则表示Linux安装在这个分区。
+4.调用如下命令：
+    grub rescue&gt;set root=(hd0,5)
+    grub rescue&gt;set prefix=(hd0,5)/boot/grub
+    grub rescue&gt;insmod /boot/grub/normal.mod
+5.然后调用如下命令，就可以显示出丢失的grub菜单了。
+    grub rescue&gt;normal
+6.不过不要高兴，如果这时重启，问题依旧存在，我们需要进入Linux中，对grub进行修复。
+进入Linux之后，在命令行执行：
+    sudo update-grub
+    sudo grub-install /dev/sda
+（sda是你的硬盘号码，千万不要指定分区号码，例如sda1，sda5等都不对）
+7.重启测试是否已经恢复了grub的启动菜单
+</code></pre>
+
+<p>但是在步骤2我一直没遇到我所期待的结果，到达不了步骤3，得到结果要么是unknown filesystem,就是什么out of disk，疑惑了许久，换了好几个版本都是类似的错误。</p>
+
+<p>就这样整整大半天，后面我想，要不分下区吧，之前都是把整个硬盘扔给linux，让他自己去分。分区的时候又去找股勾大神，3T硬盘太大不知道怎么下手啊，然后猛然想到MBR和GPT，会不会装不上系统就是硬盘太大的原因，MBR最大只支持2T，就给/home分区留了2000000M，给/boot留了100M，给swap留了10000M，剩下近1000000M扔给了/，然后重装，问题消失。</p>
+
+<h2>事后诸葛</h2>
+
+<p>之前整个硬盘直接扔给ubuntu，他会分三个区：启动分区、/、swap，有两个盘在我操作第二步的时候是unknown filesystem，但总有一个是out of disk，现在来看就是因为硬盘太大的缘故，目前网上流行的文章大多数重复而陈旧，老是把人往歧途上带。</p>
+]]></content>
+  </entry>
+  
+</feed>
