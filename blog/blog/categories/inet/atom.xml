@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Inet | liao.bz]]></title>
   <link href="http://blog.liao.bz//blog/categories/inet/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz//"/>
-  <updated>2014-12-16T16:52:18+08:00</updated>
+  <updated>2014-12-16T16:56:41+08:00</updated>
   <id>http://blog.liao.bz//</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -636,6 +636,8 @@ width：height ≈ 5:3</p>
 <span class='line-number'>335</span>
 <span class='line-number'>336</span>
 <span class='line-number'>337</span>
+<span class='line-number'>338</span>
+<span class='line-number'>339</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>public static final String[] PICTURE_SIZE_16_9 = new String[] {
 </span><span class='line'>    &ldquo;640x352&rdquo;,
 </span><span class='line'>    &ldquo;1280x720&rdquo;,
@@ -949,22 +951,39 @@ width：height ≈ 5:3</p>
 </span><span class='line'>&lt;p&gt;创建本地的git仓库，和2.1.4的路径是相互关联&lt;br/&gt;
 </span><span class='line'>比如在服务器端有alps/kernel.git仓库&lt;br/&gt;
 </span><span class='line'>则在本地需有alps/kernel/.git仓库,即初始化git仓库是在kernel目录下&lt;br/&gt;
-</span><span class='line'>&lt;code&gt;
-</span><span class='line'>cd alps/kernel
-</span><span class='line'>git init-db
-</span><span class='line'>git add .    
-</span><span class='line'>git commit -am "prompt"                  // 双引号内为修改提交提示，比如可以将prompt改成ph init git repository
-</span><span class='line'>git remote add master elink@192.168.2.98:~/mq89/alps/kernel.git  // 此句非常关键，把远程仓库和本地仓库联系起来
-</span><span class='line'>git push master --all
-</span><span class='line'>&lt;/code&gt;
+</span><span class='line'><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;cd alps/kernel
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git init-db
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git add .
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;// 双引号内为修改提交提示，比如可以将prompt改成ph init git repository
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git commit -am <span class="p">&amp;</span>ldquo<span class="p">;</span>prompt<span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;// 此句非常关键，把远程仓库和本地仓库联系起来
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git remote add master elink@192.168.2.98:~/mq89/alps/kernel.git<span class="p">&amp;</span>lt<span class="p">;</span>br/<span class="p">&amp;</span>gt<span class="p">;</span>
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git push master <span class="p">&amp;</span>ndash<span class="p">;</span>all
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;
+</span></code></pre></td></tr></table></div></figure>
 </span><span class='line'>如果是远程仓库abi/cpp.git
-</span><span class='line'>&lt;code&gt;
-</span><span class='line'>cd alps/abi/cpp
-</span><span class='line'>git add .    
-</span><span class='line'>git commit -am "prompt"         
-</span><span class='line'>git remote add master elink@192.168.2.98:~/mq89/alps/abi/cpp.git
-</span><span class='line'>git push master --all
-</span><span class='line'>&lt;/code&gt;&lt;/p&gt;
+</span><span class='line'><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;cd alps/abi/cpp
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git add .
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git commit -am <span class="p">&amp;</span>ldquo<span class="p">;</span>prompt<span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git remote add master elink@192.168.2.98:~/mq89/alps/abi/cpp.git
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git push master <span class="p">&amp;</span>ndash<span class="p">;</span>all
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;
+</span></code></pre></td></tr></table></div></figure>&lt;/p&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;h4&gt;2.2.2&lt;/h4&gt;
 </span><span class='line'>
@@ -972,7 +991,7 @@ width：height ≈ 5:3</p>
 </span><span class='line'>&lt;code&gt;
 </span><span class='line'>git clone elink@192.168.2.98:~/mq89/manifest.git
 </span><span class='line'>&lt;/code&gt;
-</span><span class='line'> 此时</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'> 此时</span></code></pre></td></tr></table></div></figure></notextile></div>
     ls mq89_std
     alps manifest</p>
 
@@ -1014,11 +1033,11 @@ project内容的path变量表示本地存放的目录，name表示服务器相�
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>    <span class="nb">cd </span>mq89_std/manifest
-</span><span class='line'>    git add default.xml
-</span><span class='line'>    git commit -am <span class="s2">&quot;prompt&quot;</span>
-</span><span class='line'>    git remote add master elink@192.168.2.98:~/mq89/manifest.git
-</span><span class='line'>    git push master --all
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>mq89_std/manifest
+</span><span class='line'>git add default.xml
+</span><span class='line'>git commit -am <span class="s2">&quot;prompt&quot;</span>
+</span><span class='line'>git remote add master elink@192.168.2.98:~/mq89/manifest.git
+</span><span class='line'>git push master --all
 </span></code></pre></td></tr></table></div></figure>
 ####注：每次的更改都需要提交default.xml文件
 ##4. 客户端的下载

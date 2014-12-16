@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | liao.bz]]></title>
   <link href="http://blog.liao.bz//blog/categories/git/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz//"/>
-  <updated>2014-12-16T16:52:18+08:00</updated>
+  <updated>2014-12-16T16:56:41+08:00</updated>
   <id>http://blog.liao.bz//</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -303,22 +303,35 @@ git clean -fd  删除上一步命令显示的文件
 <p>创建本地的git仓库，和2.1.4的路径是相互关联<br/>
 比如在服务器端有alps/kernel.git仓库<br/>
 则在本地需有alps/kernel/.git仓库,即初始化git仓库是在kernel目录下<br/>
-<code>
-    cd alps/kernel
-    git init-db
-    git add .    
-    git commit -am "prompt"                  // 双引号内为修改提交提示，比如可以将prompt改成ph init git repository
-    git remote add master elink@192.168.2.98:~/mq89/alps/kernel.git  // 此句非常关键，把远程仓库和本地仓库联系起来
-    git push master --all
-</code>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>alps/kernel
+</span><span class='line'>git init-db
+</span><span class='line'>git add .
+</span><span class='line'>// 双引号内为修改提交提示，比如可以将prompt改成ph init git repository
+</span><span class='line'>git commit -am <span class="p">&amp;</span>ldquo<span class="p">;</span>prompt<span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span><span class='line'>// 此句非常关键，把远程仓库和本地仓库联系起来
+</span><span class='line'>git remote add master elink@192.168.2.98:~/mq89/alps/kernel.git&lt;br/&gt;
+</span><span class='line'>git push master <span class="p">&amp;</span>ndash<span class="p">;</span>all
+</span></code></pre></td></tr></table></div></figure>
 如果是远程仓库abi/cpp.git
-<code>
-    cd alps/abi/cpp
-    git add .    
-    git commit -am "prompt"         
-    git remote add master elink@192.168.2.98:~/mq89/alps/abi/cpp.git
-    git push master --all
-</code></p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>    <span class="nb">cd </span>alps/abi/cpp
+</span><span class='line'>    git add .
+</span><span class='line'>    git commit -am <span class="p">&amp;</span>ldquo<span class="p">;</span>prompt<span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span><span class='line'>    git remote add master elink@192.168.2.98:~/mq89/alps/abi/cpp.git
+</span><span class='line'>    git push master <span class="p">&amp;</span>ndash<span class="p">;</span>all
+</span></code></pre></td></tr></table></div></figure></p>
 
 <h4>2.2.2</h4>
 
@@ -369,11 +382,11 @@ project内容的path变量表示本地存放的目录，name表示服务器相�
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>    <span class="nb">cd </span>mq89_std/manifest
-</span><span class='line'>    git add default.xml
-</span><span class='line'>    git commit -am <span class="s2">&quot;prompt&quot;</span>
-</span><span class='line'>    git remote add master elink@192.168.2.98:~/mq89/manifest.git
-</span><span class='line'>    git push master --all
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>mq89_std/manifest
+</span><span class='line'>git add default.xml
+</span><span class='line'>git commit -am <span class="s2">&quot;prompt&quot;</span>
+</span><span class='line'>git remote add master elink@192.168.2.98:~/mq89/manifest.git
+</span><span class='line'>git push master --all
 </span></code></pre></td></tr></table></div></figure>
 ####注：每次的更改都需要提交default.xml文件
 ##4. 客户端的下载
