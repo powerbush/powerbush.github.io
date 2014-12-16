@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Camera | My Octopress Blog]]></title>
   <link href="http://blog.liao.bz/categories/camera/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz/"/>
-  <updated>2014-12-16T17:11:33+08:00</updated>
+  <updated>2014-12-16T17:12:55+08:00</updated>
   <id>http://blog.liao.bz/</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Camera插值]]></title>
-    <link href="http://blog.liao.bz/2014/01/03/cameracha-zhi/"/>
+    <link href="http://blog.liao.bz/blog/2014/01/03/cameracha-zhi/"/>
     <updated>2014-01-03T09:55:00+08:00</updated>
-    <id>http://blog.liao.bz/2014/01/03/cameracha-zhi</id>
+    <id>http://blog.liao.bz/blog/2014/01/03/cameracha-zhi</id>
     <content type="html"><![CDATA[<h4>Camera插值在底层已经做好，我们只需要在中间层和app层添加一个对应的picture size即可。但是有一些限制条件需要注意：</h4>
 
 <h5>1．插值的倍数只能小于等于16倍，也就是说假如是1M的sensor，那最多只能插值到16M；</h5>

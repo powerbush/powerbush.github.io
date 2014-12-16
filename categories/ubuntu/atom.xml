@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ubuntu | My Octopress Blog]]></title>
   <link href="http://blog.liao.bz/categories/ubuntu/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz/"/>
-  <updated>2014-12-16T17:11:33+08:00</updated>
+  <updated>2014-12-16T17:12:55+08:00</updated>
   <id>http://blog.liao.bz/</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[大硬盘容量安装ubuntu]]></title>
-    <link href="http://blog.liao.bz/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu/"/>
+    <link href="http://blog.liao.bz/blog/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu/"/>
     <updated>2013-04-18T23:35:00+08:00</updated>
-    <id>http://blog.liao.bz/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu</id>
+    <id>http://blog.liao.bz/blog/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu</id>
     <content type="html"><![CDATA[<p>前几天公司购置了新服务器，前一天是装好了ubuntu 11.10，其实我是很奇怪为什么不装10.04或者12.04的，但这不是重点，开始叫我给服务器配置环境，作为用来编译android的服务器，结果第二天过去，说不能编译就把系统给重装了，改用10.04，但是装完进不去系统。停在一个</p>
 
 <pre><code>grub rescue&gt;
