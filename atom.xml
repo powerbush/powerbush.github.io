@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://blog.liao.bz/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz/"/>
-  <updated>2014-12-16T17:10:14+08:00</updated>
+  <updated>2014-12-16T17:11:33+08:00</updated>
   <id>http://blog.liao.bz/</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[MR82_JB5_1.19_20140125版代码编译脚本讲解]]></title>
-    <link href="http://blog.liao.bz/blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie/"/>
+    <link href="http://blog.liao.bz/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie/"/>
     <updated>2014-02-07T11:24:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie</id>
+    <id>http://blog.liao.bz/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie</id>
     <content type="html"><![CDATA[<p>在8312/8382平台上，因为软件上无法做到对不同版本及容量RAM的兼容，例如DDR2与DDR3，512MB与1024MB。之前的做法都是根据客户的需求，从而手动修改custom_MemoryDevice.h文件来编译相应的固件。<br/>
 为了减少无谓的重复累赘的工作，新版代码再次对编译脚本进行更新，具体更新代码可自行查阅mediatek/config/common目录下的编译脚本。下面是对更新点的讲解。<br/>
 本次更新的核心是对RAM版本和容量各种组合的重命名。理解了命名方式，便可以熟练的掌握和使用新的编译脚本。<br/>
@@ -47,9 +47,9 @@
   
   <entry>
     <title type="html"><![CDATA[Camera插值]]></title>
-    <link href="http://blog.liao.bz/blog/2014/01/03/cameracha-zhi/"/>
+    <link href="http://blog.liao.bz/2014/01/03/cameracha-zhi/"/>
     <updated>2014-01-03T09:55:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2014/01/03/cameracha-zhi</id>
+    <id>http://blog.liao.bz/2014/01/03/cameracha-zhi</id>
     <content type="html"><![CDATA[<h4>Camera插值在底层已经做好，我们只需要在中间层和app层添加一个对应的picture size即可。但是有一些限制条件需要注意：</h4>
 
 <h5>1．插值的倍数只能小于等于16倍，也就是说假如是1M的sensor，那最多只能插值到16M；</h5>
@@ -528,9 +528,9 @@ width：height ≈ 5:3</p>
   
   <entry>
     <title type="html"><![CDATA[常用命令2]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/19/git-common-commands/"/>
+    <link href="http://blog.liao.bz/2013/10/19/git-common-commands/"/>
     <updated>2013-10-19T17:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/19/git-common-commands</id>
+    <id>http://blog.liao.bz/2013/10/19/git-common-commands</id>
     <content type="html"><![CDATA[<h2>1、查看分支</h2>
 
 <pre><code>repo branch 分支名前有个星号且显示为绿色 表示现在所在分支
@@ -625,9 +625,9 @@ git clean -fd  删除上一步命令显示的文件
   
   <entry>
     <title type="html"><![CDATA[常用命令1]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/19/common-commands/"/>
+    <link href="http://blog.liao.bz/2013/10/19/common-commands/"/>
     <updated>2013-10-19T16:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/19/common-commands</id>
+    <id>http://blog.liao.bz/2013/10/19/common-commands</id>
     <content type="html"><![CDATA[<h2>1、同步代码</h2>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -749,9 +749,9 @@ git clean -fd  删除上一步命令显示的文件
   
   <entry>
     <title type="html"><![CDATA[Git仓库的建立以及repo的管理]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/19/build-repo-server/"/>
+    <link href="http://blog.liao.bz/2013/10/19/build-repo-server/"/>
     <updated>2013-10-19T15:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/19/build-repo-server</id>
+    <id>http://blog.liao.bz/2013/10/19/build-repo-server</id>
     <content type="html"><![CDATA[<h2>1. repo 的安装</h2>
 
 <p>一般服务器上都安装了git，所以只需安装repo即可<br/>
@@ -1016,9 +1016,9 @@ project内容的path变量表示本地存放的目录，name表示服务器相�
   
   <entry>
     <title type="html"><![CDATA[Repo添加project后补全本地分支]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/18/repo-project-add-local-branch-doc/"/>
+    <link href="http://blog.liao.bz/2013/10/18/repo-project-add-local-branch-doc/"/>
     <updated>2013-10-18T15:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/18/repo-project-add-local-branch-doc</id>
+    <id>http://blog.liao.bz/2013/10/18/repo-project-add-local-branch-doc</id>
     <content type="html"><![CDATA[<h2>概述</h2>
 
 <p>在repo的服务器端添加新project时(例如添加了MD900项目),本地完成同步后执行repo branch会碰到下面的情况:
@@ -1099,9 +1099,9 @@ project内容的path变量表示本地存放的目录，name表示服务器相�
   
   <entry>
     <title type="html"><![CDATA[往服务器上push代码流程]]></title>
-    <link href="http://blog.liao.bz/blog/2013/09/28/push-doc/"/>
+    <link href="http://blog.liao.bz/2013/09/28/push-doc/"/>
     <updated>2013-09-28T18:04:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/09/28/push-doc</id>
+    <id>http://blog.liao.bz/2013/09/28/push-doc</id>
     <content type="html"><![CDATA[<h2>1.本地合成、测试及提交</h2>
 
 <h3>1).本地合成与测试</h3>
@@ -1211,9 +1211,9 @@ lbz@elink:~$ repo forall -c git merge elink_sw
   
   <entry>
     <title type="html"><![CDATA[Elink 代码规范]]></title>
-    <link href="http://blog.liao.bz/blog/2013/09/03/elink-code-server-guide2/"/>
+    <link href="http://blog.liao.bz/2013/09/03/elink-code-server-guide2/"/>
     <updated>2013-09-03T18:05:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/09/03/elink-code-server-guide2</id>
+    <id>http://blog.liao.bz/2013/09/03/elink-code-server-guide2</id>
     <content type="html"><![CDATA[<h2>1：机型命名：</h2>
 
 <p>Elink 软件机型由内部自己定义，不和外部的外壳等等有关联。遵循简单、规律、好记的原则。<br/>
@@ -1329,9 +1329,9 @@ git的tag，跟分支一样简单。<br/>
   
   <entry>
     <title type="html"><![CDATA[Elink-code-server-guide]]></title>
-    <link href="http://blog.liao.bz/blog/2013/09/03/elink-code-server-guide1/"/>
+    <link href="http://blog.liao.bz/2013/09/03/elink-code-server-guide1/"/>
     <updated>2013-09-03T18:04:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/09/03/elink-code-server-guide1</id>
+    <id>http://blog.liao.bz/2013/09/03/elink-code-server-guide1</id>
     <content type="html"><![CDATA[<p>目前已经搭建好代码服务器，后续的项目中使用git作为代码管理。请大家了解。<br/>
 使用说明：<br/>
 我们使用ssh来作为git通讯的协议。所以也使用ssh key 来授权和管理。<br/>
@@ -1426,9 +1426,9 @@ make_project.sh
   
   <entry>
     <title type="html"><![CDATA[大硬盘容量安装ubuntu]]></title>
-    <link href="http://blog.liao.bz/blog/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu/"/>
+    <link href="http://blog.liao.bz/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu/"/>
     <updated>2013-04-18T23:35:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu</id>
+    <id>http://blog.liao.bz/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu</id>
     <content type="html"><![CDATA[<p>前几天公司购置了新服务器，前一天是装好了ubuntu 11.10，其实我是很奇怪为什么不装10.04或者12.04的，但这不是重点，开始叫我给服务器配置环境，作为用来编译android的服务器，结果第二天过去，说不能编译就把系统给重装了，改用10.04，但是装完进不去系统。停在一个</p>
 
 <pre><code>grub rescue&gt;
@@ -1475,9 +1475,9 @@ make_project.sh
   
   <entry>
     <title type="html"><![CDATA[再搭Octpress]]></title>
-    <link href="http://blog.liao.bz/blog/2013/04/17/zai-da-octpress/"/>
+    <link href="http://blog.liao.bz/2013/04/17/zai-da-octpress/"/>
     <updated>2013-04-17T22:25:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/04/17/zai-da-octpress</id>
+    <id>http://blog.liao.bz/2013/04/17/zai-da-octpress</id>
     <content type="html"><![CDATA[<p>本文主要参照<a href="http://octopress.org/docs/setup/">Octopress Setup</a>来搭建博客，数月前我曾写了<a href="http://blog.liao.bz/blog/2013/01/21/octopressde-luo-cheng/">Octopress的落成</a>，当时刚上手，迷迷糊糊就搭建好了博客，就两个时间点的比较而言，自认为对git以及ssh都相对熟练了许多，因此对搭建博客的整个流程都不再是迷迷糊糊过来的，所以最好你是熟悉ssh和git的，git的教程可以访问<a href="http://git-scm.com/book/zh">git-scm.com/book/zh</a>，需要梯子。</p>
 
 <p>下面开始搭建了……</p>
@@ -1721,9 +1721,9 @@ fatal: The remote end hung up unexpectedly
   
   <entry>
     <title type="html"><![CDATA[关于电池寿命]]></title>
-    <link href="http://blog.liao.bz/blog/2013/01/29/guan-yu-dian-chi-shou-ming/"/>
+    <link href="http://blog.liao.bz/2013/01/29/guan-yu-dian-chi-shou-ming/"/>
     <updated>2013-01-29T22:51:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/01/29/guan-yu-dian-chi-shou-ming</id>
+    <id>http://blog.liao.bz/2013/01/29/guan-yu-dian-chi-shou-ming</id>
     <content type="html"><![CDATA[<p>经常发现身边很多人手机快没电了也不充电，当然能够理解他们这样做的目的是希望能够正确的使用电池，从而延长电池寿命，但是这一套其实只是在镉镍电池的时代才管用，现在的锂电池呢？</p>
 
 <p>锂电池其实更适合浅充浅放，没电了就充吧，别漏了电话，还对电池有利。</p>
@@ -1775,9 +1775,9 @@ fatal: The remote end hung up unexpectedly
   
   <entry>
     <title type="html"><![CDATA[通过反射隐藏MX2的SmartBar]]></title>
-    <link href="http://blog.liao.bz/blog/2013/01/26/tong-guo-fan-she-yin-cang-mx2de-smartbar/"/>
+    <link href="http://blog.liao.bz/2013/01/26/tong-guo-fan-she-yin-cang-mx2de-smartbar/"/>
     <updated>2013-01-26T05:40:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/01/26/tong-guo-fan-she-yin-cang-mx2de-smartbar</id>
+    <id>http://blog.liao.bz/2013/01/26/tong-guo-fan-she-yin-cang-mx2de-smartbar</id>
     <content type="html"><![CDATA[<h2>由来</h2>
 
 <p>SmartBar自打出来便一直引来不少争议，与此同时貌似便是官方与开发者的关于显示与隐藏SmartBar的竞赛，开发者千方百计希望可以隐藏掉SmartBar，而官方则想方设法不让开发者隐藏。</p>
@@ -1847,9 +1847,9 @@ fatal: The remote end hung up unexpectedly
   
   <entry>
     <title type="html"><![CDATA[Octopress的落成]]></title>
-    <link href="http://blog.liao.bz/blog/2013/01/21/octopressde-luo-cheng/"/>
+    <link href="http://blog.liao.bz/2013/01/21/octopressde-luo-cheng/"/>
     <updated>2013-01-21T22:31:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/01/21/octopressde-luo-cheng</id>
+    <id>http://blog.liao.bz/2013/01/21/octopressde-luo-cheng</id>
     <content type="html"><![CDATA[<p>最初看了<a href="http://ghosert.loadtrend.com/">ghosert</a>后开始用octpress搭建传说中的程序员博客，但是弄了四五次仍然失败了。
 一开始参考<a href="http://octopress.org/docs/setup/">octpress</a>，在Deploying的时候选的是Github Pages，终究没能deploy成功。然后今天<a href="https://github.com%E4%B9%9F%E8%B7%9F%E7%9D%80Github">https://github.com%E4%B9%9F%E8%B7%9F%E7%9D%80Github</a> Pages在抢票助手的帮助下被GFW带走了，忽然又兴起尝试搭建Octpress，不过今天尝试在终端下通过goagent想要连接github时始终连不上。命令见下：</p>
 
