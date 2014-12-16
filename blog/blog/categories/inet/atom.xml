@@ -1,0 +1,1084 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Inet | liao.bz]]></title>
+  <link href="http://blog.liao.bz//blog/categories/inet/atom.xml" rel="self"/>
+  <link href="http://blog.liao.bz//"/>
+  <updated>2014-12-16T17:16:57+08:00</updated>
+  <id>http://blog.liao.bz//</id>
+  <author>
+    <name><![CDATA[liaobz]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MR82_JB5_1.19_20140125版代码编译脚本讲解]]></title>
+    <link href="http://blog.liao.bz//blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie/"/>
+    <updated>2014-02-07T11:24:00+08:00</updated>
+    <id>http://blog.liao.bz//blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie</id>
+    <content type="html"><![CDATA[<p>在8312/8382平台上，因为软件上无法做到对不同版本及容量RAM的兼容，例如DDR2与DDR3，512MB与1024MB。之前的做法都是根据客户的需求，从而手动修改custom_MemoryDevice.h文件来编译相应的固件。<br/>
+为了减少无谓的重复累赘的工作，新版代码再次对编译脚本进行更新，具体更新代码可自行查阅mediatek/config/common目录下的编译脚本。下面是对更新点的讲解。<br/>
+本次更新的核心是对RAM版本和容量各种组合的重命名。理解了命名方式，便可以熟练的掌握和使用新的编译脚本。<br/>
+如下图，新的命名可分为三部分：第一部分是RAM版本，第二部分是片选数量，第三部分是RAM容量。目前5种版本RAM具体含义可参照下图。</p>
+
+<!-- more -->
+
+
+<p><img class="center <a" src="href="http://192.168.2.96/blogimgs/2014-02-07-1-1.png">http://192.168.2.96/blogimgs/2014-02-07-1-1.png</a>&#8221; width=&#8221;644&#8221; height=&#8221;421&#8221; title=&#8221;5种版本的RAM&#8221; >
+而新的编译脚本则须加上RAM代号：如想编译DDR3.1024MB的MR6012H1C1W1软件，编译脚本为
+<code>
+    ./pack_user_image.sh R321 mr601 MR6012H1C1W1 new
+</code>
+同时为了方便编译中性软件，在编译的时候也可以用R代替RAM型号，编译脚本则会自动编译多个preloader并打包(仅pack脚本，make脚本不支持)。如：
+<code>
+    ./pack_user_image.sh R mr601 MR6012H1C1W1 new
+</code>
+PS：<br/>
+1.DDR2频率默认为533MHz，DDR3频率默认为916MHz。<br/>
+2.目前R212的仅有spetex的PL017。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Camera插值]]></title>
+    <link href="http://blog.liao.bz//blog/2014/01/03/cameracha-zhi/"/>
+    <updated>2014-01-03T09:55:00+08:00</updated>
+    <id>http://blog.liao.bz//blog/2014/01/03/cameracha-zhi</id>
+    <content type="html"><![CDATA[<h4>Camera插值在底层已经做好，我们只需要在中间层和app层添加一个对应的picture size即可。但是有一些限制条件需要注意：</h4>
+
+<h5>1．插值的倍数只能小于等于16倍，也就是说假如是1M的sensor，那最多只能插值到16M；</h5>
+
+<h5>2．插值后的width和height都不能超过8192，也就是picture size设置的width和height的大小都不能超过8192；</h5>
+
+<h5>3．若插值的大小超过12M：则需要打补丁</h5>
+
+<h5>4．由于hardware jpeg encoder的限制，插值时设置的width和height请您分别都设为16的整数倍，若设置非16整数倍的width或height，则可能导致拍出来的图片会有异常(如图片扭曲、花屏、连拍的图片绿屏)。</h5>
+
+<!-- more -->
+
+
+<h2>下面是关于插值的方法：</h2>
+
+<h3>（一）中间层修改</h3>
+
+<h4>1.mediatek/custom/common/hal/imgsensor/\<sensor name\>/config.ftbl.\<sensor name\>.h</h4>
+
+<p>（若没有该文件，则修改mediatek/custom/common/hal/imgsensor/src/config.ftbl.common_raw.h或者config.ftbl.common_yuv.h）<br/>
+在如下定义picture size的地方增加您想要的size (宽和高必须是16的整数倍)，如果已经包含您要加的size，就不需要再增加。
+<code>
+    #if 1
+        //  Picture Size
+        FTABLE_CONFIG_AS_TYPE_OF_DEFAULT_VALUES(
+            KEY_AS_(MtkCameraParameters::KEY_PICTURE_SIZE),
+            SCENE_AS_DEFAULT_SCENE(
+                ITEM_AS_DEFAULT_("2560x1920"),
+                ITEM_AS_VALUES_(
+                    "320x240",  "640x480",  "1024x768",  "1280x720",  "1280x768",  "1280x960"
+                )
+            ),
+        )
+    #endif
+</code></p>
+
+<p>例如：
+<code>
+    //  Picture Size
+    FTABLE_CONFIG_AS_TYPE_OF_DEFAULT_VALUES(
+        KEY_AS_(MtkCameraParameters::KEY_PICTURE_SIZE),
+        SCENE_AS_DEFAULT_SCENE(
+            ITEM_AS_DEFAULT_("2560x1920"),
+            ITEM_AS_VALUES_(
+                "320x240",  "640x480",  "1024x768",  "1280x720",  "1280x768",  "1280x960",  "1920x1088",  "1920x1152",
+            )
+        ),
+    )
+</code></p>
+
+<p>1920:1088 ≈ 16:9<br/>
+1920:1152 ≈ 5:3</p>
+
+<p>如果是16:9的屏幕,则得确保2个分辨率都添加<br/>
+width：height ≈ 16:9<br/>
+width：height ≈ 5:3</p>
+
+<h3>（二）app层的修改可以按照如下来修改：</h3>
+
+<h4>1．packages/apps/Camera/res/values/strings.xml</h4>
+
+<p>增加您想要的size，如果已经包含您要加的size，就不需要再增加<br/>
+<code>
+    &lt;string name="pref_camera_picturesize_entry_3264x2448"&gt;8M pixels&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_2592x1936"&gt;5M pixels&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_2048x1536"&gt;3M pixels&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_1600x1200"&gt;2M pixels&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_1280x960"&gt;1.3M pixels&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_1024x768"&gt;1M pixels&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_640x480"&gt;VGA&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_320x240"&gt;QVGA&lt;/string&gt;
+</code>
+例如：
+<code>
+    &lt;string name="pref_camera_picturesize_entry_3264x2448"&gt;8M pixels&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_2592x1936"&gt;5M pixels&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_2048x1536"&gt;3M pixels&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_1920x1088"&gt;2M pixels&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_1920x1152"&gt;2M pixels&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_1600x1200"&gt;2M pixels&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_1280x960"&gt;1.3M pixels&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_1024x768"&gt;1M pixels&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_640x480"&gt;VGA&lt;/string&gt;
+    &lt;string name="pref_camera_picturesize_entry_320x240"&gt;QVGA&lt;/string&gt;
+</code></p>
+
+<h4>2．packages/apps/Camera/res/values/arrays.xml</h4>
+
+<pre><code>    &lt;string-array name="pref_camera_picturesize_entries" translatable="false"&gt;
+        &lt;!-- TODO: Change to a better name of the preference.
+                The first element of the array should be
+                "pref_camera_picturesize_entry_2592x1944". However, we are too
+                late for the translation. Since we show the same label as the
+                second item, we just use the second one instead.
+        --&gt;
+        &lt;!-- 4:3 --&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_320x240&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1024x768&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_4096x3072&lt;/item&gt;
+        &lt;!-- 16:9 --&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1280x720&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1152&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2560x1440&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2992x1680&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_3328x1872&lt;/item&gt;
+        &lt;!-- 5:3 --&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1280x768&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
+        &lt;!-- 3:2 --&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+    &lt;/string-array&gt;
+</code></pre>
+
+<p>增加您想要的size，如果已经包含您要加的size，就不需要再增加
+例如：
+<code>
+    &lt;string-array name="pref_camera_picturesize_entries" translatable="false"&gt;
+        &lt;!-- TODO: Change to a better name of the preference.
+                The first element of the array should be
+                "pref_camera_picturesize_entry_2592x1944". However, we are too
+                late for the translation. Since we show the same label as the
+                second item, we just use the second one instead.
+        --&gt;
+        &lt;!-- 4:3 --&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_320x240&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1024x768&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_4096x3072&lt;/item&gt;
+        &lt;!-- 16:9 --&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1280x720&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1920x1088&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1152&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2560x1440&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2992x1680&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_3328x1872&lt;/item&gt;
+        &lt;!-- 5:3 --&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1280x768&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1920x1152&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
+        &lt;!-- 3:2 --&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
+        &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+    &lt;/string-array&gt;
+</code></p>
+
+<h4>3．packages/apps/Camera/res/values/arrays.xml</h4>
+
+<pre><code>    &lt;string-array name="pref_camera_picturesize_entryvalues" translatable="false"&gt;
+        &lt;!-- 4:3 --&gt;
+        &lt;item&gt;320x240&lt;/item&gt;
+        &lt;item&gt;640x480&lt;/item&gt;
+        &lt;item&gt;1024x768&lt;/item&gt;
+        &lt;item&gt;1280x960&lt;/item&gt;
+        &lt;item&gt;1600x1200&lt;/item&gt;
+        &lt;item&gt;2048x1536&lt;/item&gt;
+        &lt;item&gt;2560x1920&lt;/item&gt;
+        &lt;item&gt;3264x2448&lt;/item&gt;
+        &lt;item&gt;4096x3072&lt;/item&gt;
+        &lt;!-- 16:9 --&gt;
+        &lt;item&gt;640x352&lt;/item&gt;
+        &lt;item&gt;1280x720&lt;/item&gt;
+        &lt;item&gt;2048x1152&lt;/item&gt;
+        &lt;item&gt;2560x1440&lt;/item&gt;
+        &lt;item&gt;2992x1680&lt;/item&gt;
+        &lt;item&gt;3328x1872&lt;/item&gt;
+        &lt;!-- 5:3 --&gt;
+        &lt;item&gt;1280x768&lt;/item&gt;
+        &lt;item&gt;1600x960&lt;/item&gt;
+        &lt;item&gt;2880x1728&lt;/item&gt;
+        &lt;item&gt;3600x2160&lt;/item&gt;
+        &lt;!-- 3:2 --&gt;
+        &lt;item&gt;1440x960&lt;/item&gt;
+        &lt;item&gt;2048x1360&lt;/item&gt;
+        &lt;item&gt;2560x1712&lt;/item&gt;
+    &lt;/string-array&gt;
+</code></pre>
+
+<p>增加您想要的size，如果已经包含你要加的size，就不需要再增加<br/>
+例如：
+<code>
+    &lt;string-array name="pref_camera_picturesize_entryvalues" translatable="false"&gt;
+        &lt;!-- 4:3 --&gt;
+        &lt;item&gt;320x240&lt;/item&gt;
+        &lt;item&gt;640x480&lt;/item&gt;
+        &lt;item&gt;1024x768&lt;/item&gt;
+        &lt;item&gt;1280x960&lt;/item&gt;
+        &lt;item&gt;1600x1200&lt;/item&gt;
+        &lt;item&gt;2048x1536&lt;/item&gt;
+        &lt;item&gt;2560x1920&lt;/item&gt;
+        &lt;item&gt;3264x2448&lt;/item&gt;
+        &lt;item&gt;4096x3072&lt;/item&gt;
+        &lt;!-- 16:9 --&gt;
+        &lt;item&gt;640x352&lt;/item&gt;
+        &lt;item&gt;1280x720&lt;/item&gt;
+        &lt;item&gt;1920x1088&lt;/item&gt;
+        &lt;item&gt;2048x1152&lt;/item&gt;
+        &lt;item&gt;2560x1440&lt;/item&gt;
+        &lt;item&gt;2992x1680&lt;/item&gt;
+        &lt;item&gt;3328x1872&lt;/item&gt;
+        &lt;!-- 5:3 --&gt;
+        &lt;item&gt;1280x768&lt;/item&gt;
+        &lt;item&gt;1600x960&lt;/item&gt;
+        &lt;item&gt;1920x1152&lt;/item&gt;
+        &lt;item&gt;2880x1728&lt;/item&gt;
+        &lt;item&gt;3600x2160&lt;/item&gt;
+        &lt;!-- 3:2 --&gt;
+        &lt;item&gt;1440x960&lt;/item&gt;
+        &lt;item&gt;2048x1360&lt;/item&gt;
+        &lt;item&gt;2560x1712&lt;/item&gt;
+    &lt;/string-array&gt;
+</code></p>
+
+<h4>4．packages/apps/Camera/src/com/Android/Camera/CameraSettings.java</h4>
+
+<pre><code>    public static final String[] PICTURE_SIZE_16_9 = new String[] {
+        "640x352",
+        "1280x720",
+        "2048x1152",
+        "2560x1440",
+        "2992x1680",
+        "3328x1872",
+    };
+
+    public static final String[] PICTURE_SIZE_5_3 = new String[] {
+        "1280x768",
+        "1600x960",
+        "2880x1728",
+        "3600x2160",
+    };
+</code></pre>
+
+<p>增加您想要的size，如果已经包含你要加的size，就不需要再增加<br/>
+例如：
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+<span class='line-number'>192</span>
+<span class='line-number'>193</span>
+<span class='line-number'>194</span>
+<span class='line-number'>195</span>
+<span class='line-number'>196</span>
+<span class='line-number'>197</span>
+<span class='line-number'>198</span>
+<span class='line-number'>199</span>
+<span class='line-number'>200</span>
+<span class='line-number'>201</span>
+<span class='line-number'>202</span>
+<span class='line-number'>203</span>
+<span class='line-number'>204</span>
+<span class='line-number'>205</span>
+<span class='line-number'>206</span>
+<span class='line-number'>207</span>
+<span class='line-number'>208</span>
+<span class='line-number'>209</span>
+<span class='line-number'>210</span>
+<span class='line-number'>211</span>
+<span class='line-number'>212</span>
+<span class='line-number'>213</span>
+<span class='line-number'>214</span>
+<span class='line-number'>215</span>
+<span class='line-number'>216</span>
+<span class='line-number'>217</span>
+<span class='line-number'>218</span>
+<span class='line-number'>219</span>
+<span class='line-number'>220</span>
+<span class='line-number'>221</span>
+<span class='line-number'>222</span>
+<span class='line-number'>223</span>
+<span class='line-number'>224</span>
+<span class='line-number'>225</span>
+<span class='line-number'>226</span>
+<span class='line-number'>227</span>
+<span class='line-number'>228</span>
+<span class='line-number'>229</span>
+<span class='line-number'>230</span>
+<span class='line-number'>231</span>
+<span class='line-number'>232</span>
+<span class='line-number'>233</span>
+<span class='line-number'>234</span>
+<span class='line-number'>235</span>
+<span class='line-number'>236</span>
+<span class='line-number'>237</span>
+<span class='line-number'>238</span>
+<span class='line-number'>239</span>
+<span class='line-number'>240</span>
+<span class='line-number'>241</span>
+<span class='line-number'>242</span>
+<span class='line-number'>243</span>
+<span class='line-number'>244</span>
+<span class='line-number'>245</span>
+<span class='line-number'>246</span>
+<span class='line-number'>247</span>
+<span class='line-number'>248</span>
+<span class='line-number'>249</span>
+<span class='line-number'>250</span>
+<span class='line-number'>251</span>
+<span class='line-number'>252</span>
+<span class='line-number'>253</span>
+<span class='line-number'>254</span>
+<span class='line-number'>255</span>
+<span class='line-number'>256</span>
+<span class='line-number'>257</span>
+<span class='line-number'>258</span>
+<span class='line-number'>259</span>
+<span class='line-number'>260</span>
+<span class='line-number'>261</span>
+<span class='line-number'>262</span>
+<span class='line-number'>263</span>
+<span class='line-number'>264</span>
+<span class='line-number'>265</span>
+<span class='line-number'>266</span>
+<span class='line-number'>267</span>
+<span class='line-number'>268</span>
+<span class='line-number'>269</span>
+<span class='line-number'>270</span>
+<span class='line-number'>271</span>
+<span class='line-number'>272</span>
+<span class='line-number'>273</span>
+<span class='line-number'>274</span>
+<span class='line-number'>275</span>
+<span class='line-number'>276</span>
+<span class='line-number'>277</span>
+<span class='line-number'>278</span>
+<span class='line-number'>279</span>
+<span class='line-number'>280</span>
+<span class='line-number'>281</span>
+<span class='line-number'>282</span>
+<span class='line-number'>283</span>
+<span class='line-number'>284</span>
+<span class='line-number'>285</span>
+<span class='line-number'>286</span>
+<span class='line-number'>287</span>
+<span class='line-number'>288</span>
+<span class='line-number'>289</span>
+<span class='line-number'>290</span>
+<span class='line-number'>291</span>
+<span class='line-number'>292</span>
+<span class='line-number'>293</span>
+<span class='line-number'>294</span>
+<span class='line-number'>295</span>
+<span class='line-number'>296</span>
+<span class='line-number'>297</span>
+<span class='line-number'>298</span>
+<span class='line-number'>299</span>
+<span class='line-number'>300</span>
+<span class='line-number'>301</span>
+<span class='line-number'>302</span>
+<span class='line-number'>303</span>
+<span class='line-number'>304</span>
+<span class='line-number'>305</span>
+<span class='line-number'>306</span>
+<span class='line-number'>307</span>
+<span class='line-number'>308</span>
+<span class='line-number'>309</span>
+<span class='line-number'>310</span>
+<span class='line-number'>311</span>
+<span class='line-number'>312</span>
+<span class='line-number'>313</span>
+<span class='line-number'>314</span>
+<span class='line-number'>315</span>
+<span class='line-number'>316</span>
+<span class='line-number'>317</span>
+<span class='line-number'>318</span>
+<span class='line-number'>319</span>
+<span class='line-number'>320</span>
+<span class='line-number'>321</span>
+<span class='line-number'>322</span>
+<span class='line-number'>323</span>
+<span class='line-number'>324</span>
+<span class='line-number'>325</span>
+<span class='line-number'>326</span>
+<span class='line-number'>327</span>
+<span class='line-number'>328</span>
+<span class='line-number'>329</span>
+<span class='line-number'>330</span>
+<span class='line-number'>331</span>
+<span class='line-number'>332</span>
+<span class='line-number'>333</span>
+<span class='line-number'>334</span>
+<span class='line-number'>335</span>
+<span class='line-number'>336</span>
+<span class='line-number'>337</span>
+<span class='line-number'>338</span>
+<span class='line-number'>339</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public static final String[] PICTURE_SIZE_16_9 = new String[] {
+</span><span class='line'>    &ldquo;640x352&rdquo;,
+</span><span class='line'>    &ldquo;1280x720&rdquo;,
+</span><span class='line'>    &ldquo;1920x1088&rdquo;,
+</span><span class='line'>    &ldquo;2048x1152&rdquo;,
+</span><span class='line'>    &ldquo;2560x1440&rdquo;,
+</span><span class='line'>    &ldquo;2992x1680&rdquo;,
+</span><span class='line'>    &ldquo;3328x1872&rdquo;,
+</span><span class='line'>};&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;public static final String[] PICTURE_SIZE_5_3 = new String[] {
+</span><span class='line'>"1280x768",
+</span><span class='line'>"1600x960",
+</span><span class='line'>"1920x1152",
+</span><span class='line'>"2880x1728",
+</span><span class='line'>"3600x2160",
+</span><span class='line'>};
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;
+</span><span class='line'>]]&gt;&lt;/content&gt;
+</span><span class='line'>  &lt;/entry&gt;
+</span><span class='line'>  
+</span><span class='line'>  &lt;entry&gt;
+</span><span class='line'>&lt;title type="html"&gt;&lt;![CDATA[常用命令2]]&gt;&lt;/title&gt;
+</span><span class='line'>&lt;link href="http://blog.liao.bz//blog/2013/10/19/git-common-commands/"/&gt;
+</span><span class='line'>&lt;updated&gt;2013-10-19T17:00:00+08:00&lt;/updated&gt;
+</span><span class='line'>&lt;id&gt;http://blog.liao.bz//blog/2013/10/19/git-common-commands&lt;/id&gt;
+</span><span class='line'>&lt;content type="html"&gt;&lt;![CDATA[&lt;h2&gt;1、查看分支&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;repo branch 分支名前有个星号且显示为绿色 表示现在所在分支
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;2、切换分支&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;repo checkout [分支名字] 如：repo checkout elink_sw  
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;※注：切换分支前务必提交先所在分支的所有修改&lt;br/&gt;
+</span><span class='line'>如切换分支后出现两个或多个绿色分支名代表切换前的分支有修改未提交，重新切换回之前的分支完成提交再切换&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;3、 撤销分支&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;repo abandon  [分支名字]  
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;如: repo abandon vido&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;4、分支重命名&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;repo forall -c git branch -m [分支名]
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;!--more--&gt;
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;5、 撤销恢复状态&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;HEAD  指向最后一次提交的状态
+</span><span class='line'>git reset --hard HEAD   恢复到最后一次提交 log 的状态  
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;※注意:此操作会覆盖所有未提交的修改 如不小心覆盖 请使用git reflog 恢复
+</span><span class='line'>git reset &ndash;soft [log ID]  恢复到指定ID状态，该ID之前的状态保存到暂存区&lt;br/&gt;
+</span><span class='line'>例如 log1  log2  log3 恢复到log3 则log2 log1的修改保存在暂存区 &ndash;hard则直接清除log2 log1
+</span><span class='line'>git reset &ndash;mixed（默认不加）  恢复到指定ID状态，该ID之前的状态保存到工作区区&lt;br/&gt;
+</span><span class='line'>例如 log1  log2  log3 恢复到log3 则log2 log1的修改保存在工作区&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;6、查看状态&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;repo status 迭代查看所有git项目状态  
+</span><span class='line'>git status  查看项目状态  
+</span><span class='line'>git status -s 简化输出
+</span><span class='line'>
+</span><span class='line'>- 表示没有改变的文件
+</span><span class='line'>M 表示修改过的文件
+</span><span class='line'>A 表示新添加的文件
+</span><span class='line'>D 表示被删除的文件
+</span><span class='line'>R 表示被重命名的文件
+</span><span class='line'>C 表示复制的文件
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;7、查看提交日志&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;git log  显示提交的更新 默认显示提交者 提交时间 提交备注&lt;br/&gt;
+</span><span class='line'>   参数
+</span><span class='line'>&ndash;author=xxxx    显示某个提交者提交的更新
+</span><span class='line'>&ndash;no-merges      不显示合并代码自动提交的更新
+</span><span class='line'>&ndash;merges         只显示合并的提交
+</span><span class='line'>-p               显示每条更新的详细信息
+</span><span class='line'>&ndash;stat           显示每条更新修改的文件统计
+</span><span class='line'>&ndash;dirstat        显示更新文件的目录比例
+</span><span class='line'>&ndash;name-only      显示修改过的文件路径
+</span><span class='line'>&ndash;oneline        只显示提交ID和提交备注
+</span><span class='line'>&ndash;date={local,relative,iso,rfc,short}         格式化输出日期
+</span><span class='line'>    local       同本地的日期格式           Date:   Sat Sep 28 14:37:00 2013
+</span><span class='line'>    relative    相对于今天的日期间隔       Date:   2 weeks ago
+</span><span class='line'>    iso         iso标准时间                Date:   2013-09-28 14:27:08 +0800
+</span><span class='line'>    rfc         RFC文档标准时间            Date:   Sat, 28 Sep 2013 14:37:00 +0800
+</span><span class='line'>    short       精简输出                   Date:   2013-09-25
+</span><span class='line'>-&lt;n&gt;              限制输出记录数       例如：git log -2  只显示两条记录
+</span><span class='line'>&ndash;since=&lt;date&gt;,&ndash;after=&lt;date&gt; 显示指定日期后的修改  例如: git log &ndash;since=2013-09-12&lt;br/&gt;
+</span><span class='line'>&ndash;util=&lt;date&gt;,&ndash;before=&lt;date&gt;  显示指定日期前的修改  例如: git log &ndash;util=2013-09-12&lt;br/&gt;
+</span><span class='line'>指定某天提交的（例如指定2013.09.28号的提交）
+</span><span class='line'>git log &ndash;since=2013-09-27 &ndash;util=2013-09-28
+</span><span class='line'>git show [log ID] 显示某&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;8、交互式提交修改到暂存区&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;repo stage -i
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;9、删除不追踪的多余文件&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;git clean -nd  查看执行该命令被删除的文件列表
+</span><span class='line'>git clean -fd  删除上一步命令显示的文件  
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>]]&gt;&lt;/content&gt;
+</span><span class='line'>  &lt;/entry&gt;
+</span><span class='line'>  
+</span><span class='line'>  &lt;entry&gt;
+</span><span class='line'>&lt;title type="html"&gt;&lt;![CDATA[常用命令1]]&gt;&lt;/title&gt;
+</span><span class='line'>&lt;link href="http://blog.liao.bz//blog/2013/10/19/common-commands/"/&gt;
+</span><span class='line'>&lt;updated&gt;2013-10-19T16:00:00+08:00&lt;/updated&gt;
+</span><span class='line'>&lt;id&gt;http://blog.liao.bz//blog/2013/10/19/common-commands&lt;/id&gt;
+</span><span class='line'>&lt;content type="html"&gt;&lt;![CDATA[&lt;h2&gt;1、同步代码&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;    repo start mtk --all                                          // 建立mtk分支
+</span><span class='line'>repo forall -c "git checkout -b elink_sw md77/elink_sw"       // 获取elink_sw分支
+</span><span class='line'>repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分支
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;你如果要开发新客户，请基于elink_sw分支做新的分支，例如分支newbranchname。命令
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>repo forall -c "git checkout -b newbranchname elink_sw"
+</span><span class='line'>&lt;/code&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;2、查看分支&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;    repo branch
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;3、切换分支&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;repo checkout [分支名字] 如：
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>repo checkout elink_sw
+</span><span class='line'>&lt;/code&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;!--more--&gt;
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;4、把修改过的文件commit到各自的分支&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;git commit -am [&ldquo;注释&rdquo;] 如：
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>git commit -am "update some apk"
+</span><span class='line'>&lt;/code&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;5、提交代码&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;在切换分支之前先把修改过的代码提交&lt;br/&gt;
+</span><span class='line'>先运行repo status查看自己修改过的地方，确认是否OK&lt;br/&gt;
+</span><span class='line'>然后运行repo forall -c git commit -am &ldquo;自己的注释&rdquo; 提交（如果有新增加的文件，需要进入到该文件所在的目录。 运行git add .  然后 运行 git commit -am &ldquo;自己的注释"）&lt;br/&gt;
+</span><span class='line'>提交新增的文件：&lt;br/&gt;
+</span><span class='line'>跳转到新增文件的仓库目录下面  如：cd alps/vendor/mediatek/md706/&lt;br/&gt;
+</span><span class='line'>(1)运行 git add .&lt;br/&gt;
+</span><span class='line'>(2)运行 git commit -m "注释&rdquo;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;6、更新代码&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;&lt;strong&gt;更新代码前须先提交代码&lt;/strong&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;ol&gt;
+</span><span class='line'>&lt;li&gt;切换分支到mtk分支（repo checkout mtk）&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;运行 repo sync&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;切换到elink_sw分支（repo checkout elink_sw）&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;运行repo forall -c git pull md77 elink_sw&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;切换本地项目分支&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;运行repo forall -c git merge elink_sw
+</span><span class='line'>(如果有提示conflict，需要打开提示冲突的文件，手动处理相关文件并提交（repo forall -c git commit -am &ldquo;自己的注释"）)&lt;/li&gt;
+</span><span class='line'>&lt;/ol&gt;
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;7、编译代码&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;在alps目录下面：
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>cp mediatek/config/common/make_user_project.sh ./
+</span><span class='line'>./make_user_project.sh md706 [机型名（MD7062HC2W1）] [new | systemimage | userdataimage]
+</span><span class='line'>&lt;/code&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;8、提交删除掉的文件：&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;切换到删除过文件的分支;如： cd alps/vendor/mediatek/md706/&lt;br/&gt;
+</span><span class='line'>逐一删除文件，命令：git rm 删除的文件;如：
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>git rm artifacts/out/target/product/md706/data/app/com.adobe.reader.apk
+</span><span class='line'>&lt;/code&gt;
+</span><span class='line'>所有的文件执行上面的命令之后输入 repo status会出现类似如下的情况：
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>xx@elinktek:~/code/xx_repo_git/alps/vendor/mediatek/md706$ repo status
+</span><span class='line'># on branch huama
+</span><span class='line'>project alps/vendor/mediatek/md706/             branch huama
+</span><span class='line'> D-     artifacts/out/target/product/md706/data/app/aldiko.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/data/app/com.adobe.reader.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/data/app/documents.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/data/app/flashplayer-2.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/data/app/gps_test.1.2.4.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/system/appbackup/aldiko.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/system/appbackup/com.adobe.reader.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/system/appbackup/documents.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/system/appbackup/flashplayer-2.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/system/appbackup/gps_test.1.2.4.apk
+</span><span class='line'>&lt;/code&gt;
+</span><span class='line'>然后输入git commit -m &ldquo;注释&rdquo; 来提交&lt;/p&gt;
+</span><span class='line'>]]&gt;&lt;/content&gt;
+</span><span class='line'>  &lt;/entry&gt;
+</span><span class='line'>  
+</span><span class='line'>  &lt;entry&gt;
+</span><span class='line'>&lt;title type="html"&gt;&lt;![CDATA[Git仓库的建立以及repo的管理]]&gt;&lt;/title&gt;
+</span><span class='line'>&lt;link href="http://blog.liao.bz//blog/2013/10/19/build-repo-server/"/&gt;
+</span><span class='line'>&lt;updated&gt;2013-10-19T15:00:00+08:00&lt;/updated&gt;
+</span><span class='line'>&lt;id&gt;http://blog.liao.bz//blog/2013/10/19/build-repo-server&lt;/id&gt;
+</span><span class='line'>&lt;content type="html"&gt;&lt;![CDATA[&lt;h2&gt;1. repo 的安装&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;一般服务器上都安装了git，所以只需安装repo即可&lt;br/&gt;
+</span><span class='line'>简单一点的方法，就是直接从253服务器拷贝&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h3&gt;1.1 拷贝repo脚本&lt;/h3&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;路径：/usr/bin/repo&lt;br/&gt;
+</span><span class='line'>拷贝到当前服务器的相同目录下，即/usr/bin&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h3&gt;1.2然后拷贝repo程序目录到当前服务器&lt;/h3&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;路径：elink-soft@192.168.2.253:/home/elink-soft/repo&lt;br/&gt;
+</span><span class='line'>拷贝到本地服务器任意目录&lt;br/&gt;
+</span><span class='line'>比如拷贝到/work/repo/下面&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;!--more--&gt;
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>&lt;h3&gt;1.3然后用vim编辑repo脚本&lt;/h3&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;    vim /usr/bin/repo
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;修改
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>REPO_URL='elink-soft@192.168.2.253:~/repo/repo.git'
+</span><span class='line'>&lt;/code&gt;
+</span><span class='line'>这句为之前repo程序目录的拷贝到的地址,如本处应改为
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>REPO_URL='/work/repo'
+</span><span class='line'>&lt;/code&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;2. git仓库的建立&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h3&gt;2.1 服务器端：&lt;/h3&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;此端建立git仓库，用于代码的下载，提交和管理&lt;br/&gt;
+</span><span class='line'>以192.168.2.96作为管理代码的服务器，elink账户作为代码管理账户&lt;br/&gt;
+</span><span class='line'>以89代码为例：&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h4&gt;2.1.1&lt;/h4&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;在elink的主目录下建立mq89目录，作为仓库的存放路径（m：mtk；q：quad；89：89 series）&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h4&gt;2.1.2&lt;/h4&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;在mq89下面分别建立2个目录：alps、manifest.git
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>mkdir alps manifest.git
+</span><span class='line'>ls
+</span><span class='line'>alps manifest.git
+</span><span class='line'>&lt;/code&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h4&gt;2.1.3&lt;/h4&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;在manifest.git目录中创建空的git仓库
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>git init --bare
+</span><span class='line'>&lt;/code&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h4&gt;2.1.4&lt;/h4&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;很关键的一步，在alps下面创建**.git文件夹&lt;br/&gt;
+</span><span class='line'>规则：事先规划应该在哪些目录下面建立git仓库，以方便代码的管理。如,alps/kernel下面需要一个仓库，那么&lt;br/&gt;
+</span><span class='line'>就在alps目录下建立kernel.git目录，用于存放原始代码的远程仓库，然后初始化git，同2.3
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>cd alps
+</span><span class='line'>mkdir kernel.git
+</span><span class='line'>git init --bare
+</span><span class='line'>&lt;/code&gt;
+</span><span class='line'>如果是abi/cpp/下面有个git仓库&lt;br/&gt;
+</span><span class='line'>则应该递归创建目录abi/cpp.git&lt;br/&gt;
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>cd alps
+</span><span class='line'>mkdir -p abi/cpp.git
+</span><span class='line'>&lt;/code&gt;
+</span><span class='line'>至此,服务器端的准备工作完毕&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h3&gt;2.2 本机端：&lt;/h3&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;此端作为原始代码的存放地，负责更新mtk的最新补丁，然后上传到服务器端&lt;br/&gt;
+</span><span class='line'>假设代码存放在mq89_std/alps目录下&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h4&gt;2.2.1&lt;/h4&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;创建本地的git仓库，和2.1.4的路径是相互关联&lt;br/&gt;
+</span><span class='line'>比如在服务器端有alps/kernel.git仓库&lt;br/&gt;
+</span><span class='line'>则在本地需有alps/kernel/.git仓库,即初始化git仓库是在kernel目录下&lt;br/&gt;
+</span><span class='line'><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;cd alps/kernel
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git init-db
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git add .
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;// 双引号内为修改提交提示，比如可以将prompt改成ph init git repository
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git commit -am <span class="p">&amp;</span>ldquo<span class="p">;</span>prompt<span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;// 此句非常关键，把远程仓库和本地仓库联系起来
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git remote add master elink@192.168.2.98:~/mq89/alps/kernel.git<span class="p">&amp;</span>lt<span class="p">;</span>br/<span class="p">&amp;</span>gt<span class="p">;</span>
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git push master <span class="p">&amp;</span>ndash<span class="p">;</span>all
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;
+</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>如果是远程仓库abi/cpp.git
+</span><span class='line'><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;cd alps/abi/cpp
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git add .
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git commit -am <span class="p">&amp;</span>ldquo<span class="p">;</span>prompt<span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git remote add master elink@192.168.2.98:~/mq89/alps/abi/cpp.git
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;git push master <span class="p">&amp;</span>ndash<span class="p">;</span>all
+</span><span class='line'>&lt;/span&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>&gt;
+</span></code></pre></td></tr></table></div></figure>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h4&gt;2.2.2&lt;/h4&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;克隆远程manifest.git目录,在mq89_std目录下
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>git clone elink@192.168.2.98:~/mq89/manifest.git
+</span><span class='line'>&lt;/code&gt;
+</span><span class='line'> 此时</span></code></pre></td></tr></table></div></figure></notextile></div>
+    ls mq89_std
+    alps manifest</p>
+
+<pre><code>---
+###注：关于代码中哪些目录需要建立git仓库
+原则：为了方便以后代码的管理，如果在一个目录下拥有多个子目录，并且除去子目录以外没有其他文件，应该在各个子目录中分别建立git仓库。如，alps/mediatek的各个子目录。  
+还有我们应该按平台区分目录，在各个目录下创建git仓库，如，alps/mediatek/platform目录。我们应该在其下
+的common和mt6589这2个目录分别建立git仓库,这样更方便以后的代码更新和管理  
+##3. repo的管理
+###3.1 新建default.xml文件
+在manifest目录下新建default.xml文件，此文件是repo管理的所有git仓库(project)  
+内容如下:
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>manifest<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>remote  name=&quot;alps&quot;
+</span><span class='line'>           fetch=&quot;DIR&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>default revision=&quot;master&quot;
+</span><span class='line'>           remote=&quot;alps&quot;
+</span><span class='line'>           sync-j=&quot;4&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>project path=&quot;alps/ndk&quot; name=&quot;alps/ndk&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/manifest<span class="ni">&amp;gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+####注：
+fetch后面的双引号填写代码存放的路径，remote name 和default remote的内容需相同，default revision指
+远程的分支，这里填写的是默认分支master，sync-j表示的开启的线程数。  
+project内容的path变量表示本地存放的目录，name表示服务器相关git的存放路径，即DIR/alps/ndk/
+###3.2 git add default.xml并提交
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>mq89_std/manifest
+</span><span class='line'>git add default.xml
+</span><span class='line'>git commit -am <span class="s2">&quot;prompt&quot;</span>
+</span><span class='line'>git remote add master elink@192.168.2.98:~/mq89/manifest.git
+</span><span class='line'>git push master --all
+</span></code></pre></td></tr></table></div></figure>
+####注：每次的更改都需要提交default.xml文件
+##4. 客户端的下载
+比如下载到repo-client文件夹中
+</code></pre>
+
+<pre><code>cd repo-client
+repo init -u [repo-server's directory]/manifest.git
+repo sync
+</code></pre>
+
+<p>&#8220;`
+即可以下载完成</p>
+
+<h2>5. 关于copyfile的使用</h2>
+
+<p>前面有提到过git仓库创建的原则，比如alps/mediatek/platform目录下，需要对common和mt6589，2个目录各创建一个git仓库，但是在alps/mediatek/platform下存在Android.mk和rules.mk 文件，如果只在common和mt6589这2个目录中建立仓库则会导致无法下载这2个mk文件，所以推荐的方法是在alps/mediatek/platform下面创建目录mtk，并将Android.mk和rules.mk这2个文件复制过去，下载的时候就可以通过copyfile去实现了
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;project</span> <span class="na">path=</span><span class="s">&quot;alps/mediatek/platform/mtk&quot;</span> <span class="na">name=</span><span class="s">&quot;alps/mediatek/platform/mtk/&quot;</span> <span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;Android.mk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mediatek/platform/Android.mk&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;rules.mk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mediatek/platform/rules.mk&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/project&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+同理alps下面的几个文件也是一样的情况，可以在build中穿件mtk文件夹
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;project</span> <span class="na">path=</span><span class="s">&quot;alps/build&quot;</span> <span class="na">name=</span><span class="s">&quot;alps/build/&quot;</span> <span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/Makefile&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/Makefile&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/makeMtk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/makeMtk&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/mbldenv.sh&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mbldenv.sh&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/mk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mk&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/project&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+]]></content>
+  </entry>
+  
+</feed>
