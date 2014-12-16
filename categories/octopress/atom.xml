@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | My Octopress Blog]]></title>
   <link href="http://blog.liao.bz/categories/octopress/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz/"/>
-  <updated>2014-12-16T17:12:55+08:00</updated>
+  <updated>2014-12-16T17:15:46+08:00</updated>
   <id>http://blog.liao.bz/</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[再搭Octpress]]></title>
-    <link href="http://blog.liao.bz/blog/2013/04/17/zai-da-octpress/"/>
+    <link href="http://blog.liao.bz/2013/04/17/zai-da-octpress/"/>
     <updated>2013-04-17T22:25:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/04/17/zai-da-octpress</id>
+    <id>http://blog.liao.bz/2013/04/17/zai-da-octpress</id>
     <content type="html"><![CDATA[<p>本文主要参照<a href="http://octopress.org/docs/setup/">Octopress Setup</a>来搭建博客，数月前我曾写了<a href="http://blog.liao.bz/blog/2013/01/21/octopressde-luo-cheng/">Octopress的落成</a>，当时刚上手，迷迷糊糊就搭建好了博客，就两个时间点的比较而言，自认为对git以及ssh都相对熟练了许多，因此对搭建博客的整个流程都不再是迷迷糊糊过来的，所以最好你是熟悉ssh和git的，git的教程可以访问<a href="http://git-scm.com/book/zh">git-scm.com/book/zh</a>，需要梯子。</p>
 
 <p>下面开始搭建了……</p>
@@ -261,9 +261,9 @@ fatal: The remote end hung up unexpectedly
   
   <entry>
     <title type="html"><![CDATA[Octopress的落成]]></title>
-    <link href="http://blog.liao.bz/blog/2013/01/21/octopressde-luo-cheng/"/>
+    <link href="http://blog.liao.bz/2013/01/21/octopressde-luo-cheng/"/>
     <updated>2013-01-21T22:31:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/01/21/octopressde-luo-cheng</id>
+    <id>http://blog.liao.bz/2013/01/21/octopressde-luo-cheng</id>
     <content type="html"><![CDATA[<p>最初看了<a href="http://ghosert.loadtrend.com/">ghosert</a>后开始用octpress搭建传说中的程序员博客，但是弄了四五次仍然失败了。
 一开始参考<a href="http://octopress.org/docs/setup/">octpress</a>，在Deploying的时候选的是Github Pages，终究没能deploy成功。然后今天<a href="https://github.com%E4%B9%9F%E8%B7%9F%E7%9D%80Github">https://github.com%E4%B9%9F%E8%B7%9F%E7%9D%80Github</a> Pages在抢票助手的帮助下被GFW带走了，忽然又兴起尝试搭建Octpress，不过今天尝试在终端下通过goagent想要连接github时始终连不上。命令见下：
 <code>

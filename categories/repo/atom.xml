@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Repo | My Octopress Blog]]></title>
   <link href="http://blog.liao.bz/categories/repo/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz/"/>
-  <updated>2014-12-16T17:12:55+08:00</updated>
+  <updated>2014-12-16T17:15:46+08:00</updated>
   <id>http://blog.liao.bz/</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[常用命令2]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/19/git-common-commands/"/>
+    <link href="http://blog.liao.bz/2013/10/19/git-common-commands/"/>
     <updated>2013-10-19T17:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/19/git-common-commands</id>
+    <id>http://blog.liao.bz/2013/10/19/git-common-commands</id>
     <content type="html"><![CDATA[<h2>1、查看分支</h2>
 
 <pre><code>repo branch 分支名前有个星号且显示为绿色 表示现在所在分支
@@ -112,9 +112,9 @@ git clean -fd  删除上一步命令显示的文件
   
   <entry>
     <title type="html"><![CDATA[常用命令1]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/19/common-commands/"/>
+    <link href="http://blog.liao.bz/2013/10/19/common-commands/"/>
     <updated>2013-10-19T16:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/19/common-commands</id>
+    <id>http://blog.liao.bz/2013/10/19/common-commands</id>
     <content type="html"><![CDATA[<h2>1、同步代码</h2>
 
 <pre><code>    repo start mtk --all                                          // 建立mtk分支
@@ -211,9 +211,9 @@ git clean -fd  删除上一步命令显示的文件
   
   <entry>
     <title type="html"><![CDATA[Git仓库的建立以及repo的管理]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/19/build-repo-server/"/>
+    <link href="http://blog.liao.bz/2013/10/19/build-repo-server/"/>
     <updated>2013-10-19T15:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/19/build-repo-server</id>
+    <id>http://blog.liao.bz/2013/10/19/build-repo-server</id>
     <content type="html"><![CDATA[<h2>1. repo 的安装</h2>
 
 <p>一般服务器上都安装了git，所以只需安装repo即可<br/>
@@ -432,9 +432,9 @@ repo sync
   
   <entry>
     <title type="html"><![CDATA[Repo添加project后补全本地分支]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/18/repo-project-add-local-branch-doc/"/>
+    <link href="http://blog.liao.bz/2013/10/18/repo-project-add-local-branch-doc/"/>
     <updated>2013-10-18T15:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/18/repo-project-add-local-branch-doc</id>
+    <id>http://blog.liao.bz/2013/10/18/repo-project-add-local-branch-doc</id>
     <content type="html"><![CDATA[<h2>概述</h2>
 
 <p>在repo的服务器端添加新project时(例如添加了MD900项目),本地完成同步后执行repo branch会碰到下面的情况:
@@ -515,9 +515,9 @@ repo sync
   
   <entry>
     <title type="html"><![CDATA[往服务器上push代码流程]]></title>
-    <link href="http://blog.liao.bz/blog/2013/09/28/push-doc/"/>
+    <link href="http://blog.liao.bz/2013/09/28/push-doc/"/>
     <updated>2013-09-28T18:04:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/09/28/push-doc</id>
+    <id>http://blog.liao.bz/2013/09/28/push-doc</id>
     <content type="html"><![CDATA[<h2>1.本地合成、测试及提交</h2>
 
 <h3>1).本地合成与测试</h3>
