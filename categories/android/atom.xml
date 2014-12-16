@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Smartbar | liao.bz]]></title>
-  <link href="http://blog.liao.bz//blog/categories/smartbar/atom.xml" rel="self"/>
-  <link href="http://blog.liao.bz//"/>
-  <updated>2014-12-16T17:10:13+08:00</updated>
-  <id>http://blog.liao.bz//</id>
+  <title><![CDATA[Category: Android | My Octopress Blog]]></title>
+  <link href="http://blog.liao.bz/categories/android/atom.xml" rel="self"/>
+  <link href="http://blog.liao.bz/"/>
+  <updated>2014-12-16T17:10:14+08:00</updated>
+  <id>http://blog.liao.bz/</id>
   <author>
     <name><![CDATA[liaobz]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[通过反射隐藏MX2的SmartBar]]></title>
-    <link href="http://blog.liao.bz//blog/2013/01/26/tong-guo-fan-she-yin-cang-mx2de-smartbar/"/>
+    <link href="http://blog.liao.bz/blog/2013/01/26/tong-guo-fan-she-yin-cang-mx2de-smartbar/"/>
     <updated>2013-01-26T05:40:00+08:00</updated>
-    <id>http://blog.liao.bz//blog/2013/01/26/tong-guo-fan-she-yin-cang-mx2de-smartbar</id>
+    <id>http://blog.liao.bz/blog/2013/01/26/tong-guo-fan-she-yin-cang-mx2de-smartbar</id>
     <content type="html"><![CDATA[<h2>由来</h2>
 
 <p>SmartBar自打出来便一直引来不少争议，与此同时貌似便是官方与开发者的关于显示与隐藏SmartBar的竞赛，开发者千方百计希望可以隐藏掉SmartBar，而官方则想方设法不让开发者隐藏。</p>
