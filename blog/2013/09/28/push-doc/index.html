@@ -9,7 +9,7 @@
   <meta name="author" content="liaobz">
 
   
-  <meta name="description" content="1.本地合成、测试及提交 1).本地合成与测试 所有的补丁都须在自己的分支上合成,假设本地分支名为patch 在工作目录执行repo branch,所示结果如下: (* patch表示当前所在为patch) lbz@elink:~/work/project/md77$ repo branch &hellip;">
+  <meta name="description" content="1.本地合成、测试及提交 1).本地合成与测试 所有的补丁都须在自己的分支上合成,假设本地分支名为patch 在工作目录执行repo branch,所示结果如下: (* patch表示当前所在为patch) lbz@elink:~$ repo branch elink_sw | in all &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,7 +91,7 @@
 <p>  所有的补丁都须在自己的分支上合成,假设本地分支名为patch<br/>
   在工作目录执行repo branch,所示结果如下: (*  patch表示当前所在为patch)</p>
 
-<pre><code>lbz@elink:~/work/project/md77$ repo branch
+<pre><code>lbz@elink:~$ repo branch
    elink_sw                  | in all projects
    mtk                       | in all projects
 *  patch                     | in all projects
@@ -111,7 +111,7 @@
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>lbz@elink:~/work/project/md77$ repo status
+</pre></td><td class='code'><pre><code class=''><span class='line'>lbz@elink:~$ repo status
 </span><span class='line'># on branch patch
 </span><span class='line'>project alps/mediatek/config/md790/             branch patch
 </span><span class='line'> -m     ProjectConfig.mk
@@ -129,17 +129,17 @@
 
 <p>  (如果只是对文件修改,git commit -am &ldquo;注释&#8221;等价于执行git add 和 git commit两条命令)</p>
 
-<pre><code>lbz@elink:~/work/project/md77$ cd alps/mediatek/config/md790/
-lbz@elink:~/work/project/md77/alps/mediatek/config/md790$ git commit -am "update ProjectConfig.mk"
+<pre><code>lbz@elink:~$ cd alps/mediatek/config/md790/
+lbz@elink:~/alps/mediatek/config/md790$ git commit -am "update ProjectConfig.mk"
 </code></pre>
 
 <h4>b.提交对kernel/lcm/md970_lvds/md970_lvds.c文件的添加</h4>
 
 <p>  (不可通过git commit -am &ldquo;注释&#8221;来提交,须单独git add命令)</p>
 
-<pre><code>lbz@elink:~/work/project/md77$ cd alps/mediatek/custom/common/
-lbz@elink:~/work/project/md77/alps/mediatek/custom/common$ git add kernel/lcm/md970_lvds/md970_lvds.c
-lbz@elink:~/work/project/md77/alps/mediatek/custom/common$ git commit -m "add md970_lvds.c"
+<pre><code>lbz@elink:~$ cd alps/mediatek/custom/common/
+lbz@elink:~/alps/mediatek/custom/common$ git add kernel/lcm/md970_lvds/md970_lvds.c
+lbz@elink:~/alps/mediatek/custom/common$ git commit -m "add md970_lvds.c"
 </code></pre>
 
 <p>  至此,本地分支的提交结束</p>
@@ -156,27 +156,27 @@ lbz@elink:~/work/project/md77/alps/mediatek/custom/common$ git commit -m "add md
 
 <p>  (repo sync的输出内容与更新内容的多少有变更)</p>
 
-<pre><code>lbz@elink:~/work/project/md77$ repo checkout mtk
+<pre><code>lbz@elink:~$ repo checkout mtk
 Checkout mtk: 100% (424/424), done.  
-liaobz@elink-soft-desktop:~/work/project/md77$ repo sync
+liaobz@elink-soft-desktop:~$ repo sync
 Fetching projects: 100% (424/424), done.
 Syncing work tree: 100% (424/424), done.
 </code></pre>
 
 <h4>b.拉取远程代码</h4>
 
-<pre><code>lbz@elink:~/work/project/md77$ repo checkout elink_sw
+<pre><code>lbz@elink:~$ repo checkout elink_sw
 Checkout elink_sw: 100% (424/424), done.  
-lbz@elink:~/work/project/md77$ repo forall -c git pull md77 elink_sw
+lbz@elink:~$ repo forall -c git pull md77 elink_sw
 </code></pre>
 
 <h3>2).本地分支的合并</h3>
 
 <p>  合并代码的时候须先切换到本地分支再进行git merge操作</p>
 
-<pre><code>lbz@elink:~/work/project/md77$ repo checkout patch
+<pre><code>lbz@elink:~$ repo checkout patch
 Checkout patch: 100% (424/424), done.  
-lbz@elink:~/work/project/md77$ repo forall -c git merge elink_sw
+lbz@elink:~$ repo forall -c git merge elink_sw
 </code></pre>
 
 <p>  注意输出内容,如果提到有冲突(conflict),须手动处理<br/>
