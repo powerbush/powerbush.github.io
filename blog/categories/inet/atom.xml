@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Repo | My Octopress Blog]]></title>
-  <link href="http://blog.liao.bz/blog/categories/repo/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Inet | My Octopress Blog]]></title>
+  <link href="http://blog.liao.bz/blog/categories/inet/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz/"/>
   <updated>2014-12-16T16:25:24+08:00</updated>
   <id>http://blog.liao.bz/</id>
@@ -12,6 +12,308 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[MR82_JB5_1.19_20140125版代码编译脚本讲解]]></title>
+    <link href="http://blog.liao.bz/blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie/"/>
+    <updated>2014-02-07T11:24:00+08:00</updated>
+    <id>http://blog.liao.bz/blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie</id>
+    <content type="html"><![CDATA[<p>在8312/8382平台上，因为软件上无法做到对不同版本及容量RAM的兼容，例如DDR2与DDR3，512MB与1024MB。之前的做法都是根据客户的需求，从而手动修改custom_MemoryDevice.h文件来编译相应的固件。<br/>
+为了减少无谓的重复累赘的工作，新版代码再次对编译脚本进行更新，具体更新代码可自行查阅mediatek/config/common目录下的编译脚本。下面是对更新点的讲解。<br/>
+本次更新的核心是对RAM版本和容量各种组合的重命名。理解了命名方式，便可以熟练的掌握和使用新的编译脚本。<br/>
+如下图，新的命名可分为三部分：第一部分是RAM版本，第二部分是片选数量，第三部分是RAM容量。目前5种版本RAM具体含义可参照下图。</p>
+
+<!-- more -->
+
+
+<p><img class="center <a" src="href="http://192.168.2.96/blogimgs/2014-02-07-1-1.png">http://192.168.2.96/blogimgs/2014-02-07-1-1.png</a>&#8221; width=&#8221;644&#8221; height=&#8221;421&#8221; title=&#8221;5种版本的RAM&#8221; >
+而新的编译脚本则须加上RAM代号：如想编译DDR3.1024MB的MR6012H1C1W1软件，编译脚本为
+    ./pack_user_image.sh R321 mr601 MR6012H1C1W1 new
+同时为了方便编译中性软件，在编译的时候也可以用R代替RAM型号，编译脚本则会自动编译多个preloader并打包(仅pack脚本，make脚本不支持)。如：
+    ./pack_user_image.sh R mr601 MR6012H1C1W1 new</p>
+
+<p>PS：<br/>
+1.DDR2频率默认为533MHz，DDR3频率默认为916MHz。<br/>
+2.目前R212的仅有spetex的PL017。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Camera插值]]></title>
+    <link href="http://blog.liao.bz/blog/2014/01/03/cameracha-zhi/"/>
+    <updated>2014-01-03T09:55:00+08:00</updated>
+    <id>http://blog.liao.bz/blog/2014/01/03/cameracha-zhi</id>
+    <content type="html"><![CDATA[<h4>Camera插值在底层已经做好，我们只需要在中间层和app层添加一个对应的picture size即可。但是有一些限制条件需要注意：</h4>
+
+<h5>1．插值的倍数只能小于等于16倍，也就是说假如是1M的sensor，那最多只能插值到16M；</h5>
+
+<h5>2．插值后的width和height都不能超过8192，也就是picture size设置的width和height的大小都不能超过8192；</h5>
+
+<h5>3．若插值的大小超过12M：则需要打补丁</h5>
+
+<h5>4．由于hardware jpeg encoder的限制，插值时设置的width和height请您分别都设为16的整数倍，若设置非16整数倍的width或height，则可能导致拍出来的图片会有异常(如图片扭曲、花屏、连拍的图片绿屏)。</h5>
+
+<!-- more -->
+
+
+<h2>下面是关于插值的方法：</h2>
+
+<h3>（一）中间层修改</h3>
+
+<h4>1.mediatek/custom/common/hal/imgsensor/\<sensor name\>/config.ftbl.\<sensor name\>.h</h4>
+
+<p>（若没有该文件，则修改mediatek/custom/common/hal/imgsensor/src/config.ftbl.common_raw.h或者config.ftbl.common_yuv.h）<br/>
+在如下定义picture size的地方增加您想要的size (宽和高必须是16的整数倍)，如果已经包含您要加的size，就不需要再增加。
+    #if 1
+        //  Picture Size
+        FTABLE_CONFIG_AS_TYPE_OF_DEFAULT_VALUES(
+            KEY_AS<em>(MtkCameraParameters::KEY_PICTURE_SIZE),
+            SCENE_AS_DEFAULT_SCENE(
+                ITEM_AS_DEFAULT</em>(&ldquo;2560x1920&rdquo;),
+                ITEM_AS_VALUES_(
+                    &ldquo;320x240&rdquo;,  &ldquo;640x480&rdquo;,  &ldquo;1024x768&rdquo;,  &ldquo;1280x720&rdquo;,  &ldquo;1280x768&rdquo;,  &ldquo;1280x960&rdquo;
+                )
+            ),
+        )
+    #endif</p>
+
+<p>例如：
+    //  Picture Size
+    FTABLE_CONFIG_AS_TYPE_OF_DEFAULT_VALUES(
+        KEY_AS<em>(MtkCameraParameters::KEY_PICTURE_SIZE),
+        SCENE_AS_DEFAULT_SCENE(
+            ITEM_AS_DEFAULT</em>(&ldquo;2560x1920&rdquo;),
+            ITEM_AS_VALUES_(
+                &ldquo;320x240&rdquo;,  &ldquo;640x480&rdquo;,  &ldquo;1024x768&rdquo;,  &ldquo;1280x720&rdquo;,  &ldquo;1280x768&rdquo;,  &ldquo;1280x960&rdquo;,  &ldquo;1920x1088&rdquo;,  &ldquo;1920x1152&rdquo;,
+            )
+        ),
+    )</p>
+
+<p>1920:1088 ≈ 16:9<br/>
+1920:1152 ≈ 5:3</p>
+
+<p>如果是16:9的屏幕,则得确保2个分辨率都添加<br/>
+width：height ≈ 16:9<br/>
+width：height ≈ 5:3</p>
+
+<h3>（二）app层的修改可以按照如下来修改：</h3>
+
+<h4>1．packages/apps/Camera/res/values/strings.xml</h4>
+
+<p>增加您想要的size，如果已经包含您要加的size，就不需要再增加</p>
+
+<pre><code>&lt;string name="pref_camera_picturesize_entry_3264x2448"&gt;8M pixels&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_2592x1936"&gt;5M pixels&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_2048x1536"&gt;3M pixels&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_1600x1200"&gt;2M pixels&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_1280x960"&gt;1.3M pixels&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_1024x768"&gt;1M pixels&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_640x480"&gt;VGA&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_320x240"&gt;QVGA&lt;/string&gt;
+</code></pre>
+
+<p>例如：</p>
+
+<pre><code>&lt;string name="pref_camera_picturesize_entry_3264x2448"&gt;8M pixels&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_2592x1936"&gt;5M pixels&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_2048x1536"&gt;3M pixels&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_1920x1088"&gt;2M pixels&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_1920x1152"&gt;2M pixels&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_1600x1200"&gt;2M pixels&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_1280x960"&gt;1.3M pixels&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_1024x768"&gt;1M pixels&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_640x480"&gt;VGA&lt;/string&gt;
+&lt;string name="pref_camera_picturesize_entry_320x240"&gt;QVGA&lt;/string&gt;
+</code></pre>
+
+<h4>2．packages/apps/Camera/res/values/arrays.xml</h4>
+
+<pre><code>&lt;string-array name="pref_camera_picturesize_entries" translatable="false"&gt;
+    &lt;!-- TODO: Change to a better name of the preference.
+            The first element of the array should be
+            "pref_camera_picturesize_entry_2592x1944". However, we are too
+            late for the translation. Since we show the same label as the
+            second item, we just use the second one instead.
+    --&gt;
+    &lt;!-- 4:3 --&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_320x240&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1024x768&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_4096x3072&lt;/item&gt;
+    &lt;!-- 16:9 --&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x720&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1152&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2560x1440&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2992x1680&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_3328x1872&lt;/item&gt;
+    &lt;!-- 5:3 --&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x768&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
+    &lt;!-- 3:2 --&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+&lt;/string-array&gt;
+</code></pre>
+
+<p>增加您想要的size，如果已经包含您要加的size，就不需要再增加
+例如：</p>
+
+<pre><code>&lt;string-array name="pref_camera_picturesize_entries" translatable="false"&gt;
+    &lt;!-- TODO: Change to a better name of the preference.
+            The first element of the array should be
+            "pref_camera_picturesize_entry_2592x1944". However, we are too
+            late for the translation. Since we show the same label as the
+            second item, we just use the second one instead.
+    --&gt;
+    &lt;!-- 4:3 --&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_320x240&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1024x768&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_4096x3072&lt;/item&gt;
+    &lt;!-- 16:9 --&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x720&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1920x1088&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1152&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2560x1440&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2992x1680&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_3328x1872&lt;/item&gt;
+    &lt;!-- 5:3 --&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x768&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1920x1152&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
+    &lt;!-- 3:2 --&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
+    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+&lt;/string-array&gt;
+</code></pre>
+
+<h4>3．packages/apps/Camera/res/values/arrays.xml</h4>
+
+<pre><code>&lt;string-array name="pref_camera_picturesize_entryvalues" translatable="false"&gt;
+    &lt;!-- 4:3 --&gt;
+    &lt;item&gt;320x240&lt;/item&gt;
+    &lt;item&gt;640x480&lt;/item&gt;
+    &lt;item&gt;1024x768&lt;/item&gt;
+    &lt;item&gt;1280x960&lt;/item&gt;
+    &lt;item&gt;1600x1200&lt;/item&gt;
+    &lt;item&gt;2048x1536&lt;/item&gt;
+    &lt;item&gt;2560x1920&lt;/item&gt;
+    &lt;item&gt;3264x2448&lt;/item&gt;
+    &lt;item&gt;4096x3072&lt;/item&gt;
+    &lt;!-- 16:9 --&gt;
+    &lt;item&gt;640x352&lt;/item&gt;
+    &lt;item&gt;1280x720&lt;/item&gt;
+    &lt;item&gt;2048x1152&lt;/item&gt;
+    &lt;item&gt;2560x1440&lt;/item&gt;
+    &lt;item&gt;2992x1680&lt;/item&gt;
+    &lt;item&gt;3328x1872&lt;/item&gt;
+    &lt;!-- 5:3 --&gt;
+    &lt;item&gt;1280x768&lt;/item&gt;
+    &lt;item&gt;1600x960&lt;/item&gt;
+    &lt;item&gt;2880x1728&lt;/item&gt;
+    &lt;item&gt;3600x2160&lt;/item&gt;
+    &lt;!-- 3:2 --&gt;
+    &lt;item&gt;1440x960&lt;/item&gt;
+    &lt;item&gt;2048x1360&lt;/item&gt;
+    &lt;item&gt;2560x1712&lt;/item&gt;
+&lt;/string-array&gt;
+</code></pre>
+
+<p>增加您想要的size，如果已经包含你要加的size，就不需要再增加<br/>
+例如：</p>
+
+<pre><code>&lt;string-array name="pref_camera_picturesize_entryvalues" translatable="false"&gt;
+    &lt;!-- 4:3 --&gt;
+    &lt;item&gt;320x240&lt;/item&gt;
+    &lt;item&gt;640x480&lt;/item&gt;
+    &lt;item&gt;1024x768&lt;/item&gt;
+    &lt;item&gt;1280x960&lt;/item&gt;
+    &lt;item&gt;1600x1200&lt;/item&gt;
+    &lt;item&gt;2048x1536&lt;/item&gt;
+    &lt;item&gt;2560x1920&lt;/item&gt;
+    &lt;item&gt;3264x2448&lt;/item&gt;
+    &lt;item&gt;4096x3072&lt;/item&gt;
+    &lt;!-- 16:9 --&gt;
+    &lt;item&gt;640x352&lt;/item&gt;
+    &lt;item&gt;1280x720&lt;/item&gt;
+    &lt;item&gt;1920x1088&lt;/item&gt;
+    &lt;item&gt;2048x1152&lt;/item&gt;
+    &lt;item&gt;2560x1440&lt;/item&gt;
+    &lt;item&gt;2992x1680&lt;/item&gt;
+    &lt;item&gt;3328x1872&lt;/item&gt;
+    &lt;!-- 5:3 --&gt;
+    &lt;item&gt;1280x768&lt;/item&gt;
+    &lt;item&gt;1600x960&lt;/item&gt;
+    &lt;item&gt;1920x1152&lt;/item&gt;
+    &lt;item&gt;2880x1728&lt;/item&gt;
+    &lt;item&gt;3600x2160&lt;/item&gt;
+    &lt;!-- 3:2 --&gt;
+    &lt;item&gt;1440x960&lt;/item&gt;
+    &lt;item&gt;2048x1360&lt;/item&gt;
+    &lt;item&gt;2560x1712&lt;/item&gt;
+&lt;/string-array&gt;
+</code></pre>
+
+<h4>4．packages/apps/Camera/src/com/Android/Camera/CameraSettings.java</h4>
+
+<pre><code>public static final String[] PICTURE_SIZE_16_9 = new String[] {
+    "640x352",
+    "1280x720",
+    "2048x1152",
+    "2560x1440",
+    "2992x1680",
+    "3328x1872",
+};
+
+public static final String[] PICTURE_SIZE_5_3 = new String[] {
+    "1280x768",
+    "1600x960",
+    "2880x1728",
+    "3600x2160",
+};
+</code></pre>
+
+<p>增加您想要的size，如果已经包含你要加的size，就不需要再增加<br/>
+例如：
+s
+    public static final String[] PICTURE_SIZE_16_9 = new String[] {
+        &ldquo;640x352&rdquo;,
+        &ldquo;1280x720&rdquo;,
+        &ldquo;1920x1088&rdquo;,
+        &ldquo;2048x1152&rdquo;,
+        &ldquo;2560x1440&rdquo;,
+        &ldquo;2992x1680&rdquo;,
+        &ldquo;3328x1872&rdquo;,
+    };</p>
+
+<pre><code>public static final String[] PICTURE_SIZE_5_3 = new String[] {
+    "1280x768",
+    "1600x960",
+    "1920x1152",
+    "2880x1728",
+    "3600x2160",
+};
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[常用命令2]]></title>
@@ -401,194 +703,6 @@ git push master --all
 </span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/mk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mk&quot;</span> <span class="nt">/&gt;</span>
 </span><span class='line'><span class="nt">&lt;/project&gt;</span>
 </span></code></pre></td></tr></table></div></figure></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Repo添加project后补全本地分支]]></title>
-    <link href="http://blog.liao.bz/blog/2013/10/18/repo-project-add-local-branch-doc/"/>
-    <updated>2013-10-18T15:00:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/10/18/repo-project-add-local-branch-doc</id>
-    <content type="html"><![CDATA[<h2>概述</h2>
-
-<p>在repo的服务器端添加新project时(例如添加了MD900项目),本地完成同步后执行repo branch会碰到下面的情况:
-    liaobz@elink:~/code/md77$ repo branch
-       elink_sw                  | not in:
-                                       alps/mediatek/config/md900
-                                       alps/mediatek/custom/md900
-                                       alps/vendor/mediatek/md900
-    *  mtk                       | not in:
-                                       alps/mediatek/config/md900
-                                       alps/mediatek/custom/md900
-                                       alps/vendor/mediatek/md900
-碰到上面的情况的原因是新添加的repo project在本地没有创建本地分支,所以我们需要手动补全本地分支.</p>
-
-<!--more-->
-
-
-<h2>补全mtk分支</h2>
-
-<p>mtk分支是在执行repo start mtk &ndash;all之后生成的分支，所以可以通过repo start mtk &ndash;all补全分支，也可执行repo start mtk [projectName]建立mtk分支，如
-    liaobz@elink:~/code/md77$ repo start mtk &ndash;all
-或
-    liaobz@elink:~/code/md77$ repo start mtk alps/mediatek/config/md900
-    liaobz@elink:~/code/md77$ repo start mtk alps/mediatek/custom/md900
-    liaobz@elink:~/code/md77$ repo start mtk alps/vendor/mediatek/md900
-完成上述步骤之后结果如下:
-    liaobz@elink:~/code/md77$ repo branch
-       elink_sw                  | not in:
-                                       alps/mediatek/config/md900
-                                       alps/mediatek/custom/md900
-                                       alps/vendor/mediatek/md900
-    *  mtk                       | in all projects</p>
-
-<h2>补全elink_sw分支</h2>
-
-<p>elink_sw分支是通过repo forall -c git checkout -b elink_sw md77/elink_sw命令创建的分支，所以可以再次执行此命令补全分支
-    liaobz@elink:~/code/md77$ repo forall -c git checkout -b elink_sw md77/elink_sw
-结果会有两类
-    fatal: git checkout: branch elink_sw already exists
-    Branch elink_sw set up to track remote branch elink_sw from md77.
-或
-    Switched to a new branch &lsquo;elink_sw&rsquo;
-两种均是正常结果.<br/>
-如果过程完全正常,就会得到以下结果
-    liaobz@elink:~/code/md77$ repo branch
-    *  elink_sw                  | in all projects</p>
-
-<pre><code>   mtk                       | in all projects
-</code></pre>
-
-<hr />
-
-<h2>补充一:</h2>
-
-<p>在尝试补全elink_sw分支,可能会得到以下两种结果
-    fatal: git checkout: branch elink_sw already exists
-    Branch elink_sw set up to track remote branch elink_sw from md77.
-或
-    fatal: git checkout: updating paths is incompatible with switching branches.
-    Did you intend to checkout &lsquo;md77/elink_sw&rsquo; which can not be resolved as commit?
-前一种提示可以忽略,后一种提示是因为服务器端尚未创建elink_sw分支,请联系代码管理员并晚些时候再尝试同步elink_sw分支.</p>
-
-<h2>补充二:</h2>
-
-<p>本地的其他工作分支请执行以下命令补全
-    repo forall -c git checkout -b local_branch elink_sw</p>
-
-<h2>补充三:</h2>
-
-<p>若出现以下提示
-    fatal: git checkout: updating paths is incompatible with switching branches.
-    Did you intend to checkout &lsquo;md77/elink_sw&rsquo; which can not be resolved as commit?
-请重新sync之后再补全elink_sw分支
-    repo checkout mtk
-    repo sync</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[往服务器上push代码流程]]></title>
-    <link href="http://blog.liao.bz/blog/2013/09/28/push-doc/"/>
-    <updated>2013-09-28T18:04:00+08:00</updated>
-    <id>http://blog.liao.bz/blog/2013/09/28/push-doc</id>
-    <content type="html"><![CDATA[<h2>1.本地合成、测试及提交</h2>
-
-<h3>1).本地合成与测试</h3>
-
-<p>  所有的补丁都须在自己的分支上合成,假设本地分支名为patch<br/>
-  在工作目录执行repo branch,所示结果如下: (*  patch表示当前所在为patch)</p>
-
-<pre><code>lbz@elink:~$ repo branch
-   elink_sw                  | in all projects
-   mtk                       | in all projects
-*  patch                     | in all projects
-</code></pre>
-
-<!--more-->
-
-
-<h3>2).本地提交</h3>
-
-<p>  在所有补丁都测试完毕后,执行repo status<br/>
-  所示结果如下:<br/>
-<code>
-    lbz@elink:~$ repo status
-    # on branch patch
-    project alps/mediatek/config/md790/             branch patch
-     -m     ProjectConfig.mk
-    project alps/mediatek/custom/common/            branch patch
-     --     kernel/lcm/md970_lvds/md970_lvds.c
-</code>
-  根据上述结果可知:<br/>
-  a.在alps/mediatek/config/md790/下修改了ProjectConfig.mk文件<br/>
-  b.在alps/mediatek/custom/common/添加了kernel/lcm/md970_lvds/md970_lvds.c文件</p>
-
-<p>  则可以用如下方式提交</p>
-
-<h4>a.提交对ProjectConfig.mk文件的修改</h4>
-
-<p>  (如果只是对文件修改,git commit -am &ldquo;注释&#8221;等价于执行git add 和 git commit两条命令)</p>
-
-<pre><code>lbz@elink:~$ cd alps/mediatek/config/md790/
-lbz@elink:~/alps/mediatek/config/md790$ git commit -am "update ProjectConfig.mk"
-</code></pre>
-
-<h4>b.提交对kernel/lcm/md970_lvds/md970_lvds.c文件的添加</h4>
-
-<p>  (不可通过git commit -am &ldquo;注释&#8221;来提交,须单独git add命令)</p>
-
-<pre><code>lbz@elink:~$ cd alps/mediatek/custom/common/
-lbz@elink:~/alps/mediatek/custom/common$ git add kernel/lcm/md970_lvds/md970_lvds.c
-lbz@elink:~/alps/mediatek/custom/common$ git commit -m "add md970_lvds.c"
-</code></pre>
-
-<p>  至此,本地分支的提交结束</p>
-
-<h2>2.远程分支的拉取及与本地分支的合并</h2>
-
-<p>  考虑到不同人可能会对同一文件进行修改从而导致修改冲突,所以所有冲突必须在本地解决之后才能执行push操作</p>
-
-<h3>1).远程分支的拉取</h3>
-
-<p>  拉取分支先须切换到mtk分支执行repo sync命令,然后执行切换到elink_sw分支执行pull操作</p>
-
-<h4>a.repo sync</h4>
-
-<p>  (repo sync的输出内容与更新内容的多少有变更)</p>
-
-<pre><code>lbz@elink:~$ repo checkout mtk
-Checkout mtk: 100% (424/424), done.  
-liaobz@elink-soft-desktop:~$ repo sync
-Fetching projects: 100% (424/424), done.
-Syncing work tree: 100% (424/424), done.
-</code></pre>
-
-<h4>b.拉取远程代码</h4>
-
-<pre><code>lbz@elink:~$ repo checkout elink_sw
-Checkout elink_sw: 100% (424/424), done.  
-lbz@elink:~$ repo forall -c git pull md77 elink_sw
-</code></pre>
-
-<h3>2).本地分支的合并</h3>
-
-<p>  合并代码的时候须先切换到本地分支再进行git merge操作</p>
-
-<pre><code>lbz@elink:~$ repo checkout patch
-Checkout patch: 100% (424/424), done.  
-lbz@elink:~$ repo forall -c git merge elink_sw
-</code></pre>
-
-<p>  注意输出内容,如果提到有冲突(conflict),须手动处理<br/>
-  (过程暂略)</p>
-
-<p>  <strong>!重要:须在合并完后再次测试,保证所做的更改未受合并影响</strong></p>
-
-<h2>3.提交到远程elink_preview分支</h2>
-
-<pre><code>git push md77 patch:elink_preview
-</code></pre>
 ]]></content>
   </entry>
   
