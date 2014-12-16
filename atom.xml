@@ -4,7 +4,7 @@
   <title><![CDATA[liao.bz]]></title>
   <link href="http://blog.liao.bz/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz/"/>
-  <updated>2014-12-16T09:53:09+08:00</updated>
+  <updated>2014-12-16T09:59:37+08:00</updated>
   <id>http://blog.liao.bz/</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -972,19 +972,19 @@ repo forall -c git push remotegitname 1.22_20130903
 git的tag，跟分支一样简单。<br/>
 每次上线养成打tag好习惯 :)</p>
 
-<pre><code>$: git tag 1.22_20130903_publish  
+<pre><code>$: git tag 1.22_20130903_publish
 </code></pre>
 
 <p>加上-f覆盖原有的tag</p>
 
-<pre><code>$: git tag -f 1.22_20130903_publish 
+<pre><code>$: git tag -f 1.22_20130903_publish
 </code></pre>
 
 <p>显示所有的tag</p>
 
 <pre><code>$: git tag
-1.22_20130903_publish 
-1.22_20130903_publish 
+1.22_20130903_publish
+1.22_20130903_publish
 1.22_20130903_publish
 </code></pre>
 
@@ -996,11 +996,13 @@ git的tag，跟分支一样简单。<br/>
 <p>tag要push上服务器，操作跟分支操作没有任何区别</p>
 
 <ul>
-<li>push 到服务器
-  $: git push origin 1.22_20130903_publish</li>
-<li>从服务器上删除<br/>
-  $: git push origin :1.22_20130903_publish
-具体详细，可以参考git tag的帮助，或者参考其他资料获取。</li>
+<li><p>push 到服务器 *</p>
+
+<p>  $: git push origin 1.22_20130903_publish
+*从服务器上删除</p>
+
+<p>  $: git push origin :1.22_20130903_publish
+具体详细，可以参考git tag的帮助，或者参考其他资料获取。</p></li>
 </ul>
 
 ]]></content>
