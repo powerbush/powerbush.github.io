@@ -4,7 +4,7 @@
   <title><![CDATA[liao.bz]]></title>
   <link href="http://blog.liao.bz/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz/"/>
-  <updated>2014-12-16T09:44:39+08:00</updated>
+  <updated>2014-12-16T09:53:09+08:00</updated>
   <id>http://blog.liao.bz/</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -903,10 +903,15 @@ lbz@elink:~/work/project/md77$ repo forall -c git pull md77 elink_sw
 
 <p>Elink 软件机型由内部自己定义，不和外部的外壳等等有关联。遵循简单、规律、好记的原则。<br/>
 具体命名规则，请参考《Elink 机型命名规则》，项目前立项时，由项目经理提供配置单给蔡锦涛负责命名。<br/>
-在代码里面，请给与变量PRODUCT_MODEL赋值，例如<br/>
-    PRODUCT_MODEL=MD7065HC
-那么系统标准的属性,ro.product.model会变赋值为<br/>
-    ro.product.model=MD7065HC</p>
+在代码里面，请给与变量PRODUCT_MODEL赋值，例如</p>
+
+<pre><code>PRODUCT_MODEL=MD7065HC
+</code></pre>
+
+<p>那么系统标准的属性,ro.product.model会变赋值为</p>
+
+<pre><code>ro.product.model=MD7065HC  
+</code></pre>
 
 <h2>2：软件版本号命名：</h2>
 
@@ -918,8 +923,9 @@ lbz@elink:~/work/project/md77$ repo forall -c git pull md77 elink_sw
 <ul>
 <li><p>中性版本号：
 为了标示当前中性代码的版本情况，不随编译日期而改变，一般不随版型机型而变化，影响整份代码，一般不包含客户需求，乃Elink标准软件。<br/>
-给属性ro.custom.build.version赋值即可，例如：<br/>
-  ro.custom.build.version=1.22_20130903
+给属性ro.custom.build.version赋值即可，例如：</p>
+
+<p>  ro.custom.build.version=1.22_20130903
 这个版本号还和Readme对应起来，还和代码的TAG对应起来，便于管理。</p></li>
 <li><p>生成版本号
 表示软件工程师制作出来的软件版本号命名，和具体的版型机型有关，还和编译日期有关。<br/>
@@ -949,30 +955,48 @@ lbz@elink:~/work/project/md77$ repo forall -c git pull md77 elink_sw
 </ol>
 
 
-<p>使用方法：
-    git tag 1.22_20130903
-简单操作如下：
-    repo checkout elink_sw
-    repo forall -c git tag 1.22_20130903
-    repo forall -c git push remotegitname elink_sw：elink_sw   //推代码到指定分支上去。
-    repo forall -c git push remotegitname 1.22_20130903
-具体请参考：<br/>
+<p>使用方法：</p>
+
+<pre><code>git tag 1.22_20130903
+</code></pre>
+
+<p>简单操作如下：</p>
+
+<pre><code>repo checkout elink_sw
+repo forall -c git tag 1.22_20130903
+repo forall -c git push remotegitname elink_sw：elink_sw   //推代码到指定分支上去。
+repo forall -c git push remotegitname 1.22_20130903
+</code></pre>
+
+<p>具体请参考：<br/>
 git的tag，跟分支一样简单。<br/>
-每次上线养成打tag好习惯 :)<br/>
-    $: git tag 1.22_20130903_publish<br/>
-加上-f覆盖原有的tag
-    $: git tag -f 1.22_20130903_publish
-显示所有的tag
-    $: git tag
-    1.22_20130903_publish
-    1.22_20130903_publish
-    1.22_20130903_publish
-删除tag
-    $: git tag -d 1.22_20130903_publish
-tag要push上服务器，操作跟分支操作没有任何区别</p>
+每次上线养成打tag好习惯 :)</p>
+
+<pre><code>$: git tag 1.22_20130903_publish  
+</code></pre>
+
+<p>加上-f覆盖原有的tag</p>
+
+<pre><code>$: git tag -f 1.22_20130903_publish 
+</code></pre>
+
+<p>显示所有的tag</p>
+
+<pre><code>$: git tag
+1.22_20130903_publish 
+1.22_20130903_publish 
+1.22_20130903_publish
+</code></pre>
+
+<p>删除tag</p>
+
+<pre><code>$: git tag -d 1.22_20130903_publish
+</code></pre>
+
+<p>tag要push上服务器，操作跟分支操作没有任何区别</p>
 
 <ul>
-<li>push 到服务器<br/>
+<li>push 到服务器
   $: git push origin 1.22_20130903_publish</li>
 <li>从服务器上删除<br/>
   $: git push origin :1.22_20130903_publish
@@ -1003,27 +1027,38 @@ tag要push上服务器，操作跟分支操作没有任何区别</p>
 <!--more-->
 
 
-<p>注：在git服务器端使用<br/>
-    cat id_rsa.pub_paul >> .ssh/authorized_keys<br/>
-把用户的公钥放在服务器上，这样你就可以用自己的私钥id_rsa来访问了。这个就是原理。</p>
+<p>注：在git服务器端使用</p>
+
+<pre><code>cat id_rsa.pub_paul &gt;&gt; .ssh/authorized_keys  
+</code></pre>
+
+<p>把用户的公钥放在服务器上，这样你就可以用自己的私钥id_rsa来访问了。这个就是原理。</p>
 
 <h2>2：配置git</h2>
 
 <p>git不欢迎没有name &amp; email的陌生人。<br/>
-请使用<br/>
-    git config &ndash;global user.name
-    git config &ndash;global user.email
-来简单配置下git.<br/>
+请使用</p>
+
+<pre><code>git config --global user.name
+git config --global user.email 
+</code></pre>
+
+<p>来简单配置下git.<br/>
 另外最重要的是学习git的使用。</p>
 
 <h2>3. 下载代码：</h2>
 
-<p>1> MT6577
-    repo init -u elink-code-server@192.168.2.96:/elink_code/sda/md77/manifest.git
-    repo sync
-2> MT6589
-    repo init -u elink-code-server@192.168.2.96:/elink_code/sda/mq89/manifest.git
-    repo sync</p>
+<p>1> MT6577</p>
+
+<pre><code>repo init -u elink-code-server@192.168.2.96:/elink_code/sda/md77/manifest.git
+repo sync
+</code></pre>
+
+<p>2> MT6589</p>
+
+<pre><code>repo init -u elink-code-server@192.168.2.96:/elink_code/sda/mq89/manifest.git
+repo sync
+</code></pre>
 
 <h2>4：管理代码：</h2>
 
@@ -1032,19 +1067,24 @@ tag要push上服务器，操作跟分支操作没有任何区别</p>
 分支elink_sw ，为我们公版的稳定版本的source.<br/>
 分支yourbranchname ,为个人开发使用的版本,请更改名字，例如paul。</p>
 
-<p>拿到代码后，请执行以下操作
-    repo start mtk &ndash;all                                          //建立mtk分支
-    repo forall -c &ldquo;git checkout -b elink_sw md77/elink_sw&rdquo;       //获取elink_sw分支
-    repo forall -c &ldquo;git checkout -b yourbranchname elink_sw&rdquo;
-!ok，你现在可以在你自己的yourbranchname上开发了。<br/>
+<p>拿到代码后，请执行以下操作</p>
+
+<pre><code>repo start mtk --all                                          //建立mtk分支
+repo forall -c "git checkout -b elink_sw md77/elink_sw"       //获取elink_sw分支
+repo forall -c "git checkout -b yourbranchname elink_sw"
+</code></pre>
+
+<p>!ok，你现在可以在你自己的yourbranchname上开发了。<br/>
 <strong>注意一下操作：</strong><br/>
 1. 你如果要开发新客户，请基于elink_sw分支做新的分支，例如分支newbranchname。命令 repo forall -c &ldquo;git checkout -b newbranchname elink_sw&rdquo;<br/>
 2. 如果elink_sw有更新，请先切换到elink_sw分支，然后执行repo forall -c &ldquo;git pull remoteG remotebranchname&rdquo;<br/>
 其中 remoteG表示的是远程仓库名，remotebranchname代表的是远程分支名。<br/>
 3. 如果有你补丁确认后，需要上传到服务器，请再自己的分支确认后，然后更新到elink_sw分支。<br/>
 然后在inet_team分支上，操作 repo forall -c &ldquo;git push remote_res_name elink_sw:elink_preview&rdquo;<br/>
-即：<br/>
-    repo forall -c &ldquo;git push md77 elink_sw:elink_preview&rdquo;</p>
+即：</p>
+
+<pre><code>repo forall -c "git push md77 elink_sw:elink_preview"
+</code></pre>
 
 <p>上传代码，会影响到所有的同事，所以请确认后再上传,谁上传谁负责。</p>
 

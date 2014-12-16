@@ -90,10 +90,15 @@
 
 <p>Elink 软件机型由内部自己定义，不和外部的外壳等等有关联。遵循简单、规律、好记的原则。<br/>
 具体命名规则，请参考《Elink 机型命名规则》，项目前立项时，由项目经理提供配置单给蔡锦涛负责命名。<br/>
-在代码里面，请给与变量PRODUCT_MODEL赋值，例如<br/>
-    PRODUCT_MODEL=MD7065HC
-那么系统标准的属性,ro.product.model会变赋值为<br/>
-    ro.product.model=MD7065HC</p>
+在代码里面，请给与变量PRODUCT_MODEL赋值，例如</p>
+
+<pre><code>PRODUCT_MODEL=MD7065HC
+</code></pre>
+
+<p>那么系统标准的属性,ro.product.model会变赋值为</p>
+
+<pre><code>ro.product.model=MD7065HC  
+</code></pre>
 
 <h2>2：软件版本号命名：</h2>
 
@@ -105,8 +110,9 @@
 <ul>
 <li><p>中性版本号：
 为了标示当前中性代码的版本情况，不随编译日期而改变，一般不随版型机型而变化，影响整份代码，一般不包含客户需求，乃Elink标准软件。<br/>
-给属性ro.custom.build.version赋值即可，例如：<br/>
-  ro.custom.build.version=1.22_20130903
+给属性ro.custom.build.version赋值即可，例如：</p>
+
+<p>  ro.custom.build.version=1.22_20130903
 这个版本号还和Readme对应起来，还和代码的TAG对应起来，便于管理。</p></li>
 <li><p>生成版本号
 表示软件工程师制作出来的软件版本号命名，和具体的版型机型有关，还和编译日期有关。<br/>
@@ -136,30 +142,48 @@
 </ol>
 
 
-<p>使用方法：
-    git tag 1.22_20130903
-简单操作如下：
-    repo checkout elink_sw
-    repo forall -c git tag 1.22_20130903
-    repo forall -c git push remotegitname elink_sw：elink_sw   //推代码到指定分支上去。
-    repo forall -c git push remotegitname 1.22_20130903
-具体请参考：<br/>
+<p>使用方法：</p>
+
+<pre><code>git tag 1.22_20130903
+</code></pre>
+
+<p>简单操作如下：</p>
+
+<pre><code>repo checkout elink_sw
+repo forall -c git tag 1.22_20130903
+repo forall -c git push remotegitname elink_sw：elink_sw   //推代码到指定分支上去。
+repo forall -c git push remotegitname 1.22_20130903
+</code></pre>
+
+<p>具体请参考：<br/>
 git的tag，跟分支一样简单。<br/>
-每次上线养成打tag好习惯 :)<br/>
-    $: git tag 1.22_20130903_publish<br/>
-加上-f覆盖原有的tag
-    $: git tag -f 1.22_20130903_publish
-显示所有的tag
-    $: git tag
-    1.22_20130903_publish
-    1.22_20130903_publish
-    1.22_20130903_publish
-删除tag
-    $: git tag -d 1.22_20130903_publish
-tag要push上服务器，操作跟分支操作没有任何区别</p>
+每次上线养成打tag好习惯 :)</p>
+
+<pre><code>$: git tag 1.22_20130903_publish  
+</code></pre>
+
+<p>加上-f覆盖原有的tag</p>
+
+<pre><code>$: git tag -f 1.22_20130903_publish 
+</code></pre>
+
+<p>显示所有的tag</p>
+
+<pre><code>$: git tag
+1.22_20130903_publish 
+1.22_20130903_publish 
+1.22_20130903_publish
+</code></pre>
+
+<p>删除tag</p>
+
+<pre><code>$: git tag -d 1.22_20130903_publish
+</code></pre>
+
+<p>tag要push上服务器，操作跟分支操作没有任何区别</p>
 
 <ul>
-<li>push 到服务器<br/>
+<li>push 到服务器
   $: git push origin 1.22_20130903_publish</li>
 <li>从服务器上删除<br/>
   $: git push origin :1.22_20130903_publish
@@ -239,6 +263,22 @@ tag要push上服务器，操作跟分支操作没有任何区别</p>
     
       <li class="post">
         <a href="/blog/2013/10/19/build-repo-server/">Git仓库的建立以及repo的管理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/10/18/repo-project-add-local-branch-doc/">Repo添加project后补全本地分支</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/28/push-doc/">往服务器上push代码流程</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/03/elink-code-server-guide2/">Elink 代码规范</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/03/elink-code-server-guide1/">Elink-code-server-guide</a>
       </li>
     
   </ul>
