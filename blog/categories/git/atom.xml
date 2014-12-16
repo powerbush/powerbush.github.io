@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | liao.bz]]></title>
   <link href="http://blog.liao.bz/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz/"/>
-  <updated>2014-12-16T10:08:33+08:00</updated>
+  <updated>2014-12-16T10:12:19+08:00</updated>
   <id>http://blog.liao.bz/</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -330,25 +330,17 @@ project alps/vendor/mediatek/md706/             branch huama
 
 <p>在manifest目录下新建default.xml文件，此文件是repo管理的所有git仓库(project)<br/>
 内容如下:
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=<span class="ni">&amp;ldquo;</span>1.0<span class="ni">&amp;rdquo;</span> encoding=<span class="ni">&amp;ldquo;</span>UTF-8<span class="ni">&amp;rdquo;</span>?&gt;
-</span><span class='line'><span class="nt">&lt;manifest&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;remote</span>  <span class="na">name=</span><span class="s">&quot;alps&quot;</span>
-</span><span class='line'>           <span class="na">fetch=</span><span class="s">&quot;DIR&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;default</span> <span class="na">revision=</span><span class="s">&quot;master&quot;</span>
-</span><span class='line'>           <span class="na">remote=</span><span class="s">&quot;alps&quot;</span>
-</span><span class='line'>           <span class="na">sync-j=</span><span class="s">&quot;4&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;project</span> <span class="na">path=</span><span class="s">&quot;alps/ndk&quot;</span> <span class="na">name=</span><span class="s">&quot;alps/ndk&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'><span class="nt">&lt;/manifest&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+{% codeblock lang:xml %}
+&lt;?xml version=&ldquo;1.0&rdquo; encoding=&ldquo;UTF-8&rdquo;?>
+<manifest>
+    <remote  name="alps"
+           fetch="DIR" />
+    <default revision="master"
+           remote="alps"
+           sync-j="4" />
+    <project path="alps/ndk" name="alps/ndk" />
+</manifest>
+{% endcodeblock %}</p>
 
 <h4>注：</h4>
 
@@ -378,29 +370,21 @@ git push master --all
 <h2>5. 关于copyfile的使用</h2>
 
 <p>前面有提到过git仓库创建的原则，比如alps/mediatek/platform目录下，需要对common和mt6589，2个目录各创建一个git仓库，但是在alps/mediatek/platform下存在Android.mk和rules.mk 文件，如果只在common和mt6589这2个目录中建立仓库则会导致无法下载这2个mk文件，所以推荐的方法是在alps/mediatek/platform下面创建目录mtk，并将Android.mk和rules.mk这2个文件复制过去，下载的时候就可以通过copyfile去实现了
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;project</span> <span class="na">path=</span><span class="s">&quot;alps/mediatek/platform/mtk&quot;</span> <span class="na">name=</span><span class="s">&quot;alps/mediatek/platform/mtk/&quot;</span> <span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;Android.mk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mediatek/platform/Android.mk&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;rules.mk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mediatek/platform/rules.mk&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'><span class="nt">&lt;/project&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
+{% codeblock lang:xml %}
+<project path="alps/mediatek/platform/mtk" name="alps/mediatek/platform/mtk/" >
+    <copyfile src="Android.mk" dest="alps/mediatek/platform/Android.mk" />
+    <copyfile src="rules.mk" dest="alps/mediatek/platform/rules.mk" />
+</project>
+{% endcodeblock %}
 同理alps下面的几个文件也是一样的情况，可以在build中穿件mtk文件夹
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;project</span> <span class="na">path=</span><span class="s">&quot;alps/build&quot;</span> <span class="na">name=</span><span class="s">&quot;alps/build/&quot;</span> <span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/Makefile&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/Makefile&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/makeMtk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/makeMtk&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/mbldenv.sh&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mbldenv.sh&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/mk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mk&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'><span class="nt">&lt;/project&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+{% codeblock lang:xml %}
+<project path="alps/build" name="alps/build/" >
+    <copyfile src="mtk/Makefile" dest="alps/Makefile" />
+    <copyfile src="mtk/makeMtk" dest="alps/makeMtk" />
+    <copyfile src="mtk/mbldenv.sh" dest="alps/mbldenv.sh" />
+    <copyfile src="mtk/mk" dest="alps/mk" />
+</project>
+{% endcodeblock %}</p>
 ]]></content>
   </entry>
   
@@ -588,6 +572,11 @@ lbz@elink:~/work/project/md77$ repo forall -c git merge elink_sw
 <h2>3.提交到远程elink_preview分支</h2>
 
 <pre><code>git push md77 patch:elink_preview
+</code></pre>
+
+<pre><code class="seq">Alice-&gt;Bob: Hello Bob, how are you?
+Note right of Bob: Bob thinks
+Bob--&gt;Alice: I am good thanks!
 </code></pre>
 ]]></content>
   </entry>
