@@ -1,89 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://blog.liao.bz/blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie/</loc>
+    <loc>http://blog.liao.bz//blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie/</loc>
     <lastmod>2014-02-07T11:24:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/blog/2014/01/03/cameracha-zhi/</loc>
+    <loc>http://blog.liao.bz//blog/2014/01/03/cameracha-zhi/</loc>
     <lastmod>2014-01-03T09:55:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/blog/2013/10/19/git-common-commands/</loc>
+    <loc>http://blog.liao.bz//blog/2013/10/19/git-common-commands/</loc>
     <lastmod>2013-10-19T17:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/blog/2013/10/19/common-commands/</loc>
+    <loc>http://blog.liao.bz//blog/2013/10/19/common-commands/</loc>
     <lastmod>2013-10-19T16:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/blog/2013/10/19/build-repo-server/</loc>
+    <loc>http://blog.liao.bz//blog/2013/10/19/build-repo-server/</loc>
     <lastmod>2013-10-19T15:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/blog/2013/10/18/repo-project-add-local-branch-doc/</loc>
+    <loc>http://blog.liao.bz//blog/2013/10/18/repo-project-add-local-branch-doc/</loc>
     <lastmod>2013-10-18T15:00:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/blog/2013/09/28/push-doc/</loc>
+    <loc>http://blog.liao.bz//blog/2013/09/28/push-doc/</loc>
     <lastmod>2013-09-28T18:04:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/blog/2013/09/03/elink-code-server-guide2/</loc>
+    <loc>http://blog.liao.bz//blog/2013/09/03/elink-code-server-guide2/</loc>
     <lastmod>2013-09-03T18:05:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/blog/2013/09/03/elink-code-server-guide1/</loc>
+    <loc>http://blog.liao.bz//blog/2013/09/03/elink-code-server-guide1/</loc>
     <lastmod>2013-09-03T18:04:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/blog/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu/</loc>
+    <loc>http://blog.liao.bz//blog/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu/</loc>
     <lastmod>2013-04-18T23:35:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/blog/2013/04/17/zai-da-octpress/</loc>
+    <loc>http://blog.liao.bz//blog/2013/04/17/zai-da-octpress/</loc>
     <lastmod>2013-04-17T22:25:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/blog/2013/01/29/guan-yu-dian-chi-shou-ming/</loc>
+    <loc>http://blog.liao.bz//blog/2013/01/29/guan-yu-dian-chi-shou-ming/</loc>
     <lastmod>2013-01-29T22:51:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/blog/2013/01/26/tong-guo-fan-she-yin-cang-mx2de-smartbar/</loc>
+    <loc>http://blog.liao.bz//blog/2013/01/26/tong-guo-fan-she-yin-cang-mx2de-smartbar/</loc>
     <lastmod>2013-01-26T05:40:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/blog/2013/01/21/octopressde-luo-cheng/</loc>
+    <loc>http://blog.liao.bz//blog/2013/01/21/octopressde-luo-cheng/</loc>
     <lastmod>2013-01-21T22:31:00+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/</loc>
-    <lastmod>2014-12-16T15:29:43+08:00</lastmod>
+    <loc>http://blog.liao.bz//</loc>
+    <lastmod>2014-12-16T15:32:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/blog/archives/</loc>
-    <lastmod>2014-12-16T15:29:43+08:00</lastmod>
+    <loc>http://blog.liao.bz//blog/archives/</loc>
+    <lastmod>2014-12-16T15:32:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://blog.liao.bz/404.html</loc>
+    <loc>http://blog.liao.bz//404.html</loc>
     <lastmod>2014-12-12T17:00:06+08:00</lastmod>
     <priority>0.6</priority>
   </url>
