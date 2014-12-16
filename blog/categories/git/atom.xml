@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | liao.bz]]></title>
   <link href="http://blog.liao.bz/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz/"/>
-  <updated>2014-12-16T10:03:46+08:00</updated>
+  <updated>2014-12-16T10:08:33+08:00</updated>
   <id>http://blog.liao.bz/</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -511,17 +511,16 @@ git push master --all
 <h3>2).本地提交</h3>
 
 <p>  在所有补丁都测试完毕后,执行repo status<br/>
-  所示结果如下:</p>
-
-<pre><code>lbz@elink:~/work/project/md77$ repo status
-# on branch patch
-project alps/mediatek/config/md790/             branch patch
- -m     ProjectConfig.mk
-project alps/mediatek/custom/common/            branch patch
- --     kernel/lcm/md970_lvds/md970_lvds.c
-</code></pre>
-
-<p>  根据上述结果可知:<br/>
+  所示结果如下:<br/>
+<code>
+    lbz@elink:~/work/project/md77$ repo status
+    # on branch patch
+    project alps/mediatek/config/md790/             branch patch
+     -m     ProjectConfig.mk
+    project alps/mediatek/custom/common/            branch patch
+     --     kernel/lcm/md970_lvds/md970_lvds.c
+</code>
+  根据上述结果可知:<br/>
   a.在alps/mediatek/config/md790/下修改了ProjectConfig.mk文件<br/>
   b.在alps/mediatek/custom/common/添加了kernel/lcm/md970_lvds/md970_lvds.c文件</p>
 
