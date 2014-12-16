@@ -9,7 +9,10 @@
   <meta name="author" content="liaobz">
 
   
-  <meta name="description" content="1、同步代码 repo start mtk --all // 建立mtk分支
+  <meta name="description" content="1、同步代码 1
+2
+3
+repo start mtk --all // 建立mtk分支
 repo forall -c "git checkout -b elink_sw md77/elink_sw" // 获取elink_sw分支
 repo forall -c "git checkout -b &hellip;">
   
@@ -89,27 +92,33 @@ repo forall -c "git checkout -b &hellip;">
 
 <div class="entry-content"><h2>1、同步代码</h2>
 
-<pre><code>repo start mtk --all                                          // 建立mtk分支
-repo forall -c "git checkout -b elink_sw md77/elink_sw"       // 获取elink_sw分支
-repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分支
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo start mtk --all                                          // 建立mtk分支
+</span><span class='line'>repo forall -c "git checkout -b elink_sw md77/elink_sw"       // 获取elink_sw分支
+</span><span class='line'>repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分支</span></code></pre></td></tr></table></div></figure>
+
 
 <p>你如果要开发新客户，请基于elink_sw分支做新的分支，例如分支newbranchname。命令</p>
 
-<pre><code>repo forall -c "git checkout -b newbranchname elink_sw"
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo forall -c "git checkout -b newbranchname elink_sw"</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>2、查看分支</h2>
 
-<pre><code>repo branch
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo branch</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>3、切换分支</h2>
 
 <p>repo checkout [分支名字] 如：</p>
 
-<pre><code>repo checkout elink_sw
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo checkout elink_sw</span></code></pre></td></tr></table></div></figure>
+
 
 <!--more-->
 
@@ -118,8 +127,9 @@ repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分
 
 <p>git commit -am [&ldquo;注释&rdquo;] 如：</p>
 
-<pre><code>git commit -am "update some apk"
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git commit -am "update some apk"</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>5、提交代码</h2>
 
@@ -150,34 +160,50 @@ repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分
 
 <p>在alps目录下面：</p>
 
-<pre><code>cp mediatek/config/common/make_user_project.sh ./
-./make_user_project.sh md706 [机型名（MD7062HC2W1）] [new | systemimage | userdataimage]
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cp mediatek/config/common/make_user_project.sh ./
+</span><span class='line'>./make_user_project.sh md706 [机型名（MD7062HC2W1）] [new | systemimage | userdataimage]</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>8、提交删除掉的文件：</h2>
 
 <p>切换到删除过文件的分支;如： cd alps/vendor/mediatek/md706/<br/>
 逐一删除文件，命令：git rm 删除的文件;如：</p>
 
-<pre><code>git rm artifacts/out/target/product/md706/data/app/com.adobe.reader.apk
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git rm artifacts/out/target/product/md706/data/app/com.adobe.reader.apk</span></code></pre></td></tr></table></div></figure>
+
 
 <p>所有的文件执行上面的命令之后输入 repo status会出现类似如下的情况：</p>
 
-<pre><code>xx@elinktek:~/code/xx_repo_git/alps/vendor/mediatek/md706$ repo status
-# on branch huama
-project alps/vendor/mediatek/md706/             branch huama
- D-     artifacts/out/target/product/md706/data/app/aldiko.apk
- D-     artifacts/out/target/product/md706/data/app/com.adobe.reader.apk
- D-     artifacts/out/target/product/md706/data/app/documents.apk
- D-     artifacts/out/target/product/md706/data/app/flashplayer-2.apk
- D-     artifacts/out/target/product/md706/data/app/gps_test.1.2.4.apk
- D-     artifacts/out/target/product/md706/system/appbackup/aldiko.apk
- D-     artifacts/out/target/product/md706/system/appbackup/com.adobe.reader.apk
- D-     artifacts/out/target/product/md706/system/appbackup/documents.apk
- D-     artifacts/out/target/product/md706/system/appbackup/flashplayer-2.apk
- D-     artifacts/out/target/product/md706/system/appbackup/gps_test.1.2.4.apk
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>xx@elinktek:~/code/xx_repo_git/alps/vendor/mediatek/md706$ repo status
+</span><span class='line'># on branch huama
+</span><span class='line'>project alps/vendor/mediatek/md706/             branch huama
+</span><span class='line'> D-     artifacts/out/target/product/md706/data/app/aldiko.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/data/app/com.adobe.reader.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/data/app/documents.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/data/app/flashplayer-2.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/data/app/gps_test.1.2.4.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/system/appbackup/aldiko.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/system/appbackup/com.adobe.reader.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/system/appbackup/documents.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/system/appbackup/flashplayer-2.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/system/appbackup/gps_test.1.2.4.apk</span></code></pre></td></tr></table></div></figure>
+
 
 <p>然后输入git commit -m &ldquo;注释&rdquo; 来提交</p>
 </div>

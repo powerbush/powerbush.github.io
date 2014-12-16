@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://blog.liao.bz/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz/"/>
-  <updated>2014-12-16T16:30:20+08:00</updated>
+  <updated>2014-12-16T16:47:01+08:00</updated>
   <id>http://blog.liao.bz/</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -27,10 +27,17 @@
 
 
 <p><img class="center" src="http://192.168.2.96/blogimgs/2014-02-07-1-1.png" width="644" height="421" title="5种版本的RAM" >
-而新的编译脚本则须加上RAM代号：如想编译DDR3.1024MB的MR6012H1C1W1软件，编译脚本为
-    ./pack_user_image.sh R321 mr601 MR6012H1C1W1 new
-同时为了方便编译中性软件，在编译的时候也可以用R代替RAM型号，编译脚本则会自动编译多个preloader并打包(仅pack脚本，make脚本不支持)。如：
-    ./pack_user_image.sh R mr601 MR6012H1C1W1 new</p>
+而新的编译脚本则须加上RAM代号：如想编译DDR3.1024MB的MR6012H1C1W1软件，编译脚本为</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>./pack_user_image.sh R321 mr601 MR6012H1C1W1 new</span></code></pre></td></tr></table></div></figure>
+
+
+<p>同时为了方便编译中性软件，在编译的时候也可以用R代替RAM型号，编译脚本则会自动编译多个preloader并打包(仅pack脚本，make脚本不支持)。如：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>./pack_user_image.sh R mr601 MR6012H1C1W1 new</span></code></pre></td></tr></table></div></figure>
+
 
 <p>PS：<br/>
 1.DDR2频率默认为533MHz，DDR3频率默认为916MHz。<br/>
@@ -63,31 +70,57 @@
 <h4>1.mediatek/custom/common/hal/imgsensor/\<sensor name\>/config.ftbl.\<sensor name\>.h</h4>
 
 <p>（若没有该文件，则修改mediatek/custom/common/hal/imgsensor/src/config.ftbl.common_raw.h或者config.ftbl.common_yuv.h）<br/>
-在如下定义picture size的地方增加您想要的size (宽和高必须是16的整数倍)，如果已经包含您要加的size，就不需要再增加。
-    #if 1
-        //  Picture Size
-        FTABLE_CONFIG_AS_TYPE_OF_DEFAULT_VALUES(
-            KEY_AS<em>(MtkCameraParameters::KEY_PICTURE_SIZE),
-            SCENE_AS_DEFAULT_SCENE(
-                ITEM_AS_DEFAULT</em>(&ldquo;2560x1920&rdquo;),
-                ITEM_AS_VALUES_(
-                    &ldquo;320x240&rdquo;,  &ldquo;640x480&rdquo;,  &ldquo;1024x768&rdquo;,  &ldquo;1280x720&rdquo;,  &ldquo;1280x768&rdquo;,  &ldquo;1280x960&rdquo;
-                )
-            ),
-        )
-    #endif</p>
+在如下定义picture size的地方增加您想要的size (宽和高必须是16的整数倍)，如果已经包含您要加的size，就不需要再增加。</p>
 
-<p>例如：
-    //  Picture Size
-    FTABLE_CONFIG_AS_TYPE_OF_DEFAULT_VALUES(
-        KEY_AS<em>(MtkCameraParameters::KEY_PICTURE_SIZE),
-        SCENE_AS_DEFAULT_SCENE(
-            ITEM_AS_DEFAULT</em>(&ldquo;2560x1920&rdquo;),
-            ITEM_AS_VALUES_(
-                &ldquo;320x240&rdquo;,  &ldquo;640x480&rdquo;,  &ldquo;1024x768&rdquo;,  &ldquo;1280x720&rdquo;,  &ldquo;1280x768&rdquo;,  &ldquo;1280x960&rdquo;,  &ldquo;1920x1088&rdquo;,  &ldquo;1920x1152&rdquo;,
-            )
-        ),
-    )</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#if 1
+</span><span class='line'>    //  Picture Size
+</span><span class='line'>    FTABLE_CONFIG_AS_TYPE_OF_DEFAULT_VALUES(
+</span><span class='line'>        KEY_AS_(MtkCameraParameters::KEY_PICTURE_SIZE),
+</span><span class='line'>        SCENE_AS_DEFAULT_SCENE(
+</span><span class='line'>            ITEM_AS_DEFAULT_("2560x1920"),
+</span><span class='line'>            ITEM_AS_VALUES_(
+</span><span class='line'>                "320x240",  "640x480",  "1024x768",  "1280x720",  "1280x768",  "1280x960"
+</span><span class='line'>            )
+</span><span class='line'>        ),
+</span><span class='line'>    )
+</span><span class='line'>#endif</span></code></pre></td></tr></table></div></figure>
+
+
+<p>例如：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>//  Picture Size
+</span><span class='line'>FTABLE_CONFIG_AS_TYPE_OF_DEFAULT_VALUES(
+</span><span class='line'>    KEY_AS_(MtkCameraParameters::KEY_PICTURE_SIZE),
+</span><span class='line'>    SCENE_AS_DEFAULT_SCENE(
+</span><span class='line'>        ITEM_AS_DEFAULT_("2560x1920"),
+</span><span class='line'>        ITEM_AS_VALUES_(
+</span><span class='line'>            "320x240",  "640x480",  "1024x768",  "1280x720",  "1280x768",  "1280x960",  "1920x1088",  "1920x1152",
+</span><span class='line'>        )
+</span><span class='line'>    ),
+</span><span class='line'>)</span></code></pre></td></tr></table></div></figure>
+
 
 <p>1920:1088 ≈ 16:9<br/>
 1920:1152 ≈ 5:3</p>
@@ -102,216 +135,394 @@ width：height ≈ 5:3</p>
 
 <p>增加您想要的size，如果已经包含您要加的size，就不需要再增加</p>
 
-<pre><code>&lt;string name="pref_camera_picturesize_entry_3264x2448"&gt;8M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_2592x1936"&gt;5M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_2048x1536"&gt;3M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1600x1200"&gt;2M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1280x960"&gt;1.3M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1024x768"&gt;1M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_640x480"&gt;VGA&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_320x240"&gt;QVGA&lt;/string&gt;
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;string name="pref_camera_picturesize_entry_3264x2448"&gt;8M pixels&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_2592x1936"&gt;5M pixels&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_2048x1536"&gt;3M pixels&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_1600x1200"&gt;2M pixels&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_1280x960"&gt;1.3M pixels&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_1024x768"&gt;1M pixels&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_640x480"&gt;VGA&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_320x240"&gt;QVGA&lt;/string&gt;</span></code></pre></td></tr></table></div></figure>
+
 
 <p>例如：</p>
 
-<pre><code>&lt;string name="pref_camera_picturesize_entry_3264x2448"&gt;8M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_2592x1936"&gt;5M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_2048x1536"&gt;3M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1920x1088"&gt;2M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1920x1152"&gt;2M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1600x1200"&gt;2M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1280x960"&gt;1.3M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_1024x768"&gt;1M pixels&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_640x480"&gt;VGA&lt;/string&gt;
-&lt;string name="pref_camera_picturesize_entry_320x240"&gt;QVGA&lt;/string&gt;
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;string name="pref_camera_picturesize_entry_3264x2448"&gt;8M pixels&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_2592x1936"&gt;5M pixels&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_2048x1536"&gt;3M pixels&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_1920x1088"&gt;2M pixels&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_1920x1152"&gt;2M pixels&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_1600x1200"&gt;2M pixels&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_1280x960"&gt;1.3M pixels&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_1024x768"&gt;1M pixels&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_640x480"&gt;VGA&lt;/string&gt;
+</span><span class='line'>&lt;string name="pref_camera_picturesize_entry_320x240"&gt;QVGA&lt;/string&gt;</span></code></pre></td></tr></table></div></figure>
+
 
 <h4>2．packages/apps/Camera/res/values/arrays.xml</h4>
 
-<pre><code>&lt;string-array name="pref_camera_picturesize_entries" translatable="false"&gt;
-    &lt;!-- TODO: Change to a better name of the preference.
-            The first element of the array should be
-            "pref_camera_picturesize_entry_2592x1944". However, we are too
-            late for the translation. Since we show the same label as the
-            second item, we just use the second one instead.
-    --&gt;
-    &lt;!-- 4:3 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_320x240&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1024x768&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_4096x3072&lt;/item&gt;
-    &lt;!-- 16:9 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x720&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1152&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2560x1440&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2992x1680&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_3328x1872&lt;/item&gt;
-    &lt;!-- 5:3 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x768&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
-    &lt;!-- 3:2 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
-&lt;/string-array&gt;
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;string-array name="pref_camera_picturesize_entries" translatable="false"&gt;
+</span><span class='line'>    &lt;!-- TODO: Change to a better name of the preference.
+</span><span class='line'>            The first element of the array should be
+</span><span class='line'>            "pref_camera_picturesize_entry_2592x1944". However, we are too
+</span><span class='line'>            late for the translation. Since we show the same label as the
+</span><span class='line'>            second item, we just use the second one instead.
+</span><span class='line'>    --&gt;
+</span><span class='line'>    &lt;!-- 4:3 --&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_320x240&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1024x768&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_4096x3072&lt;/item&gt;
+</span><span class='line'>    &lt;!-- 16:9 --&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x720&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1152&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2560x1440&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2992x1680&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_3328x1872&lt;/item&gt;
+</span><span class='line'>    &lt;!-- 5:3 --&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x768&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
+</span><span class='line'>    &lt;!-- 3:2 --&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+</span><span class='line'>&lt;/string-array&gt;</span></code></pre></td></tr></table></div></figure>
+
 
 <p>增加您想要的size，如果已经包含您要加的size，就不需要再增加
 例如：</p>
 
-<pre><code>&lt;string-array name="pref_camera_picturesize_entries" translatable="false"&gt;
-    &lt;!-- TODO: Change to a better name of the preference.
-            The first element of the array should be
-            "pref_camera_picturesize_entry_2592x1944". However, we are too
-            late for the translation. Since we show the same label as the
-            second item, we just use the second one instead.
-    --&gt;
-    &lt;!-- 4:3 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_320x240&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1024x768&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_4096x3072&lt;/item&gt;
-    &lt;!-- 16:9 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x720&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1920x1088&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1152&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2560x1440&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2992x1680&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_3328x1872&lt;/item&gt;
-    &lt;!-- 5:3 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x768&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1920x1152&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
-    &lt;!-- 3:2 --&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
-    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
-&lt;/string-array&gt;
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;string-array name="pref_camera_picturesize_entries" translatable="false"&gt;
+</span><span class='line'>    &lt;!-- TODO: Change to a better name of the preference.
+</span><span class='line'>            The first element of the array should be
+</span><span class='line'>            "pref_camera_picturesize_entry_2592x1944". However, we are too
+</span><span class='line'>            late for the translation. Since we show the same label as the
+</span><span class='line'>            second item, we just use the second one instead.
+</span><span class='line'>    --&gt;
+</span><span class='line'>    &lt;!-- 4:3 --&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_320x240&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1024x768&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_4096x3072&lt;/item&gt;
+</span><span class='line'>    &lt;!-- 16:9 --&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_640x480&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x720&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1920x1088&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1152&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2560x1440&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2992x1680&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_3328x1872&lt;/item&gt;
+</span><span class='line'>    &lt;!-- 5:3 --&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x768&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1600x1200&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1920x1152&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_3264x2448&lt;/item&gt;
+</span><span class='line'>    &lt;!-- 3:2 --&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_1280x960&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2048x1536&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;@string/pref_camera_picturesize_entry_2592x1936&lt;/item&gt;
+</span><span class='line'>&lt;/string-array&gt;</span></code></pre></td></tr></table></div></figure>
+
 
 <h4>3．packages/apps/Camera/res/values/arrays.xml</h4>
 
-<pre><code>&lt;string-array name="pref_camera_picturesize_entryvalues" translatable="false"&gt;
-    &lt;!-- 4:3 --&gt;
-    &lt;item&gt;320x240&lt;/item&gt;
-    &lt;item&gt;640x480&lt;/item&gt;
-    &lt;item&gt;1024x768&lt;/item&gt;
-    &lt;item&gt;1280x960&lt;/item&gt;
-    &lt;item&gt;1600x1200&lt;/item&gt;
-    &lt;item&gt;2048x1536&lt;/item&gt;
-    &lt;item&gt;2560x1920&lt;/item&gt;
-    &lt;item&gt;3264x2448&lt;/item&gt;
-    &lt;item&gt;4096x3072&lt;/item&gt;
-    &lt;!-- 16:9 --&gt;
-    &lt;item&gt;640x352&lt;/item&gt;
-    &lt;item&gt;1280x720&lt;/item&gt;
-    &lt;item&gt;2048x1152&lt;/item&gt;
-    &lt;item&gt;2560x1440&lt;/item&gt;
-    &lt;item&gt;2992x1680&lt;/item&gt;
-    &lt;item&gt;3328x1872&lt;/item&gt;
-    &lt;!-- 5:3 --&gt;
-    &lt;item&gt;1280x768&lt;/item&gt;
-    &lt;item&gt;1600x960&lt;/item&gt;
-    &lt;item&gt;2880x1728&lt;/item&gt;
-    &lt;item&gt;3600x2160&lt;/item&gt;
-    &lt;!-- 3:2 --&gt;
-    &lt;item&gt;1440x960&lt;/item&gt;
-    &lt;item&gt;2048x1360&lt;/item&gt;
-    &lt;item&gt;2560x1712&lt;/item&gt;
-&lt;/string-array&gt;
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;string-array name="pref_camera_picturesize_entryvalues" translatable="false"&gt;
+</span><span class='line'>    &lt;!-- 4:3 --&gt;
+</span><span class='line'>    &lt;item&gt;320x240&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;640x480&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;1024x768&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;1280x960&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;1600x1200&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2048x1536&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2560x1920&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;3264x2448&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;4096x3072&lt;/item&gt;
+</span><span class='line'>    &lt;!-- 16:9 --&gt;
+</span><span class='line'>    &lt;item&gt;640x352&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;1280x720&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2048x1152&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2560x1440&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2992x1680&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;3328x1872&lt;/item&gt;
+</span><span class='line'>    &lt;!-- 5:3 --&gt;
+</span><span class='line'>    &lt;item&gt;1280x768&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;1600x960&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2880x1728&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;3600x2160&lt;/item&gt;
+</span><span class='line'>    &lt;!-- 3:2 --&gt;
+</span><span class='line'>    &lt;item&gt;1440x960&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2048x1360&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2560x1712&lt;/item&gt;
+</span><span class='line'>&lt;/string-array&gt;</span></code></pre></td></tr></table></div></figure>
+
 
 <p>增加您想要的size，如果已经包含你要加的size，就不需要再增加<br/>
 例如：</p>
 
-<pre><code>&lt;string-array name="pref_camera_picturesize_entryvalues" translatable="false"&gt;
-    &lt;!-- 4:3 --&gt;
-    &lt;item&gt;320x240&lt;/item&gt;
-    &lt;item&gt;640x480&lt;/item&gt;
-    &lt;item&gt;1024x768&lt;/item&gt;
-    &lt;item&gt;1280x960&lt;/item&gt;
-    &lt;item&gt;1600x1200&lt;/item&gt;
-    &lt;item&gt;2048x1536&lt;/item&gt;
-    &lt;item&gt;2560x1920&lt;/item&gt;
-    &lt;item&gt;3264x2448&lt;/item&gt;
-    &lt;item&gt;4096x3072&lt;/item&gt;
-    &lt;!-- 16:9 --&gt;
-    &lt;item&gt;640x352&lt;/item&gt;
-    &lt;item&gt;1280x720&lt;/item&gt;
-    &lt;item&gt;1920x1088&lt;/item&gt;
-    &lt;item&gt;2048x1152&lt;/item&gt;
-    &lt;item&gt;2560x1440&lt;/item&gt;
-    &lt;item&gt;2992x1680&lt;/item&gt;
-    &lt;item&gt;3328x1872&lt;/item&gt;
-    &lt;!-- 5:3 --&gt;
-    &lt;item&gt;1280x768&lt;/item&gt;
-    &lt;item&gt;1600x960&lt;/item&gt;
-    &lt;item&gt;1920x1152&lt;/item&gt;
-    &lt;item&gt;2880x1728&lt;/item&gt;
-    &lt;item&gt;3600x2160&lt;/item&gt;
-    &lt;!-- 3:2 --&gt;
-    &lt;item&gt;1440x960&lt;/item&gt;
-    &lt;item&gt;2048x1360&lt;/item&gt;
-    &lt;item&gt;2560x1712&lt;/item&gt;
-&lt;/string-array&gt;
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;string-array name="pref_camera_picturesize_entryvalues" translatable="false"&gt;
+</span><span class='line'>    &lt;!-- 4:3 --&gt;
+</span><span class='line'>    &lt;item&gt;320x240&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;640x480&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;1024x768&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;1280x960&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;1600x1200&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2048x1536&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2560x1920&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;3264x2448&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;4096x3072&lt;/item&gt;
+</span><span class='line'>    &lt;!-- 16:9 --&gt;
+</span><span class='line'>    &lt;item&gt;640x352&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;1280x720&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;1920x1088&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2048x1152&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2560x1440&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2992x1680&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;3328x1872&lt;/item&gt;
+</span><span class='line'>    &lt;!-- 5:3 --&gt;
+</span><span class='line'>    &lt;item&gt;1280x768&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;1600x960&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;1920x1152&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2880x1728&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;3600x2160&lt;/item&gt;
+</span><span class='line'>    &lt;!-- 3:2 --&gt;
+</span><span class='line'>    &lt;item&gt;1440x960&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2048x1360&lt;/item&gt;
+</span><span class='line'>    &lt;item&gt;2560x1712&lt;/item&gt;
+</span><span class='line'>&lt;/string-array&gt;</span></code></pre></td></tr></table></div></figure>
+
 
 <h4>4．packages/apps/Camera/src/com/Android/Camera/CameraSettings.java</h4>
 
-<pre><code>public static final String[] PICTURE_SIZE_16_9 = new String[] {
-    "640x352",
-    "1280x720",
-    "2048x1152",
-    "2560x1440",
-    "2992x1680",
-    "3328x1872",
-};
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public static final String[] PICTURE_SIZE_16_9 = new String[] {
+</span><span class='line'>    "640x352",
+</span><span class='line'>    "1280x720",
+</span><span class='line'>    "2048x1152",
+</span><span class='line'>    "2560x1440",
+</span><span class='line'>    "2992x1680",
+</span><span class='line'>    "3328x1872",
+</span><span class='line'>};
+</span><span class='line'>
+</span><span class='line'>public static final String[] PICTURE_SIZE_5_3 = new String[] {
+</span><span class='line'>    "1280x768",
+</span><span class='line'>    "1600x960",
+</span><span class='line'>    "2880x1728",
+</span><span class='line'>    "3600x2160",
+</span><span class='line'>};</span></code></pre></td></tr></table></div></figure>
 
-public static final String[] PICTURE_SIZE_5_3 = new String[] {
-    "1280x768",
-    "1600x960",
-    "2880x1728",
-    "3600x2160",
-};
-</code></pre>
 
 <p>增加您想要的size，如果已经包含你要加的size，就不需要再增加<br/>
-例如：
-s
-    public static final String[] PICTURE_SIZE_16_9 = new String[] {
-        &ldquo;640x352&rdquo;,
-        &ldquo;1280x720&rdquo;,
-        &ldquo;1920x1088&rdquo;,
-        &ldquo;2048x1152&rdquo;,
-        &ldquo;2560x1440&rdquo;,
-        &ldquo;2992x1680&rdquo;,
-        &ldquo;3328x1872&rdquo;,
-    };</p>
+例如：</p>
 
-<pre><code>public static final String[] PICTURE_SIZE_5_3 = new String[] {
-    "1280x768",
-    "1600x960",
-    "1920x1152",
-    "2880x1728",
-    "3600x2160",
-};
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public static final String[] PICTURE_SIZE_16_9 = new String[] {
+</span><span class='line'>    "640x352",
+</span><span class='line'>    "1280x720",
+</span><span class='line'>    "1920x1088",
+</span><span class='line'>    "2048x1152",
+</span><span class='line'>    "2560x1440",
+</span><span class='line'>    "2992x1680",
+</span><span class='line'>    "3328x1872",
+</span><span class='line'>};
+</span><span class='line'>
+</span><span class='line'>public static final String[] PICTURE_SIZE_5_3 = new String[] {
+</span><span class='line'>    "1280x768",
+</span><span class='line'>    "1600x960",
+</span><span class='line'>    "1920x1152",
+</span><span class='line'>    "2880x1728",
+</span><span class='line'>    "3600x2160",
+</span><span class='line'>};</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   
@@ -419,27 +630,33 @@ git clean -fd  删除上一步命令显示的文件
     <id>http://blog.liao.bz/blog/2013/10/19/common-commands</id>
     <content type="html"><![CDATA[<h2>1、同步代码</h2>
 
-<pre><code>repo start mtk --all                                          // 建立mtk分支
-repo forall -c "git checkout -b elink_sw md77/elink_sw"       // 获取elink_sw分支
-repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分支
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo start mtk --all                                          // 建立mtk分支
+</span><span class='line'>repo forall -c "git checkout -b elink_sw md77/elink_sw"       // 获取elink_sw分支
+</span><span class='line'>repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分支</span></code></pre></td></tr></table></div></figure>
+
 
 <p>你如果要开发新客户，请基于elink_sw分支做新的分支，例如分支newbranchname。命令</p>
 
-<pre><code>repo forall -c "git checkout -b newbranchname elink_sw"
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo forall -c "git checkout -b newbranchname elink_sw"</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>2、查看分支</h2>
 
-<pre><code>repo branch
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo branch</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>3、切换分支</h2>
 
 <p>repo checkout [分支名字] 如：</p>
 
-<pre><code>repo checkout elink_sw
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo checkout elink_sw</span></code></pre></td></tr></table></div></figure>
+
 
 <!--more-->
 
@@ -448,8 +665,9 @@ repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分
 
 <p>git commit -am [&ldquo;注释&rdquo;] 如：</p>
 
-<pre><code>git commit -am "update some apk"
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git commit -am "update some apk"</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>5、提交代码</h2>
 
@@ -480,34 +698,50 @@ repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分
 
 <p>在alps目录下面：</p>
 
-<pre><code>cp mediatek/config/common/make_user_project.sh ./
-./make_user_project.sh md706 [机型名（MD7062HC2W1）] [new | systemimage | userdataimage]
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cp mediatek/config/common/make_user_project.sh ./
+</span><span class='line'>./make_user_project.sh md706 [机型名（MD7062HC2W1）] [new | systemimage | userdataimage]</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>8、提交删除掉的文件：</h2>
 
 <p>切换到删除过文件的分支;如： cd alps/vendor/mediatek/md706/<br/>
 逐一删除文件，命令：git rm 删除的文件;如：</p>
 
-<pre><code>git rm artifacts/out/target/product/md706/data/app/com.adobe.reader.apk
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git rm artifacts/out/target/product/md706/data/app/com.adobe.reader.apk</span></code></pre></td></tr></table></div></figure>
+
 
 <p>所有的文件执行上面的命令之后输入 repo status会出现类似如下的情况：</p>
 
-<pre><code>xx@elinktek:~/code/xx_repo_git/alps/vendor/mediatek/md706$ repo status
-# on branch huama
-project alps/vendor/mediatek/md706/             branch huama
- D-     artifacts/out/target/product/md706/data/app/aldiko.apk
- D-     artifacts/out/target/product/md706/data/app/com.adobe.reader.apk
- D-     artifacts/out/target/product/md706/data/app/documents.apk
- D-     artifacts/out/target/product/md706/data/app/flashplayer-2.apk
- D-     artifacts/out/target/product/md706/data/app/gps_test.1.2.4.apk
- D-     artifacts/out/target/product/md706/system/appbackup/aldiko.apk
- D-     artifacts/out/target/product/md706/system/appbackup/com.adobe.reader.apk
- D-     artifacts/out/target/product/md706/system/appbackup/documents.apk
- D-     artifacts/out/target/product/md706/system/appbackup/flashplayer-2.apk
- D-     artifacts/out/target/product/md706/system/appbackup/gps_test.1.2.4.apk
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>xx@elinktek:~/code/xx_repo_git/alps/vendor/mediatek/md706$ repo status
+</span><span class='line'># on branch huama
+</span><span class='line'>project alps/vendor/mediatek/md706/             branch huama
+</span><span class='line'> D-     artifacts/out/target/product/md706/data/app/aldiko.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/data/app/com.adobe.reader.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/data/app/documents.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/data/app/flashplayer-2.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/data/app/gps_test.1.2.4.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/system/appbackup/aldiko.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/system/appbackup/com.adobe.reader.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/system/appbackup/documents.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/system/appbackup/flashplayer-2.apk
+</span><span class='line'> D-     artifacts/out/target/product/md706/system/appbackup/gps_test.1.2.4.apk</span></code></pre></td></tr></table></div></figure>
+
 
 <p>然后输入git commit -m &ldquo;注释&rdquo; 来提交</p>
 ]]></content>
@@ -539,13 +773,21 @@ project alps/vendor/mediatek/md706/             branch huama
 
 <h3>1.3然后用vim编辑repo脚本</h3>
 
-<pre><code>vim /usr/bin/repo
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>vim /usr/bin/repo</span></code></pre></td></tr></table></div></figure>
 
-<p>修改
-    REPO_URL=&lsquo;elink-soft@192.168.2.253:~/repo/repo.git&rsquo;
-这句为之前repo程序目录的拷贝到的地址,如本处应改为
-    REPO_URL=&lsquo;/work/repo&rsquo;</p>
+
+<p>修改</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>REPO_URL='elink-soft@192.168.2.253:~/repo/repo.git'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这句为之前repo程序目录的拷贝到的地址,如本处应改为</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>REPO_URL='/work/repo'</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>2. git仓库的建立</h2>
 
@@ -561,29 +803,48 @@ project alps/vendor/mediatek/md706/             branch huama
 
 <h4>2.1.2</h4>
 
-<p>在mq89下面分别建立2个目录：alps、manifest.git
-    mkdir alps manifest.git
-    ls
-    alps manifest.git</p>
+<p>在mq89下面分别建立2个目录：alps、manifest.git</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir alps manifest.git
+</span><span class='line'>ls
+</span><span class='line'>alps manifest.git</span></code></pre></td></tr></table></div></figure>
+
 
 <h4>2.1.3</h4>
 
-<p>在manifest.git目录中创建空的git仓库
-    git init &ndash;bare</p>
+<p>在manifest.git目录中创建空的git仓库</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git init --bare</span></code></pre></td></tr></table></div></figure>
+
 
 <h4>2.1.4</h4>
 
 <p>很关键的一步，在alps下面创建**.git文件夹<br/>
 规则：事先规划应该在哪些目录下面建立git仓库，以方便代码的管理。如,alps/kernel下面需要一个仓库，那么<br/>
-就在alps目录下建立kernel.git目录，用于存放原始代码的远程仓库，然后初始化git，同2.3
-    cd alps
-    mkdir kernel.git
-    git init &ndash;bare
-如果是abi/cpp/下面有个git仓库<br/>
-则应该递归创建目录abi/cpp.git<br/>
-    cd alps
-    mkdir -p abi/cpp.git
-至此,服务器端的准备工作完毕</p>
+就在alps目录下建立kernel.git目录，用于存放原始代码的远程仓库，然后初始化git，同2.3</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd alps
+</span><span class='line'>mkdir kernel.git
+</span><span class='line'>git init --bare</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果是abi/cpp/下面有个git仓库<br/>
+则应该递归创建目录abi/cpp.git</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd alps
+</span><span class='line'>mkdir -p abi/cpp.git</span></code></pre></td></tr></table></div></figure>
+
+
+<p>至此,服务器端的准备工作完毕</p>
 
 <h3>2.2 本机端：</h3>
 
@@ -594,29 +855,51 @@ project alps/vendor/mediatek/md706/             branch huama
 
 <p>创建本地的git仓库，和2.1.4的路径是相互关联<br/>
 比如在服务器端有alps/kernel.git仓库<br/>
-则在本地需有alps/kernel/.git仓库,即初始化git仓库是在kernel目录下<br/>
-    cd alps/kernel
-    git init-db
-    git add .  <br/>
-    git commit -am &ldquo;prompt&rdquo;                  // 双引号内为修改提交提示，比如可以将prompt改成ph init git repository
-    git remote add master elink@192.168.2.98:~/mq89/alps/kernel.git  // 此句非常关键，把远程仓库和本地仓库联系起来
-    git push master &ndash;all
-如果是远程仓库abi/cpp.git
-    cd alps/abi/cpp
-    git add .  <br/>
-    git commit -am &ldquo;prompt&rdquo;       <br/>
-    git remote add master elink@192.168.2.98:~/mq89/alps/abi/cpp.git
-    git push master &ndash;all</p>
+则在本地需有alps/kernel/.git仓库,即初始化git仓库是在kernel目录下</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd alps/kernel
+</span><span class='line'>git init-db
+</span><span class='line'>git add .    
+</span><span class='line'>git commit -am "prompt"                  // 双引号内为修改提交提示，比如可以将prompt改成ph init git repository
+</span><span class='line'>git remote add master elink@192.168.2.98:~/mq89/alps/kernel.git  // 此句非常关键，把远程仓库和本地仓库联系起来
+</span><span class='line'>git push master --all</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果是远程仓库abi/cpp.git</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd alps/abi/cpp
+</span><span class='line'>git add .    
+</span><span class='line'>git commit -am "prompt"         
+</span><span class='line'>git remote add master elink@192.168.2.98:~/mq89/alps/abi/cpp.git
+</span><span class='line'>git push master --all</span></code></pre></td></tr></table></div></figure>
+
 
 <h4>2.2.2</h4>
 
-<p>克隆远程manifest.git目录,在mq89_std目录下
-    git clone elink@192.168.2.98:~/mq89/manifest.git
- 此时
-    ls mq89_std</p>
+<p>克隆远程manifest.git目录,在mq89_std目录下</p>
 
-<pre><code>alps manifest
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone elink@192.168.2.98:~/mq89/manifest.git</span></code></pre></td></tr></table></div></figure>
+
+
+<p> 此时</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ls mq89_std
+</span><span class='line'>alps manifest</span></code></pre></td></tr></table></div></figure>
+
 
 <hr />
 
@@ -662,22 +945,33 @@ project内容的path变量表示本地存放的目录，name表示服务器相�
 
 <h3>3.2 git add default.xml并提交</h3>
 
-<pre><code>cd mq89_std/manifest
-git add default.xml
-git commit -am "prompt"
-git remote add master elink@192.168.2.98:~/mq89/manifest.git
-git push master --all
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd mq89_std/manifest
+</span><span class='line'>git add default.xml
+</span><span class='line'>git commit -am "prompt"
+</span><span class='line'>git remote add master elink@192.168.2.98:~/mq89/manifest.git
+</span><span class='line'>git push master --all</span></code></pre></td></tr></table></div></figure>
+
 
 <h4>注：每次的更改都需要提交default.xml文件</h4>
 
 <h2>4. 客户端的下载</h2>
 
-<p>比如下载到repo-client文件夹中
-    cd repo-client
-    repo init -u [repo-server&rsquo;s directory]/manifest.git
-    repo sync
-即可以下载完成</p>
+<p>比如下载到repo-client文件夹中</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd repo-client
+</span><span class='line'>repo init -u [repo-server's directory]/manifest.git
+</span><span class='line'>repo sync</span></code></pre></td></tr></table></div></figure>
+
+
+<p>即可以下载完成</p>
 
 <h2>5. 关于copyfile的使用</h2>
 
@@ -1552,8 +1846,9 @@ fatal: The remote end hung up unexpectedly
     <content type="html"><![CDATA[<p>最初看了<a href="http://ghosert.loadtrend.com/">ghosert</a>后开始用octpress搭建传说中的程序员博客，但是弄了四五次仍然失败了。
 一开始参考<a href="http://octopress.org/docs/setup/">octpress</a>，在Deploying的时候选的是Github Pages，终究没能deploy成功。然后今天<a href="https://github.com%E4%B9%9F%E8%B7%9F%E7%9D%80Github">https://github.com%E4%B9%9F%E8%B7%9F%E7%9D%80Github</a> Pages在抢票助手的帮助下被GFW带走了，忽然又兴起尝试搭建Octpress，不过今天尝试在终端下通过goagent想要连接github时始终连不上。命令见下：</p>
 
-<pre><code>git config --global http.proxy http://127.0.0.1:8087
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git config --global http.proxy http://127.0.0.1:8087</span></code></pre></td></tr></table></div></figure>
+
 
 <!--more-->
 

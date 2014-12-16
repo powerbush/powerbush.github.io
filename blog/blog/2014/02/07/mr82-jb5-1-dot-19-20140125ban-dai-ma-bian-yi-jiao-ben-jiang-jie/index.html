@@ -95,10 +95,17 @@
 
 
 <p><img class="center" src="http://192.168.2.96/blogimgs/2014-02-07-1-1.png" width="644" height="421" title="5种版本的RAM" >
-而新的编译脚本则须加上RAM代号：如想编译DDR3.1024MB的MR6012H1C1W1软件，编译脚本为
-    ./pack_user_image.sh R321 mr601 MR6012H1C1W1 new
-同时为了方便编译中性软件，在编译的时候也可以用R代替RAM型号，编译脚本则会自动编译多个preloader并打包(仅pack脚本，make脚本不支持)。如：
-    ./pack_user_image.sh R mr601 MR6012H1C1W1 new</p>
+而新的编译脚本则须加上RAM代号：如想编译DDR3.1024MB的MR6012H1C1W1软件，编译脚本为</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>./pack_user_image.sh R321 mr601 MR6012H1C1W1 new</span></code></pre></td></tr></table></div></figure>
+
+
+<p>同时为了方便编译中性软件，在编译的时候也可以用R代替RAM型号，编译脚本则会自动编译多个preloader并打包(仅pack脚本，make脚本不支持)。如：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>./pack_user_image.sh R mr601 MR6012H1C1W1 new</span></code></pre></td></tr></table></div></figure>
+
 
 <p>PS：<br/>
 1.DDR2频率默认为533MHz，DDR3频率默认为916MHz。<br/>

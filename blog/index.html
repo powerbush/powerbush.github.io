@@ -227,27 +227,33 @@
 
   <div class="entry-content"><h2>1、同步代码</h2>
 
-<pre><code>repo start mtk --all                                          // 建立mtk分支
-repo forall -c "git checkout -b elink_sw md77/elink_sw"       // 获取elink_sw分支
-repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分支
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo start mtk --all                                          // 建立mtk分支
+</span><span class='line'>repo forall -c "git checkout -b elink_sw md77/elink_sw"       // 获取elink_sw分支
+</span><span class='line'>repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分支</span></code></pre></td></tr></table></div></figure>
+
 
 <p>你如果要开发新客户，请基于elink_sw分支做新的分支，例如分支newbranchname。命令</p>
 
-<pre><code>repo forall -c "git checkout -b newbranchname elink_sw"
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo forall -c "git checkout -b newbranchname elink_sw"</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>2、查看分支</h2>
 
-<pre><code>repo branch
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo branch</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>3、切换分支</h2>
 
 <p>repo checkout [分支名字] 如：</p>
 
-<pre><code>repo checkout elink_sw
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo checkout elink_sw</span></code></pre></td></tr></table></div></figure>
+
 
 </div>
   

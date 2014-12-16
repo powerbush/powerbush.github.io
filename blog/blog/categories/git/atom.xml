@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | liao.bz]]></title>
   <link href="http://blog.liao.bz//blog/categories/git/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz//"/>
-  <updated>2014-12-16T16:30:19+08:00</updated>
+  <updated>2014-12-16T16:47:02+08:00</updated>
   <id>http://blog.liao.bz//</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -117,37 +117,37 @@ git clean -fd  删除上一步命令显示的文件
     <id>http://blog.liao.bz//blog/2013/10/19/common-commands</id>
     <content type="html"><![CDATA[<h2>1、同步代码</h2>
 
-<pre><code>repo start mtk --all                                          // 建立mtk分支
-repo forall -c "git checkout -b elink_sw md77/elink_sw"       // 获取elink_sw分支
-repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分支
+<pre><code>    repo start mtk --all                                          // 建立mtk分支
+    repo forall -c "git checkout -b elink_sw md77/elink_sw"       // 获取elink_sw分支
+    repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分支
 </code></pre>
 
-<p>你如果要开发新客户，请基于elink_sw分支做新的分支，例如分支newbranchname。命令</p>
-
-<pre><code>repo forall -c "git checkout -b newbranchname elink_sw"
-</code></pre>
+<p>你如果要开发新客户，请基于elink_sw分支做新的分支，例如分支newbranchname。命令
+<code>
+    repo forall -c "git checkout -b newbranchname elink_sw"
+</code></p>
 
 <h2>2、查看分支</h2>
 
-<pre><code>repo branch
+<pre><code>    repo branch
 </code></pre>
 
 <h2>3、切换分支</h2>
 
-<p>repo checkout [分支名字] 如：</p>
-
-<pre><code>repo checkout elink_sw
-</code></pre>
+<p>repo checkout [分支名字] 如：
+<code>
+    repo checkout elink_sw
+</code></p>
 
 <!--more-->
 
 
 <h2>4、把修改过的文件commit到各自的分支</h2>
 
-<p>git commit -am [&ldquo;注释&rdquo;] 如：</p>
-
-<pre><code>git commit -am "update some apk"
-</code></pre>
+<p>git commit -am [&ldquo;注释&rdquo;] 如：
+<code>
+    git commit -am "update some apk"
+</code></p>
 
 <h2>5、提交代码</h2>
 
@@ -176,38 +176,36 @@ repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分
 
 <h2>7、编译代码</h2>
 
-<p>在alps目录下面：</p>
-
-<pre><code>cp mediatek/config/common/make_user_project.sh ./
-./make_user_project.sh md706 [机型名（MD7062HC2W1）] [new | systemimage | userdataimage]
-</code></pre>
+<p>在alps目录下面：
+<code>
+    cp mediatek/config/common/make_user_project.sh ./
+    ./make_user_project.sh md706 [机型名（MD7062HC2W1）] [new | systemimage | userdataimage]
+</code></p>
 
 <h2>8、提交删除掉的文件：</h2>
 
 <p>切换到删除过文件的分支;如： cd alps/vendor/mediatek/md706/<br/>
-逐一删除文件，命令：git rm 删除的文件;如：</p>
-
-<pre><code>git rm artifacts/out/target/product/md706/data/app/com.adobe.reader.apk
-</code></pre>
-
-<p>所有的文件执行上面的命令之后输入 repo status会出现类似如下的情况：</p>
-
-<pre><code>xx@elinktek:~/code/xx_repo_git/alps/vendor/mediatek/md706$ repo status
-# on branch huama
-project alps/vendor/mediatek/md706/             branch huama
- D-     artifacts/out/target/product/md706/data/app/aldiko.apk
- D-     artifacts/out/target/product/md706/data/app/com.adobe.reader.apk
- D-     artifacts/out/target/product/md706/data/app/documents.apk
- D-     artifacts/out/target/product/md706/data/app/flashplayer-2.apk
- D-     artifacts/out/target/product/md706/data/app/gps_test.1.2.4.apk
- D-     artifacts/out/target/product/md706/system/appbackup/aldiko.apk
- D-     artifacts/out/target/product/md706/system/appbackup/com.adobe.reader.apk
- D-     artifacts/out/target/product/md706/system/appbackup/documents.apk
- D-     artifacts/out/target/product/md706/system/appbackup/flashplayer-2.apk
- D-     artifacts/out/target/product/md706/system/appbackup/gps_test.1.2.4.apk
-</code></pre>
-
-<p>然后输入git commit -m &ldquo;注释&rdquo; 来提交</p>
+逐一删除文件，命令：git rm 删除的文件;如：
+<code>
+    git rm artifacts/out/target/product/md706/data/app/com.adobe.reader.apk
+</code>
+所有的文件执行上面的命令之后输入 repo status会出现类似如下的情况：
+<code>
+    xx@elinktek:~/code/xx_repo_git/alps/vendor/mediatek/md706$ repo status
+    # on branch huama
+    project alps/vendor/mediatek/md706/             branch huama
+     D-     artifacts/out/target/product/md706/data/app/aldiko.apk
+     D-     artifacts/out/target/product/md706/data/app/com.adobe.reader.apk
+     D-     artifacts/out/target/product/md706/data/app/documents.apk
+     D-     artifacts/out/target/product/md706/data/app/flashplayer-2.apk
+     D-     artifacts/out/target/product/md706/data/app/gps_test.1.2.4.apk
+     D-     artifacts/out/target/product/md706/system/appbackup/aldiko.apk
+     D-     artifacts/out/target/product/md706/system/appbackup/com.adobe.reader.apk
+     D-     artifacts/out/target/product/md706/system/appbackup/documents.apk
+     D-     artifacts/out/target/product/md706/system/appbackup/flashplayer-2.apk
+     D-     artifacts/out/target/product/md706/system/appbackup/gps_test.1.2.4.apk
+</code>
+然后输入git commit -m &ldquo;注释&rdquo; 来提交</p>
 ]]></content>
   </entry>
   
@@ -237,13 +235,17 @@ project alps/vendor/mediatek/md706/             branch huama
 
 <h3>1.3然后用vim编辑repo脚本</h3>
 
-<pre><code>vim /usr/bin/repo
+<pre><code>    vim /usr/bin/repo
 </code></pre>
 
 <p>修改
-    REPO_URL=&lsquo;elink-soft@192.168.2.253:~/repo/repo.git&rsquo;
+<code>
+    REPO_URL='elink-soft@192.168.2.253:~/repo/repo.git'
+</code>
 这句为之前repo程序目录的拷贝到的地址,如本处应改为
-    REPO_URL=&lsquo;/work/repo&rsquo;</p>
+<code>
+    REPO_URL='/work/repo'
+</code></p>
 
 <h2>2. git仓库的建立</h2>
 
@@ -260,27 +262,35 @@ project alps/vendor/mediatek/md706/             branch huama
 <h4>2.1.2</h4>
 
 <p>在mq89下面分别建立2个目录：alps、manifest.git
+<code>
     mkdir alps manifest.git
     ls
-    alps manifest.git</p>
+    alps manifest.git
+</code></p>
 
 <h4>2.1.3</h4>
 
 <p>在manifest.git目录中创建空的git仓库
-    git init &ndash;bare</p>
+<code>
+    git init --bare
+</code></p>
 
 <h4>2.1.4</h4>
 
 <p>很关键的一步，在alps下面创建**.git文件夹<br/>
 规则：事先规划应该在哪些目录下面建立git仓库，以方便代码的管理。如,alps/kernel下面需要一个仓库，那么<br/>
 就在alps目录下建立kernel.git目录，用于存放原始代码的远程仓库，然后初始化git，同2.3
+<code>
     cd alps
     mkdir kernel.git
-    git init &ndash;bare
+    git init --bare
+</code>
 如果是abi/cpp/下面有个git仓库<br/>
 则应该递归创建目录abi/cpp.git<br/>
+<code>
     cd alps
     mkdir -p abi/cpp.git
+</code>
 至此,服务器端的准备工作完毕</p>
 
 <h3>2.2 本机端：</h3>
@@ -293,42 +303,42 @@ project alps/vendor/mediatek/md706/             branch huama
 <p>创建本地的git仓库，和2.1.4的路径是相互关联<br/>
 比如在服务器端有alps/kernel.git仓库<br/>
 则在本地需有alps/kernel/.git仓库,即初始化git仓库是在kernel目录下<br/>
+<code>
     cd alps/kernel
     git init-db
-    git add .  <br/>
-    git commit -am &ldquo;prompt&rdquo;                  // 双引号内为修改提交提示，比如可以将prompt改成ph init git repository
+    git add .    
+    git commit -am "prompt"                  // 双引号内为修改提交提示，比如可以将prompt改成ph init git repository
     git remote add master elink@192.168.2.98:~/mq89/alps/kernel.git  // 此句非常关键，把远程仓库和本地仓库联系起来
-    git push master &ndash;all
+    git push master --all
+</code>
 如果是远程仓库abi/cpp.git
+<code>
     cd alps/abi/cpp
-    git add .  <br/>
-    git commit -am &ldquo;prompt&rdquo;       <br/>
+    git add .    
+    git commit -am "prompt"         
     git remote add master elink@192.168.2.98:~/mq89/alps/abi/cpp.git
-    git push master &ndash;all</p>
+    git push master --all
+</code></p>
 
 <h4>2.2.2</h4>
 
 <p>克隆远程manifest.git目录,在mq89_std目录下
+<code>
     git clone elink@192.168.2.98:~/mq89/manifest.git
+</code>
  此时
-    ls mq89_std</p>
+&#8220;`
+    ls mq89_std
+    alps manifest</p>
 
-<pre><code>alps manifest
-</code></pre>
-
-<hr />
-
-<h3>注：关于代码中哪些目录需要建立git仓库</h3>
-
-<p>原则：为了方便以后代码的管理，如果在一个目录下拥有多个子目录，并且除去子目录以外没有其他文件，应该在各个子目录中分别建立git仓库。如，alps/mediatek的各个子目录。<br/>
+<pre><code>---
+###注：关于代码中哪些目录需要建立git仓库
+原则：为了方便以后代码的管理，如果在一个目录下拥有多个子目录，并且除去子目录以外没有其他文件，应该在各个子目录中分别建立git仓库。如，alps/mediatek的各个子目录。  
 还有我们应该按平台区分目录，在各个目录下创建git仓库，如，alps/mediatek/platform目录。我们应该在其下
-的common和mt6589这2个目录分别建立git仓库,这样更方便以后的代码更新和管理</p>
-
-<h2>3. repo的管理</h2>
-
-<h3>3.1 新建default.xml文件</h3>
-
-<p>在manifest目录下新建default.xml文件，此文件是repo管理的所有git仓库(project)<br/>
+的common和mt6589这2个目录分别建立git仓库,这样更方便以后的代码更新和管理  
+##3. repo的管理
+###3.1 新建default.xml文件
+在manifest目录下新建default.xml文件，此文件是repo管理的所有git仓库(project)  
 内容如下:
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -339,24 +349,22 @@ project alps/vendor/mediatek/md706/             branch huama
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=<span class="ni">&amp;ldquo;</span>1.0<span class="ni">&amp;rdquo;</span> encoding=<span class="ni">&amp;ldquo;</span>UTF-8<span class="ni">&amp;rdquo;</span>?&gt;
-</span><span class='line'><span class="nt">&lt;manifest&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;remote</span>  <span class="na">name=</span><span class="s">&quot;alps&quot;</span>
-</span><span class='line'>           <span class="na">fetch=</span><span class="s">&quot;DIR&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;default</span> <span class="na">revision=</span><span class="s">&quot;master&quot;</span>
-</span><span class='line'>           <span class="na">remote=</span><span class="s">&quot;alps&quot;</span>
-</span><span class='line'>           <span class="na">sync-j=</span><span class="s">&quot;4&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;project</span> <span class="na">path=</span><span class="s">&quot;alps/ndk&quot;</span> <span class="na">name=</span><span class="s">&quot;alps/ndk&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'><span class="nt">&lt;/manifest&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
-
-<h4>注：</h4>
-
-<p>fetch后面的双引号填写代码存放的路径，remote name 和default remote的内容需相同，default revision指
-远程的分支，这里填写的是默认分支master，sync-j表示的开启的线程数。<br/>
-project内容的path变量表示本地存放的目录，name表示服务器相关git的存放路径，即DIR/alps/ndk/</p>
-
-<h3>3.2 git add default.xml并提交</h3>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>manifest<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>remote  name=&quot;alps&quot;
+</span><span class='line'>           fetch=&quot;DIR&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>default revision=&quot;master&quot;
+</span><span class='line'>           remote=&quot;alps&quot;
+</span><span class='line'>           sync-j=&quot;4&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>project path=&quot;alps/ndk&quot; name=&quot;alps/ndk&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/manifest<span class="ni">&amp;gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+####注：
+fetch后面的双引号填写代码存放的路径，remote name 和default remote的内容需相同，default revision指
+远程的分支，这里填写的是默认分支master，sync-j表示的开启的线程数。  
+project内容的path变量表示本地存放的目录，name表示服务器相关git的存放路径，即DIR/alps/ndk/
+###3.2 git add default.xml并提交
+</code></pre>
 
 <pre><code>cd mq89_std/manifest
 git add default.xml
@@ -365,14 +373,17 @@ git remote add master elink@192.168.2.98:~/mq89/manifest.git
 git push master --all
 </code></pre>
 
-<h4>注：每次的更改都需要提交default.xml文件</h4>
+<pre><code>####注：每次的更改都需要提交default.xml文件
+##4. 客户端的下载
+比如下载到repo-client文件夹中
+</code></pre>
 
-<h2>4. 客户端的下载</h2>
+<pre><code>cd repo-client
+repo init -u [repo-server's directory]/manifest.git
+repo sync
+</code></pre>
 
-<p>比如下载到repo-client文件夹中
-    cd repo-client
-    repo init -u [repo-server&rsquo;s directory]/manifest.git
-    repo sync
+<p>&#8220;`
 即可以下载完成</p>
 
 <h2>5. 关于copyfile的使用</h2>

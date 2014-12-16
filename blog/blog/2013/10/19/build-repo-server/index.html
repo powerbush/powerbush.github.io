@@ -108,13 +108,21 @@
 
 <h3>1.3然后用vim编辑repo脚本</h3>
 
-<pre><code>vim /usr/bin/repo
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>vim /usr/bin/repo</span></code></pre></td></tr></table></div></figure>
 
-<p>修改
-    REPO_URL=&lsquo;elink-soft@192.168.2.253:~/repo/repo.git&rsquo;
-这句为之前repo程序目录的拷贝到的地址,如本处应改为
-    REPO_URL=&lsquo;/work/repo&rsquo;</p>
+
+<p>修改</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>REPO_URL='elink-soft@192.168.2.253:~/repo/repo.git'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这句为之前repo程序目录的拷贝到的地址,如本处应改为</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>REPO_URL='/work/repo'</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>2. git仓库的建立</h2>
 
@@ -130,29 +138,48 @@
 
 <h4>2.1.2</h4>
 
-<p>在mq89下面分别建立2个目录：alps、manifest.git
-    mkdir alps manifest.git
-    ls
-    alps manifest.git</p>
+<p>在mq89下面分别建立2个目录：alps、manifest.git</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir alps manifest.git
+</span><span class='line'>ls
+</span><span class='line'>alps manifest.git</span></code></pre></td></tr></table></div></figure>
+
 
 <h4>2.1.3</h4>
 
-<p>在manifest.git目录中创建空的git仓库
-    git init &ndash;bare</p>
+<p>在manifest.git目录中创建空的git仓库</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git init --bare</span></code></pre></td></tr></table></div></figure>
+
 
 <h4>2.1.4</h4>
 
 <p>很关键的一步，在alps下面创建**.git文件夹<br/>
 规则：事先规划应该在哪些目录下面建立git仓库，以方便代码的管理。如,alps/kernel下面需要一个仓库，那么<br/>
-就在alps目录下建立kernel.git目录，用于存放原始代码的远程仓库，然后初始化git，同2.3
-    cd alps
-    mkdir kernel.git
-    git init &ndash;bare
-如果是abi/cpp/下面有个git仓库<br/>
-则应该递归创建目录abi/cpp.git<br/>
-    cd alps
-    mkdir -p abi/cpp.git
-至此,服务器端的准备工作完毕</p>
+就在alps目录下建立kernel.git目录，用于存放原始代码的远程仓库，然后初始化git，同2.3</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd alps
+</span><span class='line'>mkdir kernel.git
+</span><span class='line'>git init --bare</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果是abi/cpp/下面有个git仓库<br/>
+则应该递归创建目录abi/cpp.git</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd alps
+</span><span class='line'>mkdir -p abi/cpp.git</span></code></pre></td></tr></table></div></figure>
+
+
+<p>至此,服务器端的准备工作完毕</p>
 
 <h3>2.2 本机端：</h3>
 
@@ -163,29 +190,51 @@
 
 <p>创建本地的git仓库，和2.1.4的路径是相互关联<br/>
 比如在服务器端有alps/kernel.git仓库<br/>
-则在本地需有alps/kernel/.git仓库,即初始化git仓库是在kernel目录下<br/>
-    cd alps/kernel
-    git init-db
-    git add .  <br/>
-    git commit -am &ldquo;prompt&rdquo;                  // 双引号内为修改提交提示，比如可以将prompt改成ph init git repository
-    git remote add master elink@192.168.2.98:~/mq89/alps/kernel.git  // 此句非常关键，把远程仓库和本地仓库联系起来
-    git push master &ndash;all
-如果是远程仓库abi/cpp.git
-    cd alps/abi/cpp
-    git add .  <br/>
-    git commit -am &ldquo;prompt&rdquo;       <br/>
-    git remote add master elink@192.168.2.98:~/mq89/alps/abi/cpp.git
-    git push master &ndash;all</p>
+则在本地需有alps/kernel/.git仓库,即初始化git仓库是在kernel目录下</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd alps/kernel
+</span><span class='line'>git init-db
+</span><span class='line'>git add .    
+</span><span class='line'>git commit -am "prompt"                  // 双引号内为修改提交提示，比如可以将prompt改成ph init git repository
+</span><span class='line'>git remote add master elink@192.168.2.98:~/mq89/alps/kernel.git  // 此句非常关键，把远程仓库和本地仓库联系起来
+</span><span class='line'>git push master --all</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果是远程仓库abi/cpp.git</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd alps/abi/cpp
+</span><span class='line'>git add .    
+</span><span class='line'>git commit -am "prompt"         
+</span><span class='line'>git remote add master elink@192.168.2.98:~/mq89/alps/abi/cpp.git
+</span><span class='line'>git push master --all</span></code></pre></td></tr></table></div></figure>
+
 
 <h4>2.2.2</h4>
 
-<p>克隆远程manifest.git目录,在mq89_std目录下
-    git clone elink@192.168.2.98:~/mq89/manifest.git
- 此时
-    ls mq89_std</p>
+<p>克隆远程manifest.git目录,在mq89_std目录下</p>
 
-<pre><code>alps manifest
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone elink@192.168.2.98:~/mq89/manifest.git</span></code></pre></td></tr></table></div></figure>
+
+
+<p> 此时</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ls mq89_std
+</span><span class='line'>alps manifest</span></code></pre></td></tr></table></div></figure>
+
 
 <hr />
 
@@ -231,22 +280,33 @@ project内容的path变量表示本地存放的目录，name表示服务器相�
 
 <h3>3.2 git add default.xml并提交</h3>
 
-<pre><code>cd mq89_std/manifest
-git add default.xml
-git commit -am "prompt"
-git remote add master elink@192.168.2.98:~/mq89/manifest.git
-git push master --all
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd mq89_std/manifest
+</span><span class='line'>git add default.xml
+</span><span class='line'>git commit -am "prompt"
+</span><span class='line'>git remote add master elink@192.168.2.98:~/mq89/manifest.git
+</span><span class='line'>git push master --all</span></code></pre></td></tr></table></div></figure>
+
 
 <h4>注：每次的更改都需要提交default.xml文件</h4>
 
 <h2>4. 客户端的下载</h2>
 
-<p>比如下载到repo-client文件夹中
-    cd repo-client
-    repo init -u [repo-server&rsquo;s directory]/manifest.git
-    repo sync
-即可以下载完成</p>
+<p>比如下载到repo-client文件夹中</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd repo-client
+</span><span class='line'>repo init -u [repo-server's directory]/manifest.git
+</span><span class='line'>repo sync</span></code></pre></td></tr></table></div></figure>
+
+
+<p>即可以下载完成</p>
 
 <h2>5. 关于copyfile的使用</h2>
 
