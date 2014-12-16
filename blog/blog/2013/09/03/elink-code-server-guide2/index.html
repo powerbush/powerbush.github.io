@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Elink 代码规范 - liao.bz</title>
+  <meta name="author" content="liaobz">
+
+  
+  <meta name="description" content="1：机型命名： Elink 软件机型由内部自己定义，不和外部的外壳等等有关联。遵循简单、规律、好记的原则。
+具体命名规则，请参考《Elink 机型命名规则》，项目前立项时，由项目经理提供配置单给蔡锦涛负责命名。
+在代码里面，请给与变量PRODUCT_MODEL赋值，例如 PRODUCT_MODEL &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.liao.bz//blog/2013/09/03/elink-code-server-guide2">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/blog/atom.xml" rel="alternate" title="liao.bz" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">liao.bz</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/blog/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.liao.bz/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Elink 代码规范</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-09-03T18:05:00+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2013</span></span> <span class='time'>6:05 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>1：机型命名：</h2>
+
+<p>Elink 软件机型由内部自己定义，不和外部的外壳等等有关联。遵循简单、规律、好记的原则。<br/>
+具体命名规则，请参考《Elink 机型命名规则》，项目前立项时，由项目经理提供配置单给蔡锦涛负责命名。<br/>
+在代码里面，请给与变量PRODUCT_MODEL赋值，例如</p>
+
+<pre><code>PRODUCT_MODEL=MD7065HC
+</code></pre>
+
+<p>那么系统标准的属性,ro.product.model会变赋值为</p>
+
+<pre><code>ro.product.model=MD7065HC  
+</code></pre>
+
+<h2>2：软件版本号命名：</h2>
+
+<p>软件版本号分为两个版本，一个是中性版本号，一个是生成版本号。</p>
+
+<!--more-->
+
+
+<ul>
+<li><p>中性版本号：
+为了标示当前中性代码的版本情况，不随编译日期而改变，一般不随版型机型而变化，影响整份代码，一般不包含客户需求，乃Elink标准软件。<br/>
+给属性ro.custom.build.version赋值即可，例如：</p>
+
+<p>  ro.custom.build.version=1.22_20130903
+这个版本号还和Readme对应起来，还和代码的TAG对应起来，便于管理。</p></li>
+<li><p>生成版本号
+表示软件工程师制作出来的软件版本号命名，和具体的版型机型有关，还和编译日期有关。<br/>
+例如：<br/>
+规则为：芯片<em>版型</em>机型_(客户单号).YYYYMMDD<br/>
+例如标准软件：MT77_MD7062HC1.20130903<br/>
+例如客制软件：MT77_MD7062HC1_123456.20130903<br/>
+它影响的属性为：</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ro.build.display.id</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3：代码分支管理：</h2>
+
+<p>一般代码，我们有以下几种情况：</p>
+
+<ol>
+<li>我们自己拿到的代码创建的仓库，我们简称为mtk分支，对应远程分支master。</li>
+<li>Elink标准代码分支， 我们简称为elink_sw分支，一般对应远程分支为elink_sw分支。
+
+<h2>4：目前代码管理存在的问题点：</h2>
+
+<p>问题1：不同中性版本号之前的差异，无法快速切换？
+解决方案：使用git tag.<br/>
+每个repo 中的每个git使用一个tag，这个tag,使用中性版本号来表示，例如<br/>
+当MT6577的代码，使用了1.22_20130903这个版本号，还需要在push上之前，打上这个tag信息。</p></li>
+</ol>
+
+
+<p>使用方法：</p>
+
+<pre><code>git tag 1.22_20130903
+</code></pre>
+
+<p>简单操作如下：</p>
+
+<pre><code>repo checkout elink_sw
+repo forall -c git tag 1.22_20130903
+repo forall -c git push remotegitname elink_sw：elink_sw   //推代码到指定分支上去。
+repo forall -c git push remotegitname 1.22_20130903
+</code></pre>
+
+<p>具体请参考：<br/>
+git的tag，跟分支一样简单。<br/>
+每次上线养成打tag好习惯 :)</p>
+
+<pre><code>$: git tag 1.22_20130903_publish
+</code></pre>
+
+<p>加上-f覆盖原有的tag</p>
+
+<pre><code>$: git tag -f 1.22_20130903_publish
+</code></pre>
+
+<p>显示所有的tag</p>
+
+<pre><code>$: git tag
+1.22_20130903_publish
+1.22_20130903_publish
+1.22_20130903_publish
+</code></pre>
+
+<p>删除tag</p>
+
+<pre><code>$: git tag -d 1.22_20130903_publish
+</code></pre>
+
+<p>tag要push上服务器，操作跟分支操作没有任何区别</p>
+
+<p>*push 到服务器</p>
+
+<pre><code>$: git push origin 1.22_20130903_publish
+</code></pre>
+
+<p>*从服务器上删除</p>
+
+<pre><code>$: git push origin :1.22_20130903_publish
+</code></pre>
+
+<p>具体详细，可以参考git tag的帮助，或者参考其他资料获取。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Paul</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-09-03T18:05:00+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2013</span></span> <span class='time'>6:05 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/blog/categories/git/'>git</a>, <a class='category' href='/blog/blog/categories/repo/'>repo</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.liao.bz//blog/2013/09/03/elink-code-server-guide2/" data-via="" data-counturl="http://blog.liao.bz//blog/2013/09/03/elink-code-server-guide2/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/blog/2013/09/03/elink-code-server-guide1/" title="Previous Post: elink-code-server-guide">&laquo; elink-code-server-guide</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/blog/2013/09/28/push-doc/" title="Next Post: 往服务器上push代码流程">往服务器上push代码流程 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie/">MR82_JB5_1.19_20140125版代码编译脚本讲解</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2014/01/03/cameracha-zhi/">Camera插值</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/10/19/git-common-commands/">常用命令2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/10/19/common-commands/">常用命令1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/10/19/build-repo-server/">Git仓库的建立以及repo的管理</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/liaobz">@liaobz</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'liaobz',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - liaobz -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
