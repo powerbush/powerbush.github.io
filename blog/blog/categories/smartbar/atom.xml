@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Smartbar | liao.bz]]></title>
   <link href="http://blog.liao.bz//blog/categories/smartbar/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz//"/>
-  <updated>2014-12-17T18:54:54+08:00</updated>
+  <updated>2014-12-17T18:56:49+08:00</updated>
   <id>http://blog.liao.bz//</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -31,27 +31,27 @@
 
 <p>首先从安装包里面提取出dex文件</p>
 
-<p><img src="/images/2013-01-26-1.png"></p>
+<p>{% img  /images/2013-01-26-1.png %}</p>
 
 <p>使用反编译工具反编译</p>
 
-<p><img src="/images/2013-01-26-2.png"></p>
+<p>{% img  /images/2013-01-26-2.png %}</p>
 
 <p>随后使用jar浏览器查看反编译出来的文件，再逐步查看代码，肯定是优先查看MainActivity的，既然程序的设置里面是有选择关闭SmartBar的，便优先搜索preference</p>
 
-<p><img src="/images/2013-01-26-3.png"></p>
+<p>{% img  /images/2013-01-26-3.png %}</p>
 
 <p>再找到com.weibo.net.s这个类搜索 j(boolean)方法</p>
 
-<p><img src="/images/2013-01-26-4.png"></p>
+<p>{% img  /images/2013-01-26-4.png %}</p>
 
 <p>这样看来便大致可以猜测com.weibo.net.s是个常量类之类的，j(boolean)和w()分别是get/set方法，这样的话，回到MainActivity找到使用了set()方法的地方</p>
 
-<p><img src="/images/2013-01-26-5.png"></p>
+<p>{% img  /images/2013-01-26-5.png %}</p>
 
 <p>一开始我还傻傻的以为setNavigationMode是我要的Key，跑了一遍才发现break才是我要找的，在这里终于见到了long time no see的goto，我的意思是…相信你们懂的，再来一次，搜索label217</p>
 
-<p><img src="/images/2013-01-26-6.png"></p>
+<p>{% img  /images/2013-01-26-6.png %}</p>
 
 <p>这便是我要的结果了……不过217是什么？宿舍号码吗…管他嘞</p>
 
@@ -81,7 +81,7 @@
 
 <p>不过呢，最后的结果还是需要继续调整的，因为右上角的两个ActionBar图标应该不是你想要的吧。</p>
 
-<p><img src="/images/2013-01-26-7.jpg" width="800" height="300" title="每日一文" ></p>
+<p>{% img  /images/2013-01-26-7.jpg 800 300 每日一文 %}</p>
 ]]></content>
   </entry>
   
