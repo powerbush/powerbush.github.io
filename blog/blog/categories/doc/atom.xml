@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Inet | liao.bz]]></title>
-  <link href="http://blog.liao.bz//blog/categories/inet/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Doc | liao.bz]]></title>
+  <link href="http://blog.liao.bz//blog/categories/doc/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz//"/>
-  <updated>2014-12-17T17:22:11+08:00</updated>
+  <updated>2014-12-17T17:25:43+08:00</updated>
   <id>http://blog.liao.bz//</id>
   <author>
     <name><![CDATA[liaobz]]></name>
