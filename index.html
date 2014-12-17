@@ -337,17 +337,20 @@
 
   <div class="entry-content"><h2>概述</h2>
 
-<p>在repo的服务器端添加新project时(例如添加了MD900项目),本地完成同步后执行repo branch会碰到下面的情况:
-    liaobz@elink:~/code/md77$ repo branch
-       elink_sw                  | not in:
-                                       alps/mediatek/config/md900
-                                       alps/mediatek/custom/md900
-                                       alps/vendor/mediatek/md900
-    *  mtk                       | not in:
-                                       alps/mediatek/config/md900
-                                       alps/mediatek/custom/md900
-                                       alps/vendor/mediatek/md900
-碰到上面的情况的原因是新添加的repo project在本地没有创建本地分支,所以我们需要手动补全本地分支.</p>
+<p>在repo的服务器端添加新project时(例如添加了MD900项目),本地完成同步后执行repo branch会碰到下面的情况:</p>
+
+<pre><code>liaobz@elink:~/code/md77$ repo branch
+   elink_sw                  | not in:
+                                   alps/mediatek/config/md900
+                                   alps/mediatek/custom/md900
+                                   alps/vendor/mediatek/md900
+*  mtk                       | not in:
+                                   alps/mediatek/config/md900
+                                   alps/mediatek/custom/md900
+                                   alps/vendor/mediatek/md900
+</code></pre>
+
+<p>碰到上面的情况的原因是新添加的repo project在本地没有创建本地分支,所以我们需要手动补全本地分支.</p>
 
 </div>
   

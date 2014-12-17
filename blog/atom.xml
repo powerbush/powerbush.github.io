@@ -4,7 +4,7 @@
   <title><![CDATA[liao.bz]]></title>
   <link href="http://blog.liao.bz//atom.xml" rel="self"/>
   <link href="http://blog.liao.bz//"/>
-  <updated>2014-12-17T15:48:32+08:00</updated>
+  <updated>2014-12-17T15:51:15+08:00</updated>
   <id>http://blog.liao.bz//</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -1021,79 +1021,109 @@ project内容的path变量表示本地存放的目录，name表示服务器相�
     <id>http://blog.liao.bz//blog/2013/10/18/repo-project-add-local-branch-doc</id>
     <content type="html"><![CDATA[<h2>概述</h2>
 
-<p>在repo的服务器端添加新project时(例如添加了MD900项目),本地完成同步后执行repo branch会碰到下面的情况:
-    liaobz@elink:~/code/md77$ repo branch
-       elink_sw                  | not in:
-                                       alps/mediatek/config/md900
-                                       alps/mediatek/custom/md900
-                                       alps/vendor/mediatek/md900
-    *  mtk                       | not in:
-                                       alps/mediatek/config/md900
-                                       alps/mediatek/custom/md900
-                                       alps/vendor/mediatek/md900
-碰到上面的情况的原因是新添加的repo project在本地没有创建本地分支,所以我们需要手动补全本地分支.</p>
+<p>在repo的服务器端添加新project时(例如添加了MD900项目),本地完成同步后执行repo branch会碰到下面的情况:</p>
+
+<pre><code>liaobz@elink:~/code/md77$ repo branch
+   elink_sw                  | not in:
+                                   alps/mediatek/config/md900
+                                   alps/mediatek/custom/md900
+                                   alps/vendor/mediatek/md900
+*  mtk                       | not in:
+                                   alps/mediatek/config/md900
+                                   alps/mediatek/custom/md900
+                                   alps/vendor/mediatek/md900
+</code></pre>
+
+<p>碰到上面的情况的原因是新添加的repo project在本地没有创建本地分支,所以我们需要手动补全本地分支.</p>
 
 <!--more-->
 
 
 <h2>补全mtk分支</h2>
 
-<p>mtk分支是在执行repo start mtk &ndash;all之后生成的分支，所以可以通过repo start mtk &ndash;all补全分支，也可执行repo start mtk [projectName]建立mtk分支，如
-    liaobz@elink:~/code/md77$ repo start mtk &ndash;all
-或
-    liaobz@elink:~/code/md77$ repo start mtk alps/mediatek/config/md900
-    liaobz@elink:~/code/md77$ repo start mtk alps/mediatek/custom/md900
-    liaobz@elink:~/code/md77$ repo start mtk alps/vendor/mediatek/md900
-完成上述步骤之后结果如下:
-    liaobz@elink:~/code/md77$ repo branch
-       elink_sw                  | not in:
-                                       alps/mediatek/config/md900
-                                       alps/mediatek/custom/md900
-                                       alps/vendor/mediatek/md900
-    *  mtk                       | in all projects</p>
+<p>mtk分支是在执行repo start mtk &ndash;all之后生成的分支，所以可以通过repo start mtk &ndash;all补全分支，也可执行repo start mtk [projectName]建立mtk分支，如</p>
+
+<pre><code>liaobz@elink:~/code/md77$ repo start mtk --all
+</code></pre>
+
+<p>或</p>
+
+<pre><code>liaobz@elink:~/code/md77$ repo start mtk alps/mediatek/config/md900
+liaobz@elink:~/code/md77$ repo start mtk alps/mediatek/custom/md900
+liaobz@elink:~/code/md77$ repo start mtk alps/vendor/mediatek/md900
+</code></pre>
+
+<p>完成上述步骤之后结果如下:</p>
+
+<pre><code>liaobz@elink:~/code/md77$ repo branch
+   elink_sw                  | not in:
+                                   alps/mediatek/config/md900
+                                   alps/mediatek/custom/md900
+                                   alps/vendor/mediatek/md900
+*  mtk                       | in all projects
+</code></pre>
 
 <h2>补全elink_sw分支</h2>
 
-<p>elink_sw分支是通过repo forall -c git checkout -b elink_sw md77/elink_sw命令创建的分支，所以可以再次执行此命令补全分支
-    liaobz@elink:~/code/md77$ repo forall -c git checkout -b elink_sw md77/elink_sw
-结果会有两类
-    fatal: git checkout: branch elink_sw already exists
-    Branch elink_sw set up to track remote branch elink_sw from md77.
-或
+<p>elink_sw分支是通过repo forall -c git checkout -b elink_sw md77/elink_sw命令创建的分支，所以可以再次执行此命令补全分支</p>
+
+<pre><code>liaobz@elink:~/code/md77$ repo forall -c git checkout -b elink_sw md77/elink_sw
+</code></pre>
+
+<p>结果会有两类</p>
+
+<pre><code>fatal: git checkout: branch elink_sw already exists
+Branch elink_sw set up to track remote branch elink_sw from md77.
+</code></pre>
+
+<p>或
     Switched to a new branch &lsquo;elink_sw&rsquo;
 两种均是正常结果.<br/>
-如果过程完全正常,就会得到以下结果
-    liaobz@elink:~/code/md77$ repo branch
-    *  elink_sw                  | in all projects</p>
+如果过程完全正常,就会得到以下结果</p>
 
-<pre><code>   mtk                       | in all projects
+<pre><code>liaobz@elink:~/code/md77$ repo branch
+*  elink_sw                  | in all projects
+   mtk                       | in all projects
 </code></pre>
 
 <hr />
 
 <h2>补充一:</h2>
 
-<p>在尝试补全elink_sw分支,可能会得到以下两种结果
-    fatal: git checkout: branch elink_sw already exists
-    Branch elink_sw set up to track remote branch elink_sw from md77.
-或
-    fatal: git checkout: updating paths is incompatible with switching branches.
-    Did you intend to checkout &lsquo;md77/elink_sw&rsquo; which can not be resolved as commit?
-前一种提示可以忽略,后一种提示是因为服务器端尚未创建elink_sw分支,请联系代码管理员并晚些时候再尝试同步elink_sw分支.</p>
+<p>在尝试补全elink_sw分支,可能会得到以下两种结果</p>
+
+<pre><code>fatal: git checkout: branch elink_sw already exists
+Branch elink_sw set up to track remote branch elink_sw from md77.
+</code></pre>
+
+<p>或</p>
+
+<pre><code>fatal: git checkout: updating paths is incompatible with switching branches.
+Did you intend to checkout 'md77/elink_sw' which can not be resolved as commit?
+</code></pre>
+
+<p>前一种提示可以忽略,后一种提示是因为服务器端尚未创建elink_sw分支,请联系代码管理员并晚些时候再尝试同步elink_sw分支.</p>
 
 <h2>补充二:</h2>
 
-<p>本地的其他工作分支请执行以下命令补全
-    repo forall -c git checkout -b local_branch elink_sw</p>
+<p>本地的其他工作分支请执行以下命令补全</p>
+
+<pre><code>repo forall -c git checkout -b local_branch elink_sw
+</code></pre>
 
 <h2>补充三:</h2>
 
-<p>若出现以下提示
-    fatal: git checkout: updating paths is incompatible with switching branches.
-    Did you intend to checkout &lsquo;md77/elink_sw&rsquo; which can not be resolved as commit?
-请重新sync之后再补全elink_sw分支
-    repo checkout mtk
-    repo sync</p>
+<p>若出现以下提示</p>
+
+<pre><code>fatal: git checkout: updating paths is incompatible with switching branches.
+Did you intend to checkout 'md77/elink_sw' which can not be resolved as commit?
+</code></pre>
+
+<p>请重新sync之后再补全elink_sw分支</p>
+
+<pre><code>repo checkout mtk
+repo sync
+</code></pre>
 ]]></content>
   </entry>
   
