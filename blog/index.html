@@ -9,7 +9,8 @@
   <meta name="author" content="liaobz">
 
   
-  <meta name="description" content=" 所有博客 后页>> Recent Posts MR82_JB5_1.19_20140125版代码编译脚本讲解 Camera插值 常用命令2 常用命令1 Git仓库的建立以及repo的管理 GitHub Repos Status updating&#8230; @liaobz on GitHub &#8220;>
+  <meta name="description" content="在8312/8382平台上，因为软件上无法做到对不同版本及容量RAM的兼容，例如DDR2与DDR3，512MB与1024MB。之前的做法都是根据客户的需求，从而手动修改custom_MemoryDevice.h文件来编译相应的固件。
+为了减少无谓的重复累赘的工作，新版代码再次对编译脚本进行更新， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,34 +69,478 @@
   
   
   
-    <!--  -->
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie/">MR82_JB5_1.19_20140125版代码编译脚本讲解</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-02-07T11:24:00+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>11:24 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在8312/8382平台上，因为软件上无法做到对不同版本及容量RAM的兼容，例如DDR2与DDR3，512MB与1024MB。之前的做法都是根据客户的需求，从而手动修改custom_MemoryDevice.h文件来编译相应的固件。<br/>
+为了减少无谓的重复累赘的工作，新版代码再次对编译脚本进行更新，具体更新代码可自行查阅mediatek/config/common目录下的编译脚本。下面是对更新点的讲解。<br/>
+本次更新的核心是对RAM版本和容量各种组合的重命名。理解了命名方式，便可以熟练的掌握和使用新的编译脚本。<br/>
+如下图，新的命名可分为三部分：第一部分是RAM版本，第二部分是片选数量，第三部分是RAM容量。目前5种版本RAM具体含义可参照下图。</p>
+
+</div>
   
   
-    <!--  -->
+    <footer>
+      <a rel="full-article" href="/blog/blog/2014/02/07/mr82-jb5-1-dot-19-20140125ban-dai-ma-bian-yi-jiao-ben-jiang-jie/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
-    <!--  -->
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2014/01/03/cameracha-zhi/">Camera插值</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-01-03T09:55:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>9:55 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h4>Camera插值在底层已经做好，我们只需要在中间层和app层添加一个对应的picture size即可。但是有一些限制条件需要注意：</h4>
+
+<h5>1．插值的倍数只能小于等于16倍，也就是说假如是1M的sensor，那最多只能插值到16M；</h5>
+
+<h5>2．插值后的width和height都不能超过8192，也就是picture size设置的width和height的大小都不能超过8192；</h5>
+
+<h5>3．若插值的大小超过12M：则需要打补丁</h5>
+
+<h5>4．由于hardware jpeg encoder的限制，插值时设置的width和height请您分别都设为16的整数倍，若设置非16整数倍的width或height，则可能导致拍出来的图片会有异常(如图片扭曲、花屏、连拍的图片绿屏)。</h5>
+
+</div>
   
   
-    <!--  -->
+    <footer>
+      <a rel="full-article" href="/blog/blog/2014/01/03/cameracha-zhi/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
-    <!--  -->
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2013/10/19/git-common-commands/">常用命令2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-10-19T17:00:00+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>5:00 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>1、查看分支</h2>
+
+<pre><code>repo branch 分支名前有个星号且显示为绿色 表示现在所在分支
+</code></pre>
+
+<h2>2、切换分支</h2>
+
+<pre><code>repo checkout [分支名字] 如：repo checkout elink_sw  
+</code></pre>
+
+<p>※注：切换分支前务必提交先所在分支的所有修改<br/>
+如切换分支后出现两个或多个绿色分支名代表切换前的分支有修改未提交，重新切换回之前的分支完成提交再切换</p>
+
+<h2>3、 撤销分支</h2>
+
+<pre><code>repo abandon  [分支名字]  
+</code></pre>
+
+<p>如: repo abandon vido</p>
+
+<h2>4、分支重命名</h2>
+
+<pre><code>repo forall -c git branch -m [分支名]
+</code></pre>
+
+</div>
   
   
-    <!--  -->
+    <footer>
+      <a rel="full-article" href="/blog/blog/2013/10/19/git-common-commands/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
-    <!--  -->
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2013/10/19/common-commands/">常用命令1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-10-19T16:00:00+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>4:00 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>1、同步代码</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo start mtk --all                                          // 建立mtk分支
+</span><span class='line'>repo forall -c "git checkout -b elink_sw md77/elink_sw"       // 获取elink_sw分支
+</span><span class='line'>repo forall -c "git checkout -b  yourbranchname  elink_sw"    // 建立本地分支</span></code></pre></td></tr></table></div></figure>
+
+
+<p>你如果要开发新客户，请基于elink_sw分支做新的分支，例如分支newbranchname。命令</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo forall -c "git checkout -b newbranchname elink_sw"</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2、查看分支</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo branch</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3、切换分支</h2>
+
+<p>repo checkout [分支名字] 如：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo checkout elink_sw</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
   
   
-    <!--  -->
+    <footer>
+      <a rel="full-article" href="/blog/blog/2013/10/19/common-commands/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
-    <!--  -->
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2013/10/19/build-repo-server/">Git仓库的建立以及repo的管理</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-10-19T15:00:00+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>3:00 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>1. repo 的安装</h2>
+
+<p>一般服务器上都安装了git，所以只需安装repo即可<br/>
+简单一点的方法，就是直接从253服务器拷贝</p>
+
+<h3>1.1 拷贝repo脚本</h3>
+
+<p>路径：/usr/bin/repo<br/>
+拷贝到当前服务器的相同目录下，即/usr/bin</p>
+
+<h3>1.2然后拷贝repo程序目录到当前服务器</h3>
+
+<p>路径：elink-soft@192.168.2.253:/home/elink-soft/repo<br/>
+拷贝到本地服务器任意目录<br/>
+比如拷贝到/work/repo/下面</p>
+
+</div>
   
   
-    <!--  -->
+    <footer>
+      <a rel="full-article" href="/blog/blog/2013/10/19/build-repo-server/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2013/10/18/repo-project-add-local-branch-doc/">Repo添加project后补全本地分支</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-10-18T15:00:00+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>3:00 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>概述</h2>
+
+<p>在repo的服务器端添加新project时(例如添加了MD900项目),本地完成同步后执行repo branch会碰到下面的情况:</p>
+
+<pre><code>liaobz@elink:~/code/md77$ repo branch
+   elink_sw                  | not in:
+                                   alps/mediatek/config/md900
+                                   alps/mediatek/custom/md900
+                                   alps/vendor/mediatek/md900
+*  mtk                       | not in:
+                                   alps/mediatek/config/md900
+                                   alps/mediatek/custom/md900
+                                   alps/vendor/mediatek/md900
+</code></pre>
+
+<p>碰到上面的情况的原因是新添加的repo project在本地没有创建本地分支,所以我们需要手动补全本地分支.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/blog/2013/10/18/repo-project-add-local-branch-doc/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2013/09/28/push-doc/">往服务器上push代码流程</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-09-28T18:04:00+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>6:04 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>1.本地合成、测试及提交</h2>
+
+<h3>1).本地合成与测试</h3>
+
+<p>  所有的补丁都须在自己的分支上合成,假设本地分支名为patch<br/>
+  在工作目录执行repo branch,所示结果如下: (*  patch表示当前所在为patch)</p>
+
+<pre><code>lbz@elink:~$ repo branch
+   elink_sw                  | in all projects
+   mtk                       | in all projects
+*  patch                     | in all projects
+</code></pre>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/blog/2013/09/28/push-doc/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2013/09/03/elink-code-server-guide2/">Elink 代码规范</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-09-03T18:05:00+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2013</span></span> <span class='time'>6:05 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>1：机型命名：</h2>
+
+<p>Elink 软件机型由内部自己定义，不和外部的外壳等等有关联。遵循简单、规律、好记的原则。<br/>
+具体命名规则，请参考《Elink 机型命名规则》，项目前立项时，由项目经理提供配置单给蔡锦涛负责命名。<br/>
+在代码里面，请给与变量PRODUCT_MODEL赋值，例如</p>
+
+<pre><code>PRODUCT_MODEL=MD7065HC
+</code></pre>
+
+<p>那么系统标准的属性,ro.product.model会变赋值为</p>
+
+<pre><code>ro.product.model=MD7065HC  
+</code></pre>
+
+<h2>2：软件版本号命名：</h2>
+
+<p>软件版本号分为两个版本，一个是中性版本号，一个是生成版本号。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/blog/2013/09/03/elink-code-server-guide2/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2013/09/03/elink-code-server-guide1/">Elink-code-server-guide</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-09-03T18:04:00+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2013</span></span> <span class='time'>6:04 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>目前已经搭建好代码服务器，后续的项目中使用git作为代码管理。请大家了解。<br/>
+使用说明：<br/>
+我们使用ssh来作为git通讯的协议。所以也使用ssh key 来授权和管理。<br/>
+静态IP地址为192.168.2.96</p>
+
+<h2>1：建立ssh key</h2>
+
+<p>首先检查 ls -l ~/.ssh,看有无id_rsa 和id_rsa.pub文件。<br/>
+如果没有，请键入ssh-keygen，然后一直回车，保持默认值。<br/>
+如下所示：</p>
+
+<p>然后请把id_rsa.pub文件更名为id_rsa.pub_yourname通过Email发送给LBZ。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/blog/2013/09/03/elink-code-server-guide1/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu/">大硬盘容量安装ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-04-18T23:35:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>11:35 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>前几天公司购置了新服务器，前一天是装好了ubuntu 11.10，其实我是很奇怪为什么不装10.04或者12.04的，但这不是重点，开始叫我给服务器配置环境，作为用来编译android的服务器，结果第二天过去，说不能编译就把系统给重装了，改用10.04，但是装完进不去系统。停在一个</p>
+
+<pre><code>grub rescue&gt;
+</code></pre>
+
+<p>的界面。当然还有其他信息，不过记得不是很清楚了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/blog/2013/04/18/da-ying-pan-rong-liang-an-zhuang-ubuntu/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   <div class="pagination">
     
