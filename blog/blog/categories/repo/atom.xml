@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Repo | liao.bz]]></title>
   <link href="http://blog.liao.bz//blog/categories/repo/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz//"/>
-  <updated>2014-12-17T17:18:17+08:00</updated>
+  <updated>2014-12-17T17:18:37+08:00</updated>
   <id>http://blog.liao.bz//</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -303,24 +303,35 @@ git clean -fd  删除上一步命令显示的文件
 <p>创建本地的git仓库，和2.1.4的路径是相互关联<br/>
 比如在服务器端有alps/kernel.git仓库<br/>
 则在本地需有alps/kernel/.git仓库,即初始化git仓库是在kernel目录下<br/>
-{% codeblock lang:bash %}
-cd alps/kernel
-git init-db
-git add .
-// 双引号内为修改提交提示，比如可以将prompt改成ph init git repository
-git commit -am &ldquo;prompt&rdquo;
-// 此句非常关键，把远程仓库和本地仓库联系起来
-git remote add master elink@192.168.2.98:~/mq89/alps/kernel.git<br/>
-git push master &ndash;all
-{% endcodeblock %}
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>alps/kernel
+</span><span class='line'>git init-db
+</span><span class='line'>git add .
+</span><span class='line'>// 双引号内为修改提交提示，比如可以将prompt改成ph init git repository
+</span><span class='line'>git commit -am <span class="p">&amp;</span>ldquo<span class="p">;</span>prompt<span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span><span class='line'>// 此句非常关键，把远程仓库和本地仓库联系起来
+</span><span class='line'>git remote add master elink@192.168.2.98:~/mq89/alps/kernel.git&lt;br/&gt;
+</span><span class='line'>git push master <span class="p">&amp;</span>ndash<span class="p">;</span>all
+</span></code></pre></td></tr></table></div></figure>
 如果是远程仓库abi/cpp.git
-{% codeblock lang:bash %}
-    cd alps/abi/cpp
-    git add .
-    git commit -am &ldquo;prompt&rdquo;
-    git remote add master elink@192.168.2.98:~/mq89/alps/abi/cpp.git
-    git push master &ndash;all
-{% endcodeblock %}</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>    <span class="nb">cd </span>alps/abi/cpp
+</span><span class='line'>    git add .
+</span><span class='line'>    git commit -am <span class="p">&amp;</span>ldquo<span class="p">;</span>prompt<span class="p">&amp;</span>rdquo<span class="p">;</span>
+</span><span class='line'>    git remote add master elink@192.168.2.98:~/mq89/alps/abi/cpp.git
+</span><span class='line'>    git push master <span class="p">&amp;</span>ndash<span class="p">;</span>all
+</span></code></pre></td></tr></table></div></figure></p>
 
 <h4>2.2.2</h4>
 
@@ -342,29 +353,41 @@ git push master &ndash;all
 ###3.1 新建default.xml文件
 在manifest目录下新建default.xml文件，此文件是repo管理的所有git仓库(project)  
 内容如下:
-{% codeblock lang:xml %}
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;manifest&gt;
-    &lt;remote  name="alps"
-           fetch="DIR" /&gt;
-    &lt;default revision="master"
-           remote="alps"
-           sync-j="4" /&gt;
-    &lt;project path="alps/ndk" name="alps/ndk" /&gt;
-&lt;/manifest&gt;
-{% endcodeblock %}
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="ni">&amp;lt;</span>?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>manifest<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>remote  name=&quot;alps&quot;
+</span><span class='line'>           fetch=&quot;DIR&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>default revision=&quot;master&quot;
+</span><span class='line'>           remote=&quot;alps&quot;
+</span><span class='line'>           sync-j=&quot;4&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>project path=&quot;alps/ndk&quot; name=&quot;alps/ndk&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/manifest<span class="ni">&amp;gt;</span>
+</span></code></pre></td></tr></table></div></figure>
 ####注：
 fetch后面的双引号填写代码存放的路径，remote name 和default remote的内容需相同，default revision指
 远程的分支，这里填写的是默认分支master，sync-j表示的开启的线程数。  
 project内容的path变量表示本地存放的目录，name表示服务器相关git的存放路径，即DIR/alps/ndk/
 ###3.2 git add default.xml并提交
-{% codeblock lang:bash %}
-cd mq89_std/manifest
-git add default.xml
-git commit -am "prompt"
-git remote add master elink@192.168.2.98:~/mq89/manifest.git
-git push master --all
-{% endcodeblock %}
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>mq89_std/manifest
+</span><span class='line'>git add default.xml
+</span><span class='line'>git commit -am <span class="s2">&quot;prompt&quot;</span>
+</span><span class='line'>git remote add master elink@192.168.2.98:~/mq89/manifest.git
+</span><span class='line'>git push master --all
+</span></code></pre></td></tr></table></div></figure>
 ####注：每次的更改都需要提交default.xml文件
 ##4. 客户端的下载
 比如下载到repo-client文件夹中
@@ -381,21 +404,29 @@ repo sync
 <h2>5. 关于copyfile的使用</h2>
 
 <p>前面有提到过git仓库创建的原则，比如alps/mediatek/platform目录下，需要对common和mt6589，2个目录各创建一个git仓库，但是在alps/mediatek/platform下存在Android.mk和rules.mk 文件，如果只在common和mt6589这2个目录中建立仓库则会导致无法下载这2个mk文件，所以推荐的方法是在alps/mediatek/platform下面创建目录mtk，并将Android.mk和rules.mk这2个文件复制过去，下载的时候就可以通过copyfile去实现了
-{% codeblock lang:xml %}
-<project path="alps/mediatek/platform/mtk" name="alps/mediatek/platform/mtk/" >
-    <copyfile src="Android.mk" dest="alps/mediatek/platform/Android.mk" />
-    <copyfile src="rules.mk" dest="alps/mediatek/platform/rules.mk" />
-</project>
-{% endcodeblock %}
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;project</span> <span class="na">path=</span><span class="s">&quot;alps/mediatek/platform/mtk&quot;</span> <span class="na">name=</span><span class="s">&quot;alps/mediatek/platform/mtk/&quot;</span> <span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;Android.mk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mediatek/platform/Android.mk&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;rules.mk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mediatek/platform/rules.mk&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/project&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
 同理alps下面的几个文件也是一样的情况，可以在build中穿件mtk文件夹
-{% codeblock lang:xml %}
-<project path="alps/build" name="alps/build/" >
-    <copyfile src="mtk/Makefile" dest="alps/Makefile" />
-    <copyfile src="mtk/makeMtk" dest="alps/makeMtk" />
-    <copyfile src="mtk/mbldenv.sh" dest="alps/mbldenv.sh" />
-    <copyfile src="mtk/mk" dest="alps/mk" />
-</project>
-{% endcodeblock %}</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;project</span> <span class="na">path=</span><span class="s">&quot;alps/build&quot;</span> <span class="na">name=</span><span class="s">&quot;alps/build/&quot;</span> <span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/Makefile&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/Makefile&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/makeMtk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/makeMtk&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/mbldenv.sh&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mbldenv.sh&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;copyfile</span> <span class="na">src=</span><span class="s">&quot;mtk/mk&quot;</span> <span class="na">dest=</span><span class="s">&quot;alps/mk&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/project&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
 ]]></content>
   </entry>
   
