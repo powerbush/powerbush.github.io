@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://blog.liao.bz/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz/"/>
-  <updated>2015-01-19T10:44:39+08:00</updated>
+  <updated>2015-01-19T10:47:26+08:00</updated>
   <id>http://blog.liao.bz/</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -1422,8 +1422,8 @@ git的tag，跟分支一样简单。<br/>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>repo start mtk --all                                          //建立mtk分支
-</span><span class='line'>repo forall -c "git checkout -b klink md77/elink_sw"          //获取klink分支
-</span><span class='line'>repo forall -c "git checkout -b yourbranchname elink_sw"</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>repo forall -c "git checkout -b klink 92kk/klink"          //获取klink分支
+</span><span class='line'>repo forall -c "git checkout -b yourbranchname klink"</span></code></pre></td></tr></table></div></figure>
 
 
 <p>!ok，你现在可以在你自己的yourbranchname上开发了。<br/>
@@ -1436,7 +1436,7 @@ git的tag，跟分支一样简单。<br/>
 即：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>repo forall -c "git push md77 elink_sw:elink_preview"</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo forall -c "git push 92kk klink:klink_preview"</span></code></pre></td></tr></table></div></figure>
 
 
 <p>上传代码，会影响到所有的同事，所以请确认后再上传,谁上传谁负责。</p>
