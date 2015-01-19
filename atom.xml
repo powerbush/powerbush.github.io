@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://blog.liao.bz/atom.xml" rel="self"/>
   <link href="http://blog.liao.bz/"/>
-  <updated>2014-12-17T19:41:22+08:00</updated>
+  <updated>2015-01-19T10:44:39+08:00</updated>
   <id>http://blog.liao.bz/</id>
   <author>
     <name><![CDATA[liaobz]]></name>
@@ -1365,7 +1365,7 @@ git的tag，跟分支一样简单。<br/>
     <content type="html"><![CDATA[<p>目前已经搭建好代码服务器，后续的项目中使用git作为代码管理。请大家了解。<br/>
 使用说明：<br/>
 我们使用ssh来作为git通讯的协议。所以也使用ssh key 来授权和管理。<br/>
-静态IP地址为192.168.2.96</p>
+静态IP地址为192.168.2.236</p>
 
 <h2>1：建立ssh key</h2>
 
@@ -1373,15 +1373,16 @@ git的tag，跟分支一样简单。<br/>
 如果没有，请键入ssh-keygen，然后一直回车，保持默认值。<br/>
 如下所示：</p>
 
-<p>然后请把id_rsa.pub文件更名为id_rsa.pub_yourname通过Email发送给LBZ。</p>
+<p>然后请把id_rsa.pub文件更名为id_rsa.pub_yourname通过Email发送给liaobz@klinktek.com。</p>
 
 <!--more-->
 
 
 <p>注：在git服务器端使用</p>
 
-<pre><code>cat id_rsa.pub_paul &gt;&gt; .ssh/authorized_keys  
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cat id_rsa.pub_paul &gt;&gt; .ssh/authorized_keys</span></code></pre></td></tr></table></div></figure>
+
 
 <p>把用户的公钥放在服务器上，这样你就可以用自己的私钥id_rsa来访问了。这个就是原理。</p>
 
@@ -1390,67 +1391,74 @@ git的tag，跟分支一样简单。<br/>
 <p>git不欢迎没有name &amp; email的陌生人。<br/>
 请使用</p>
 
-<pre><code>git config --global user.name
-git config --global user.email 
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git config --global user.name
+</span><span class='line'>git config --global user.email</span></code></pre></td></tr></table></div></figure>
 
-<p>来简单配置下git.<br/>
+
+<p>来简单配置下git。<br/>
 另外最重要的是学习git的使用。</p>
 
 <h2>3. 下载代码：</h2>
 
-<p>1> MT6577</p>
+<p>1> MT6592</p>
 
-<pre><code>repo init -u elink-code-server@192.168.2.96:/elink_code/sda/md77/manifest.git
-repo sync
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo init -u ssh://coolink-share@192.168.2.235/home/coolink-share/code/6592kk/manifest.git
+</span><span class='line'>repo sync</span></code></pre></td></tr></table></div></figure>
 
-<p>2> MT6589</p>
-
-<pre><code>repo init -u elink-code-server@192.168.2.96:/elink_code/sda/mq89/manifest.git
-repo sync
-</code></pre>
 
 <h2>4：管理代码：</h2>
 
 <p>我们会建立三个分支，<br/>
 分支mtk，为mtk原始的source.<br/>
-分支elink_sw ，为我们公版的稳定版本的source.<br/>
-分支yourbranchname ,为个人开发使用的版本,请更改名字，例如paul。</p>
+分支klink ，为我们公版的稳定版本的source.<br/>
+分支yourbranchname ,为个人开发使用的版本,请更改名字，例如paul。<br/>
+拿到代码后，请执行以下操作</p>
 
-<p>拿到代码后，请执行以下操作</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo start mtk --all                                          //建立mtk分支
+</span><span class='line'>repo forall -c "git checkout -b klink md77/elink_sw"          //获取klink分支
+</span><span class='line'>repo forall -c "git checkout -b yourbranchname elink_sw"</span></code></pre></td></tr></table></div></figure>
 
-<pre><code>repo start mtk --all                                          //建立mtk分支
-repo forall -c "git checkout -b elink_sw md77/elink_sw"       //获取elink_sw分支
-repo forall -c "git checkout -b yourbranchname elink_sw"
-</code></pre>
 
 <p>!ok，你现在可以在你自己的yourbranchname上开发了。<br/>
-<strong>注意一下操作：</strong><br/>
-1. 你如果要开发新客户，请基于elink_sw分支做新的分支，例如分支newbranchname。命令 repo forall -c &ldquo;git checkout -b newbranchname elink_sw&rdquo;<br/>
-2. 如果elink_sw有更新，请先切换到elink_sw分支，然后执行repo forall -c &ldquo;git pull remoteG remotebranchname&rdquo;<br/>
-其中 remoteG表示的是远程仓库名，remotebranchname代表的是远程分支名。<br/>
-3. 如果有你补丁确认后，需要上传到服务器，请再自己的分支确认后，然后更新到elink_sw分支。<br/>
-然后在inet_team分支上，操作 repo forall -c &ldquo;git push remote_res_name elink_sw:elink_preview&rdquo;<br/>
+<strong>注意一下操作：</strong>
+1. 你如果要开发新客户，请基于klink分支做新的分支，例如分支newbranchname。命令 repo forall -c &ldquo;git checkout -b newbranchname klink&rdquo;
+2. 如果klink有更新，请先切换到klink分支，然后执行repo forall -c &ldquo;git pull remoteG remotebranchname&rdquo;
+其中 remoteG表示的是远程仓库名，remotebranchname代表的是远程分支名。
+3. 如果有你补丁确认后，需要上传到服务器，请再自己的分支确认后，然后更新到klink分支。
+然后在klink分支上，操作 repo forall -c &ldquo;git push remote_res_name klink:klink_preview&rdquo;<br/>
 即：</p>
 
-<pre><code>repo forall -c "git push md77 elink_sw:elink_preview"
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>repo forall -c "git push md77 elink_sw:elink_preview"</span></code></pre></td></tr></table></div></figure>
+
 
 <p>上传代码，会影响到所有的同事，所以请确认后再上传,谁上传谁负责。</p>
 
 <h2>5：编译代码：</h2>
 
-<pre><code>make_user_project.sh
-make_project.sh
-</code></pre>
+<p>下载源码后，先进入到alps目录下面，将编译脚本从alps/mediatek/config/common下面拷贝到alps下面:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd [project_dir/]alps
+</span><span class='line'>cp alps/mediatek/config/common/user.sh .
+</span><span class='line'>cp alps/mediatek/config/common/eng.sh .</span></code></pre></td></tr></table></div></figure>
+
 
 <p>这样实现代码和配置的分开选择，但是一个命令搞定。<br/>
 请大家使用新的脚本。<br/>
 实现软件基础部分不动，用户的配置共用。<br/>
 即可编译。<br/>
 后续，我们陆续减少客户的代码公共部分的修改，减少打包时版型配置部分的影响，请各位浏览下目前的代码结构。<br/>
-如果客户有比较多的源码修改，建议使用新的branch.基于elink_sw版本。后续elink_sw有更新，只需要merge elink_sw就可以。</p>
+如果客户有比较多的源码修改，建议使用新的branch.基于klink版本。后续klink有更新，只需要merge klink就可以。</p>
 ]]></content>
   </entry>
   
