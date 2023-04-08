@@ -1,21 +1,29 @@
 #EXTM3U
-#EXTINF:-1 group-title="王者荣耀",Bilibili KPL 主直播间
-https://cn-gddg-ct-01-18.bilivideo.com/live-bvc/599400/live_392836434_52698792_1500.m3u8
-#EXTINF:-1 group-title="王者荣耀",斗鱼 KPL 主直播间
+#EXTINF:-1, group-title="王者荣耀",斗鱼 KPL 主直播间
 http://live.aptvapp.com/live/douyu/1863767
-#EXTINF:-1 group-title="王者荣耀",斗鱼 KPL Gemini
+#EXTINF:-1, group-title="王者荣耀",斗鱼 KPL Gemini
 http://live.aptvapp.com/live/douyu/36252
-#EXTINF:-1 ,CCTV-1综合
-http://39.134.115.163:8080/PLTV/88888910/224/3221225618/index.m3u8
-#EXTINF:-1 ,CCTV-2财经
-http://39.134.115.163:8080/PLTV/88888910/224/3221225643/index.m3u8
-#EXTINF:-1 ,CCTV-3综艺
-http://39.134.115.163:8080/PLTV/88888910/224/3221225634/index.m3u8
-#EXTINF:-1 ,CCTV-4中文国际
-http://39.134.115.163:8080/PLTV/88888910/224/3221225621/index.m3u8
-#EXTINF:-1 ,CCTV-5体育
-http://39.134.115.163:8080/PLTV/88888910/224/3221225633/index.m3u8
-#EXTINF:-1 ,CCTV-6电影
-http://39.134.115.163:8080/PLTV/88888910/224/3221225632/index.m3u8
-#EXTINF:-1 ,CCTV-14少儿
-http://39.134.115.163:8080/PLTV/88888910/224/3221225640/index.m3u8
+#EXTINF:-1, group-title="央视",CCTV1 综合 8M
+https://live.v1.mk/api/bestv.php?id=cctv1hd8m/8000000
+#EXTINF:-1, group-title="央视",CCTV2 财经 8M
+https://live.v1.mk/api/bestv.php?id=cctv2hd8m/8000000
+#EXTINF:-1, group-title="央视",CCTV3 综艺 8M
+https://live.v1.mk/api/bestv.php?id=cctv38m/8000000
+#EXTINF:-1, group-title="央视",CCTV4 中文国际 8M
+https://live.v1.mk/api/bestv.php?id=cctv4hd8m/8000000
+#EXTINF:-1, group-title="央视",CCTV5 体育 8M
+https://live.v1.mk/api/bestv.php?id=cctv58m/8000000
+#EXTINF:-1, group-title="央视",CCTV5+ 体育赛事 8M
+https://live.v1.mk/api/bestv.php?id=cctv5phd8m/8000000
+#EXTINF:-1, group-title="央视",CCTV6 电影 8M
+https://live.v1.mk/api/bestv.php?id=cctv6hd8m/8000000
+#EXTINF:-1, group-title="央视",CCTV14 少儿 8M
+https://live.v1.mk/api/bestv.php?id=cctvsehd8m/8000000
+#EXTINF:-1, group-title="卫视",湖南卫视 8M
+https://live.v1.mk/api/bestv.php?id=hunanwshd8m/8000000
+#EXTINF:-1, group-title="卫视",浙江卫视 8M
+https://live.v1.mk/api/bestv.php?id=zjwshd8m/8000000
+#EXTINF:-1, group-title="卫视",东方卫视 8M
+https://live.v1.mk/api/bestv.php?id=dfwshd8m/8000000
+#EXTINF:-1, group-title="其他",宝宝动画 8M
+https://live.v1.mk/api/bestv.php?id=bbdh8m/8000000
