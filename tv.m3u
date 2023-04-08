@@ -1,5 +1,21 @@
 #EXTM3U
 #EXTINF:-1 group-title="王者荣耀",Bilibili KPL 主直播间
 https://cn-gddg-ct-01-18.bilivideo.com/live-bvc/599400/live_392836434_52698792_1500.m3u8
-#EXTINF:-1 group-title="央视",CCTV-4 中文国际「亚」
-http://cctvalih5ca.v.myalicdn.com/live/cctv4_2/index.m3u8
+#EXTINF:-1 group-title="王者荣耀",斗鱼 KPL 主直播间
+http://live.aptvapp.com/live/douyu/1863767
+#EXTINF:-1 group-title="王者荣耀",斗鱼 KPL Gemini
+http://live.aptvapp.com/live/douyu/36252
+#EXTINF:-1 ,CCTV-1综合
+rtmp://ivi.bupt.edu.cn:1935/livetv/cctv1
+#EXTINF:-1 ,CCTV-2财经
+rtmp://ivi.bupt.edu.cn:1935/livetv/cctv2
+#EXTINF:-1 ,CCTV-3综艺
+rtmp://ivi.bupt.edu.cn:1935/livetv/cctv3
+#EXTINF:-1 ,CCTV-4中文国际
+rtmp://ivi.bupt.edu.cn:1935/livetv/cctv4
+#EXTINF:-1 ,CCTV-5体育
+rtmp://ivi.bupt.edu.cn:1935/livetv/cctv5
+#EXTINF:-1 ,CCTV-6电影
+rtmp://ivi.bupt.edu.cn:1935/livetv/cctv6
+#EXTINF:-1 ,CCTV-14少儿
+rtmp://ivi.bupt.edu.cn:1935/livetv/cctv14
