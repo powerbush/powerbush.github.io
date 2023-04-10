@@ -1,6 +1,8 @@
 #EXTM3U
 #EXTINF:-1, group-title="王者荣耀",斗鱼 KPL 主直播间
 http://live.aptvapp.com/live/douyu/1863767
+#EXTINF:-1, group-title="王者荣耀",B站 KPL 主直播间 720
+https://cn-gddg-ct-01-18.bilivideo.com/live-bvc/599400/live_392836434_52698792_1500.m3u8
 #EXTINF:-1, group-title="王者荣耀",斗鱼 KPL Gemini
 http://live.aptvapp.com/live/douyu/36252
 #EXTINF:-1, group-title="央视",CCTV1 综合 8M
