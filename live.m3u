@@ -4,7 +4,11 @@ http://tc-tct.douyucdn2.cn/dyliveflv1a/1863767rkpl2_2000p.flv?wsAuth=f73077d85e5
 #EXTINF:-1, group-title="王者荣耀",斗鱼 KPL Gemini
 http://live.aptvapp.com/live/douyu/36252
 #EXTINF:-1, group-title="健身",刘畊宏
-http://v2.liao.bz:5678/douyin.php?id=597241150905
+http://v2.liao.bz:5678/douyin.php?rid=597241150905
+#EXTINF:-1, group-title="购物",交个朋友直播间 转
+http://v2.liao.bz:5678/douyin.php?rid=168465302284
+#EXTINF:-1, group-title="购物",交个朋友直播间
+http://pull-hls-f1.douyincdn.com/gamereplay/stream-113042997196096176_uhd/playlist.m3u8
 #EXTINF:-1, group-title="央视",CCTV1 综合 8M
 https://live.goodiptv.club/api/bestv.php?id=cctv1hd8m/8000000
 #EXTINF:-1, group-title="央视",CCTV2 财经 8M
