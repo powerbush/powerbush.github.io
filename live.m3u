@@ -14,7 +14,7 @@ http://183.184.92.233:9003/hls/4/index.m3u8
 #EXTINF:-1 tvg-id="CCTV5" tvg-name="CCTV5" tvg-logo="https://live.fanmingming.com/tv/CCTV5.png" group-title="央视频道",CCTV-5 体育
 http://api.kkitv.itv888.cn:8080/hls/7vx0ia55les/index.m3u8
 #EXTINF:-1 tvg-id="CCTV5" tvg-name="CCTV5" tvg-logo="https://live.fanmingming.com/tv/CCTV5.png" group-title="央视频道",CCTV-5 体育
-http://180.130.150.178:5003/cctv5.m3u8?token=7375646f45c2c3378d9bbaaff4f7336ee4b96f1f&z=1151
+https://ldcctvwbcdbd.a.bdydns.com/ldcctvwbcd/cdrmldcctv5_1/index.m3u8?BR=td
 #EXTINF:-1 tvg-id="CCTV5+" tvg-name="CCTV5+" tvg-logo="https://live.fanmingming.com/tv/CCTV5+.png" group-title="央视频道",CCTV-5+ 体育赛事
 http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225603/index.m3u8
 
