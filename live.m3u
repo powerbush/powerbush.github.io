@@ -1,8 +1,6 @@
 #EXTM3U
 #EXTINF:-1, group-title="王者荣耀",斗鱼 KPL 主直播间
-http://tc-tct.douyucdn2.cn/dyliveflv1a/1863767rkpl2_2000p.flv?wsAuth=f73077d85e523eb95b6ce1ea3581b46b&token=cpn-androidmpro-0-1863767-7b520f6fe0a2b18db3c111c4e3c14350afd2dcaf43d0ef60&logo=0&expire=0&did=d010b07dcb997ada9934081c873542f0&origin=tct&vhost=play2
-#EXTINF:-1, group-title="王者荣耀",斗鱼 KPL Gemini
-http://live.aptvapp.com/live/douyu/36252
+https://cn-gddg-ct-01-11.bilivideo.com/live-bvc/257791/live_392836434_52698792_miniav1/index.m3u8?expires=1760669498&len=0&oi=3071266783&pt=web&qn=250&trid=10076e3858a65243a9d2437b46a52668f1a1&bmt=1&sigparams=cdn,expires,len,oi,pt,qn,trid,bmt&cdn=cn-gotcha01&sign=c6f5c98e97b59d1fed9ae4d88beac96e&site=6c2d170912d55aebfd8c2b8986b762f3&free_type=0&mid=7421748&sche=ban&bvchls=1&sid=cn-gddg-ct-01-11&chash=0&sg=cs&trace=17&isp=ct&rg=South&pv=Guangdong&source=puv3_onetier&strategy_ids=25,25&p2p_type=1&deploy_env=prod&strategy_id=25&info_source=cache&sl=2&long_ab_flag=live_default_longitudinal&sk=42eced9eee4cb9a201ed166a9ec6f444&hot_cdn=909701&strategy_types=0,1&hdr_type=0&long_ab_flag_value=test&flvsk=&ld=jchz&long_ab_id=45&score=100&strategy_version=latest&media_type=0&expected_qn=250&strategy_type=0&pp=rtmp&origin_bitrate=1238&suffix=miniav1&codec=2&vd=nc&zoneid_l=151371777&sid_l=live_392836434_52698792_miniav1&src=puv3&order=1
 
 #EXTM3U x-tvg-url="https://epg.zbds.top"
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV1" tvg-logo="https://live.fanmingming.com/tv/CCTV1.png" group-title="央视频道",CCTV-1 综合
